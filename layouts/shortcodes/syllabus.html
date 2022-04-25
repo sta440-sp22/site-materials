@@ -1,0 +1,97 @@
+<font color=#a64452>
+All assignments are due at 11:59 PM US Eastern time unless otherwise noted. This schedule may be updated as the semester progresses with all changes documented here (Sakai announcements will be made prior to any potential changes).
+</font>
+
+<br>
+
+<table class="table" style="max-width:900px;margin-left:auto;margin-right:auto">
+  <tr>
+    <th style="width:10%;text-align:left"></th>
+    <th style="width:5%;text-align:right">Week</th>
+    <th style="width:15%;text-align:right">Date</th>
+    <th style="width:35%">Activity</th>
+    <th style="width:5%;text-align:center">Link</th>
+	<th style="width:45%;text-align:left">Due</th>
+  </tr>
+
+  {{ range $.Site.Data.lessons }}
+    {{range . }}
+    <tr>
+      <td><font color="#00539B"><b>{{ .case }}</b></font></td>
+	  <td align="right">{{ .week }}</td>
+      <td align="right">{{ .date }}</td>
+      <td>{{ .title }}</td>
+
+      {{ if .slides }}
+        <td align="center">
+          <a href="{{ .Site.baseurl }}/slides/{{ .slides  }}"><i class="fa fa-laptop fa-lg"></i></a>
+        </td>
+      {{ else }}
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop fa-lg"></i></font></td>
+      {{ end }}
+<!--    
+      {{ if .reading }}
+      <td align="center"><a href="{{ .Site.baseurl }}/reading/{{ .reading  }}">
+          <i class="fa fa-book fa-lg"></i></a></td>
+      {{ else }}
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      {{ end }} 
+
+      {{ if .lab }}
+      <td align="center"><a href="{{ .Site.baseurl }}/labs/{{ .lab }}">
+          <i class="fas fa-flask"></i></a></td>
+      {{ else }}
+        <td align="center"><font color="f1f1f1">
+          <i class="fas fa-flask"></i></font></td>
+      {{ end }}
+
+      {{ if .appex }}
+      <td align="center"><a href="{{ .Site.baseurl }}/appex/{{ .appex }}">
+          <i class="fa fa-cloud-download fa-lg"></i></a></td>
+      {{ else }}
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-cloud-download fa-lg"></i></font></td>
+      {{ end }}
+      
+      {{ if .hw }}
+      <td align="center"><a href="{{ .Site.baseurl }}/hw/{{ .hw }}">
+          <i class="fa fa-pencil-square-o fa-lg"></i></a></td>
+      {{ else }}
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      {{ end }}
+
+      {{ if .ec }}
+      <td align="center"><a href="{{ .Site.baseurl }}/ec/{{ .ec }}">
+          <i class="fa fa-angle-double-up fa-lg"></i></a></td>
+      {{ else }}
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-angle-double-up fa-lg"></i></font></td>
+      {{ end }}
+      
+      {{ if .exam }}
+      <td align="center"><a href="{{ .Site.baseurl }}/exam/{{ .exam }}">
+          <i class="fa fa-check-square fa-lg"></i></a></td>
+      {{ else }}
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      {{ end }}  
+      
+      {{ if .project }}
+      <td align="center"><a href="{{ .Site.baseurl }}/project/{{ .project }}">
+          <i class="fas fa-flask"></i></a></td>
+      {{ else }}
+        <td align="center"><font color="f1f1f1">
+          <i class="fas fa-flask"></i></font></td>
+      {{ end }}
+	  
+	  --> 
+	  
+      <td>{{ .due }}</td>
+    </tr>
+    {{ end }}
+  {{ end }}
+
+</table>

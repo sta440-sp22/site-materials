@@ -1,0 +1,83 @@
+baseurl = "/docs/"
+languageCode = "en-us"
+defaultContentLanguage = "en-us"
+title = "STA 440 | Case Studies in the Practice of Statistics"
+theme = "material"
+#disqusShortname = ""
+# googleAnalytics = ""
+paginate = 7
+relativeURLs = true
+uglyURLs = true
+publishDir = "/docs"
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+
+[markup]
+   defaultMarkdownHandler = "blackfriday"
+
+[permalinks]
+  post = "/:year/:month/:slug/"
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+  archive = "archives"
+
+[author]
+  name = "Yue Jiang"
+  bio = ""
+  job = "Assistant Professor of the Practice"
+  location = "Duke University"
+  gravatarEmail = "yue.jiang@duke.edu"
+  # Your profile picture
+  #  picture = ""
+  # twitter = ""
+ 
+# Menu Configuration
+[[menu.main]]
+  weight = 1
+  identifier = "home"
+  name = "Home"
+  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-home\"></i>"
+  url = "/index.html"
+  
+[[menu.main]]
+  weight = 2
+  identifier = "schedule"
+  name = "Schedule"
+  pre = "<i class=\"material-icons\">calendar_today</i>"
+  url = "/schedule.html"
+  
+[[menu.main]]
+  weight = 3
+  identifier = "policies"
+  name = "Policies"
+  pre = "<i class=\"material-icons\">dashboard</i>"
+  url = "/policies.html"
+  
+[[menu.main]]
+  weight = 4
+  identifier = "sakai"
+  name = "Sakai"
+  pre = "<i class=\"material-icons\">school</i>"
+  url = "http://sakai.duke.edu"
+  
+[[menu.main]]
+  weight = 5
+  identifier = "github"
+  name = "GitHub"
+  pre = "<i class='fab fa-github fa-lg'></i>"
+  url = "https://github.com/sta440-fa21"
+
+[[menu.footer]]
+  weight = 1
+  identifier = "Duke"
+  name = "Duke Statistical Science"
+  pre = "<i class=\"button-icon fa fa-2x fa-map-marker\"></i>"
+  url = "http://stat.duke.edu/"
+[[menu.footer]]
+
+
+[params]
+  dateFormat = "January 2, 2006"
+  background = "https://www2.stat.duke.edu/courses/Summer20/sta1981.001-1/img/site-bg2.png"
+  favicon = "https://www2.stat.duke.edu/courses/Summer20/sta1981.001-1/img/sta198-sticker.png"
