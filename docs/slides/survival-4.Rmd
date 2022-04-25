@@ -1,0 +1,273 @@
+---
+title: "Introduction to survival analysis (4)"
+author: "Yue Jiang"
+date: "Duke University"
+output:
+  xaringan::moon_reader:
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    css: "sta440-slides.css"
+    lib_dir: libs/font-awesome
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r, echo = F, warning = F, message = F}
+library(survival)
+library(tidyverse)
+
+dig <- read.csv("C:/Users/Yue/Courses/STA 440 2021 Spring/docs/datasets/UNUSED_dig_teaching/DIG_csv/DIG_csv/dig.csv")
+```
+
+### The DIG Trial
+
+```{r, echo=FALSE, out.width = '120%'} 
+knitr::include_graphics("img/02/dig_trial.png")
+```
+
+Investigators compared the **primary outcome** of the number of days from the
+start of the study to either death or hospitalization from worsening heart
+failure.
+
+---
+
+### Review: accelerated failure time model
+
+An .vocab[accelerated failure time] (AFT) model assumes
+
+\begin{align*}
+\log(T_i) = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_px_p + \epsilon_i
+\end{align*}
+
+where $\epsilon_i$ are commonly assumed to be i.i.d. and follow some specified
+distribution.
+
+Covariates in an AFT model have a multiplicative effect on *time*. For instance,
+if $\beta_k = 0.4$, then $\exp(\beta_k) \approx 1.5$. Holding all else equal,
+an individual with covariate $x_k$ one unit greater than another is expected
+to survive approximately 1.5 times longer than the other.
+
+---
+
+### Review: fitting an AFT model
+
+```{r, message = F, warning = F}
+library(survival)
+aft_w <- survreg(Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+                 data = dig, dist = "lognormal")
+summary(aft_w)
+```
+
+---
+
+### Review: visualizing the AFT model
+
+```{r, echo = F, fig.align = 'center'}
+x <- seq(0, 50, 0.01)
+y <- pnorm((log(x) - 2)/0.75)
+plot(x, 1 - y, type = "l", ylim = c(0, 1), xlim = c(0, 20),
+     xlab = "Time", ylab = "Survival",
+     main = "Survival functions for various log-normal failure times")
+lines(x*0.5, (1 - y), col = "darkred")
+lines(x*2, (1 - y), col = "deepskyblue")
+lines(x, 1 - y, col = "black")
+text(10, 0.42, expression(S[0](t)))
+text(10, 0.17, expression(S[1](t)))
+text(10, 0.78, expression(S[2](t)))
+```
+
+---
+
+### Review: proportional hazards model
+
+\begin{align*}
+\lambda(t) &= \lambda_0(t)\exp\left(\beta_1x_1 + \beta_2x_2 + \cdots + \beta_px_p \right)
+\end{align*}
+
+where $\lambda_0$ is the .vocab[baseline hazard]. We've seen both parametric
+and semi-parametric versions of this model.
+
+Covariates in a PH model have a multiplicative effect on *hazards*. For
+instance, if $\beta_k = 0.4$, then $\exp(\beta_k) \approx 1.5$. Holding all else 
+equal, an individual with covariate $x_k$ one unit greater than another is 
+expected to have approximately 1.5 times the *hazard* of the event than the
+other. This multiplicative effect holds *regardless* of the time $t$.
+
+---
+
+### Review: fitting a PH model
+
+```{r, message = F, warning = F}
+library(eha)
+ph_ln <- phreg(Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+               data = dig, dist = "lognormal")
+ph_ln
+```
+
+---
+
+### Review: fitting the Cox PH model
+
+```{r}
+coxm1 <- coxph(Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+                    data = dig)
+summary(coxm1)
+```
+
+---
+
+### Review: visualizing the PH model
+
+```{r, echo = F, fig.align = 'center'}
+y <- dnorm((log(x) - 2)/0.75)/((1-pnorm((log(x) - 2)/0.75))*x*0.75)
+plot(x, y, type = "l", xlim = c(0, 20), ylim = c(0, 0.4),
+     xlab = "Time", ylab = "Hazard",
+     main = "Hazard functions for various log-normal failure times")
+lines(x, 0.5*y, col = "deepskyblue")
+lines(x, 2*y, col = "darkred")
+text(10, 0.165, expression(lambda[0](t)))
+text(10, 0.09, expression(lambda[2](t)))
+text(10, 0.305, expression(lambda[1](t)))
+```
+
+---
+
+### Bayesian survival analysis
+
+As in all Bayesian models, we must specify our prior information for various
+model components.
+
+.question[
+What pieces of the model should have priors specified on them? What types of 
+prior might be reasonable?
+]
+
+--
+
+- Intercept (baseline hazard)
+- Regression "slopes"
+- Additional distribution-specific parameters (e.g., shape parameters for 
+Weibull)
+
+We can extend models to more flexible situations, but these'll suffice for the
+vast majority of time-independent regression situations you'll encounter.
+
+---
+
+### Back to `rstanarm`
+
+```{r, eval = F}
+# you may need to change dir
+remove.packages("rstanarm", lib="~/R/win-library/4.1") 
+install.packages("rstanarm", 
+                 repos = c("https://mc-stan.org/r-packages/", 
+                           getOption("repos")))
+```
+
+---
+
+### Back to `rstanarm`
+
+```{r, message = F, warning = F}
+library(rstanarm)
+m1 <- stan_surv(Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+               data = dig, basehaz = "weibull",
+               prior = normal(autoscale = T),
+               prior_intercept = normal(autoscale = T),
+               prior_aux = cauchy(0, 5, autoscale = T),
+               chains = 2, iter = 2000, seed = 123,
+               prior_PD = F)
+```
+
+See documentation [here](https://cran.r-project.org/web/packages/rstanarm/rstanarm.pdf) 
+for further details. By default, PH is assumed.
+
+---
+
+### Back to `rstanarm`
+
+```{r}
+prior_summary(m1)
+```
+
+---
+
+### Back to `rstanarm`
+
+```{r}
+summary(m1)
+```
+
+---
+
+### Back to `rstanarm`
+
+```{r}
+round(as.data.frame(summary(m1)), 2)
+```
+
+---
+
+### Back to `rstanarm`
+
+```{r, fig.align='center', fig.height = 4}
+plot(m1, plotfun = "basehaz")
+```
+
+---
+
+### Back to `rstanarm`
+
+```{r, fig.align='center', fig.height = 4}
+ps_check(m1)
+```
+
+---
+
+Bakc to `rstanarm`
+
+```{r, fig.align='center', fig.height = 4}
+plot(m1, "dens_overlay")
+```
+
+---
+
+### Back to `rstanarm`
+
+```{r, fig.align='center', fig.height = 4}
+plot(m1, "trace")
+```
+
+---
+
+### Back to `rstanarm`
+
+```{r, fig.align='center', fig.height = 4}
+plot(m1, "trace", pars = "TRTMT") +
+  labs(title = "Trace plot: Digoxin", 
+       y = "Estimate", x = "Draw")
+```
+
+---
+
+### An AFT model
+
+```{r}
+m2 <- stan_surv(Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+               data = dig, basehaz = "weibull-aft",
+               prior = normal(autoscale = T),
+               prior_intercept = normal(autoscale = T),
+               prior_aux = cauchy(0, 5, autoscale = T),
+               chains = 2, iter = 2000, seed = 123,
+               prior_PD = F)
+```
+
+---
+
+### Comparing model results
+
+```{r}
+round(as.data.frame(summary(m1))[,c(1, 3, 7)], 3)
+round(as.data.frame(summary(m2))[,c(1, 3, 7)], 3)
+```

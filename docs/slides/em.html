@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>The EM algorithm</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Yue Jiang" />
+    <script src="em_files/header-attrs/header-attrs.js"></script>
+    <link href="em_files/remark-css/default.css" rel="stylesheet" />
+    <link href="em_files/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="sta440-slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# The EM algorithm
+### Yue Jiang
+### Duke University
+
+---
+
+
+
+
+
+
+### A disclaimer
+
+Today's (and next time's) lectures are introductory surface level treatments of
+the EM algorithm. We focus on applications and use cases -- there are no 
+theoretical results presented (even for important subjects like variance
+estimation). 
+
+As well, we are slightly "hand-wavy" at times. in formal treatments of the EM 
+algorithm you may see certain notaional conventions (e.g., defining `\(Q\)` 
+functions) that we will explain more intuitively with words and visualizations.
+
+There is much to discuss regarding the EM algorithm both theoretically and in 
+application. In STA 440, we will focus on using and implementing the EM 
+algorithm in practice to tackle real-world datasets instead of focusing on
+theoretical considerations.
+
+---
+
+### Penguin flipper length
+
+.pull-left[
+&lt;img src="img/adelie.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="img/gentoo.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;!-- Image credits: Andrew Shiva / Wikipedia / [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) --&gt;
+
+---
+
+### Penguin flipper length
+
+&lt;img src="em_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Penguin flipper length
+
+&lt;img src="em_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+Let's say we have observations and know that they come from two separate normal 
+distributions. 
+
+---
+
+### Penguin flipper length
+
+&lt;img src="em_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+
+Since we know there are two sources and they're normally distributed, it's easy 
+to estimate the mean and variance of the groups.
+
+---
+
+### Penguin flipper length
+
+&lt;img src="em_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+
+On the other hand, if we know the parameters of the two distributions, we could
+estimate species-specific probabilities for each penguin.
+
+
+---
+
+### Penguin flipper length
+
+&lt;img src="em_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+.question[
+What if all we had was this? Could we guess the species labels and/or parameters 
+of the two distributions?
+]
+
+**Problem**: If we knew which species each penguin was, we could estimate the 
+means and variances. If we had the means and variances themselves, we could 
+figure out which species each penguin was. 
+
+**But we don't have either.**
+
+---
+
+### Penguin flipper length
+
+We have the marginal mixture distribution:
+
+`\begin{align*}
+f_X(x) = \pi_{A}\mathcal{N}(x | \mu_{A}, \sigma^2_A) + \pi_G\mathcal{N}(x | \mu_G, \sigma^2_G).
+\end{align*}`
+
+We'd like to maximize the log-likelihood:
+
+`\begin{align*}
+&amp;\mathrel{\phantom{=}} \log\mathcal{L}(\mu_A, \mu_G, \sigma^2_A, \sigma^2_G, \pi_A, \pi_G| \mathbf{X}) \\
+&amp;= \log\prod_{i = 1}^n P(X_i | \mu_A, \mu_G, \sigma^2_A, \sigma^2_G, \pi_A, \pi_G)\\
+&amp;= \sum_{i = 1}^n \log \left\{\pi_{A}\mathcal{N}(x_i | \mu_{A}, \sigma^2_A) + \pi_G\mathcal{N}(x_i | \mu_G, \sigma^2_G) \right\}
+\end{align*}`
+
+.question[
+How can we maximize this log-likelihood?
+]
+
+---
+
+### Penguin flipper length
+
+Unfortunately, there is no closed form solution (and numerical methods we've
+learned so far get very messy very fast). 
+
+Idea: let's introduce a .vocab[latent variable] such that when we write out
+the .vocab[complete data log-likelihood] that includes this latent variable, 
+such a function is "easy" to maximize.
+
+For our penguin example, define the random variable `\(Z_i\)` which takes on values
+`\(A\)` and `\(G\)` depending on what species penguin `\(i\)` is.
+
+.question[
+If we knew `\(Z_1, \cdots Z_n\)` (the true group assignments), then what would the
+complete data log-likelihood be?
+]
+
+---
+
+### Penguin flipper length
+
+If we *knew* `\(Z_1, \cdots, Z_n\)`, we would have
+
+`\begin{align*}
+&amp;\mathrel{\phantom{=}} \log\mathcal{L}(\mu_A, \mu_G, \sigma^2_A, \sigma^2_G, \pi_A, \pi_G| \mathbf{X}, Z)\\
+&amp;= \sum_{i = 1}^n I(Z_i = A)\log \pi_A + I(Z_i = A) \log\mathcal{N}(x_i | \mu_{A}, \sigma^2_A) + \\
+&amp;\mathrel{\phantom{=}} \sum_{i = 1}^n I(Z_i = G)\log \pi_G + I(Z_i = G) \log\mathcal{N}(x_i | \mu_{G}, \sigma^2_G).
+\end{align*}`
+
+We would like to maximize this complete data log-likelihood, but unfortunately
+we never actually observe `\(Z\)`. 
+
+.question[
+How can we get information about `\(Z\)` in order to try and maximize the complete
+data log-likelihood?
+]
+
+---
+
+### Penguin flipper length
+
+All the information we have about `\(Z\)` should be given by its posterior 
+distribution conditional on the observed data and model parameters!
+
+Thus, let's instead maximize the *posterior expectation* of the complete data
+log-likelihood with respect to `\(Z\)`, given the observed data and model 
+parameters. That is:
+
+`\begin{align*}
+&amp;\mathrel{\phantom{=}} E_{Z|\mathbf{X}}\left[\log\mathcal{L}(\mu_A, \mu_G, \sigma^2_A, \sigma^2_G, \pi_A, \pi_G| \mathbf{X}, Z)\right]\\
+&amp;= E_{Z|\mathbf{X}}\left[P(\mathbf{X}, Z | \mu_A, \mu_G, \sigma^2_A, \sigma^2_G, \pi_A, \pi_G) \right]
+\end{align*}`
+
+.question[
+What is this expectation?
+]
+
+---
+
+### Penguin flipper length
+
+`\begin{align*}
+&amp;\mathrel{\phantom{=}} E_{Z|\mathbf{X}}\left[\log\mathcal{L}(\mu_A, \mu_G, \sigma^2_A, \sigma^2_G, \pi_A, \pi_G| \mathbf{X}, Z)\right]\\
+&amp;= \sum_{i = 1}^n E_{Z|\mathbf{X}}\left[I(Z_i = A)\left\{\log \pi_A + \log\mathcal{N}(x_i | \mu_{A}, \sigma^2_A)\right\}\right] + \\
+&amp;\mathrel{\phantom{=}} \sum_{i = 1}^n E_{Z|\mathbf{X}}\left[I(Z_i = G)\left\{\log \pi_G + \log\mathcal{N}(x_i | \mu_{G}, \sigma^2_G)\right\}\right]\\
+&amp; = \sum_{i = 1}^n P(Z_i = A | \mathbf{X})\left\{\log \pi_A + \log\mathcal{N}(x_i | \mu_{A}, \sigma^2_A)\right\} + \\
+&amp;\mathrel{\phantom{=}} \sum_{i = 1}^n P(Z_i = G | \mathbf{X})\left\{\log \pi_G + \log\mathcal{N}(x_i | \mu_{G}, \sigma^2_G)\right\}
+\end{align*}`
+
+.question[
+What are MLEs if we knew `\(P(Z_i = A | \mathbf{X})\)` and `\(P(Z_i = G | \mathbf{X})\)`?
+]
+
+---
+
+### Penguin flipper length
+
+Assuming we know `\(P(Z_i = A | \mathbf{X})\)` and `\(P(Z_i = G | \mathbf{X})\)`,
+
+`\begin{align*}
+\hat{\mu}_A &amp;= \frac{1}{\sum_{i = 1}^n P(Z_i = A | \mathbf{X})}\sum_{i = 1}^n
+P(Z_i = A | \mathbf{X}) x_i\\
+\hat{\sigma}^2_A &amp;= \frac{1}{\sum_{i = 1}^n P(Z_i = A | \mathbf{X})}\sum_{i = 1}^n
+P(Z_i = A | \mathbf{X}) (x_i - \mu_A)^2\\
+\hat{\pi}_A &amp;= \frac{1}{n}\sum_{i = 1}^n P(Z_i = A | \mathbf{X})
+\end{align*}`
+
+and similarly for `\(\hat{\mu}_G\)`, `\(\hat{\sigma}^2_G\)`, and `\(\hat{\pi}_G\)` (work not
+shown; please verify!).
+
+.question[
+On the other hand, if we knew `\(\mu_A\)`, `\(\mu_G\)`, `\(\sigma^2_A\)`, `\(\sigma^2_G\)`,
+`\(\pi_A\)`, and `\(\pi_G\)`, how could we calculate `\(P(Z_i = A | \mathbf{X})\)` and 
+`\(P(Z_i = G | \mathbf{X})\)`?
+]
+
+---
+
+### Penguin flipper length
+
+By Bayes' rule we have:
+
+`\begin{align*}
+&amp;\mathrel{\phantom{=}} P(Z_i = A | \mathbf{X})\\
+&amp;= \frac{P(Z_i = A)P(\mathbf{X}|Z_i = A)}{P(Z_i = A)P(\mathbf{X}|Z_i = A) + P(Z_i = G)P(\mathbf{X}|Z_i = G)}\\
+&amp;= \frac{\pi_A \mathcal{N}(x_i|\mu_A, \sigma^2_A)}{\pi_A \mathcal{N}(x_i|\mu_A, \sigma^2_A) + \pi_G \mathcal{N}(x_i|\mu_G, \sigma^2_G)}
+\end{align*}`
+
+and similarly for `\(P(Z_i = G | \mathbf{X})\)`.
+
+---
+
+### The EM algorithm
+
+We've now formalized the question given before, and found that we have the same
+chicken-and-egg problem:
+
+- If we knew the parameters, we could easily estimate posterior probabilities
+`\(P(Z_i = z | \mathbf{X})\)` (for `\(z \in\)` {Adelie, Gentoo})
+- If we knew the posterior probabilities `\(P(Z_i = z | \mathbf{X})\)`, we could 
+easily estimate the parameters
+
+---
+
+### The EM algorithm
+
+The .vocab[EM algorithm] (expectation-maximization) is an iterative procedure
+that numerically solves this problem:
+
+1. Initialize parameter values
+2. .vocab[E-step]: construct expected log-likelihood function, where expectation
+takes advantage of latent variable formulation and is taken using parameter
+estimates from current M-step
+3. .vocab[M-step]: calculate maximum likelihood estimates from expected 
+log-likelihood function constructed from current E-step to inform distribution
+of latent variables
+4. Repeat until convergence criterion is satisfied
+
+We "guess" the latent variables and use them to maximize an "easier" likelihood.
+The EM algorithm hinges on defining a useful complete data log-likelihood.
+
+---
+
+### The EM algorithm
+
+
+&lt;img src="img/em2.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="img/em.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+.small[*fun fact: there's an error on page 8 in one of their proofs!*]
+
+---
+
+### A few caveats
+
+The M-step doesn't maximize the *observed* log-likelihood, but rather a 
+surrogate function given by the conditional expectation of the complete data
+log-likelihood. 
+
+The good news is that at each iteration the value of the observed log-likelihood
+will never decrease. However, if initial values are chosen poorly, the EM 
+algorithm may get stuck in a local maximum or stationary value.
+
+In the previous example we found a closed form solution to the M-step (these 
+are simply MLE estimates from normal distributions). However, sometimes no 
+closed form exists and we must rely on numerical methods to obtain solutions 
+(e.g., EM algorithm with one-step Newton-Raphson in the M step).
+
+---
+
+### The EM algorithm
+
+In the context of our estimation problem, we could have:
+
+1. Initialize values `\(\mu_A\)`, `\(\mu_G\)`, `\(\sigma^2_A\)`, `\(\sigma^2_G\)`, and `\(\pi_A\)` 
+(note that `\(\pi_G = 1 - \pi_A\)`)
+2. Estimate the posterior probabilities `\(P(Z_i = A | \mathbf{X})\)` and 
+`\(P(Z_i = G | \mathbf{X})\)` using current parameter estimates from M-step
+3. Update MLEs using current parameter estimates and posterior
+probabilities from E-step
+4. Repeat until convergence criterion is satisfied
+
+---
+
+### The EM algorithm
+
+Note that the E and M steps "cycle," and so we don't have to start with one
+or the other. In this case it might be tough to come up with initial parameter
+values. So, it may be easier to assign penguins to groups as the initialization
+step and start "in the middle," so to speak.
+
+In practice, the convergence criterion is oten based on changes in the 
+log-likelihood function evaluated at parameter estimates at each iteration.
+
+.question[
+Try implementing the EM algorithm for the penguin data. What initial parameter
+values did you use? What were your final parameter estimates and group 
+probabilities for each penguin?
+]
+
+---
+
+### The EM algorithm
+
+Live demonstration: visualizing steps.
+
+---
+
+### The ABO blood group system
+
+&lt;img src="img/blood.jpg" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### The ABO blood group system
+
+.pull-left[
+Human blood group refers to a classification of blood based on presence or
+absence of certain surface antigens on red blood cells. 
+
+One of the most important blood group systems is the ABO system; during blood 
+transfusion, if mismatches occur in the ABO blood group system, potentially 
+fatal reactions may occur. 
+]
+
+.pull-right[
+&lt;img src="img/karl.jpg" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+### The ABO blood group system
+
+.pull-left[
+&lt;img src="img/abo.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+.
+]
+
+.pull-right[
+- Three alleles: A, B, and O
+- One allele inherited from each parent
+- A and B alleles are co-dominant; O is recessive
+- Six unique genotypes given in table to the left
+- Four phenotypes possible given these genotypes: A-type blood, B-type blood, 
+AB-type blood, and O-type blood
+]
+
+---
+
+### The ABO blood group system
+
+.pull-left[
+&lt;img src="img/abo.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+.
+]
+
+.pull-right[
+Let `\(p_A\)`, `\(p_B\)`, and `\(p_O\)` be .vocab[allele frequencies] of underlying alleles. 
+Then .vocab[genotype frequencies] are:
+- AA: `\(p_A^2\)`
+- BB: `\(p_B^2\)`
+- AB: `\(2p_Ap_B\)`
+- AO: `\(2p_Ap_O\)`
+- BO: `\(2p_Bp_O\)`
+- OO: `\(p^2_O\)`
+]
+ 
+---
+
+### Allele frequency estimation
+
+Assume genotype counts are multinomially distributed:
+
+`\begin{align*}
+P(N_{AA} = n_{AA}, \cdots, N_{OO} = n_{OO}) = \frac{n!}{n_{AA}\cdots!n_{OO}!}p_{AA}^{n_{AA}}\cdots p_{OO}^{n_{OO}},
+\end{align*}`
+for `\(\mathcal{B} = \{AA, BB, AB, AO, BO, OO \}\)`, and where `\(\sum\limits_{i \in \mathcal{B}} n_{i} = n\)`.
+
+We observe the phenotype counts `\(N_A\)`, `\(N_B\)`, `\(N_{AB}\)` and `\(N_O\)` only.
+
+.question[
+Using only *observed phenotype counts*, can we estimate **allele frequencies**
+in the underlying population? What is the observed data likelihood?
+]
+
+---
+
+# Allele frequency estimation
+
+Using the observed *phenotype* frequencies, we have:
+
+`\begin{align*}
+\mathcal{L}(p_A, p_B, p_O) &amp;\propto \left(p_A^2 + 2p_Ap_O \right)^{n_A}\left(p_B^2 + 2p_Bp_O \right)^{n_B}\times\\
+&amp;\mathrel{\phantom{=}}\left(2p_Ap_B\right)^{n_{AB}}\left(p_O^{2}\right)^{n_O}\\
+\log\mathcal{L}(p_A, p_B, p_O) &amp;= n_A\log\left(p_A^2 + 2p_Ap_O \right) + \\
+&amp;\mathrel{\phantom{=}} n_A\log\left(p_A^2 + 2p_Ap_O \right) + \\
+&amp;\mathrel{\phantom{=}} n_{AB}\log(2p_Ap_B) + 2n_O \log(p_O) + \\
+&amp;\mathrel{\phantom{=}} const.
+\end{align*}`
+&lt;!-- \mathcal{L}(p_A, p_B) &amp;\propto \left(p_A^2 + 2p_A(1 - p_A - p_B) \right)^{n_A} \times \\ --&gt;
+&lt;!-- &amp;\mathrel{\phantom{=}}\left(p_B^2 + 2p_B(1 - p_A - p_B) \right)^{n_B}\times\\ --&gt;
+&lt;!-- &amp;\mathrel{\phantom{=}}\left(2p_Ap_B\right)^{n_{AB}}\left((1 - p_A - p_B)^2\right)^{n_O}\\ --&gt;
+&lt;!-- \log\mathcal{L}(p_A, p_B) &amp;= n_A\log\left(p_A^2 + 2p_A(1 - p_A - p_B) \right) +\\ --&gt;
+&lt;!-- &amp;\mathrel{\phantom{=}} n_B\log\left(p_B^2 + 2p_B(1 - p_A - p_B) \right) + \\ --&gt;
+&lt;!-- &amp;\mathrel{\phantom{=}} n_{AB}\log(2p_Ap_B) + 2n_O \log(1 - p_A - p_B) + \\ --&gt;
+&lt;!-- &amp;\mathrel{\phantom{=}} const. --&gt;
+
+Setting partial derivatives equal to zero and solving is a disaster. 
+
+.question[
+How would you use a latent variable to write the complete data log-likelihood 
+using the *genotype* frequencies?
+]
+
+---
+
+### The ABO blood group system
+
+The complete data log-likelihood is
+
+`\begin{align*}
+\log\mathcal{L}(p_A, p_B, p_O) &amp;= n_{AA}\log(p_A^2) + n_{BB}\log(p_B^2) + \\
+&amp;\mathrel{\phantom{=}} n_{AO}\log(2p_Ap_O) + n_{BO}\log(2p_Bp_O) + \\
+&amp;\mathrel{\phantom{=}} n_{AB}\log(2p_Ap_B) + n_{OO}\log(p_O^2) + const.,
+\end{align*}`
+
+which we notice is much easier to maximize (no more sums of different parameters
+inside a log).
+
+.question[
+How could you maximize this log-likelihood function with respect to the 
+parameters of interest (watch out for a constraint)?
+]
+
+---
+
+### The ABO blood group system
+
+Let's calculate MLEs for `\(p_A\)`, `\(p_B\)`, and `\(p_O\)` using the complete data
+log-likelihood. We can use Lagrange multipliers to solve the optimization
+problem under the constraint `\(p_A + p_B + p_O = 1\)` (again, no work shown; please
+verify!):
+
+`\begin{align*}
+\hat{p}_A &amp;= \frac{2n_{AA} + n_{AO} + n_{AB}}{2n}\\
+\hat{p}_B &amp;= \frac{2n_{BB} + n_{BO} + n_{AB}}{2n}\\
+\hat{p}_O &amp;= \frac{2n_{OO} + n_{AO} + n_{BO}}{2n}.
+\end{align*}`
+
+.question[
+Now how about the E-step?
+]
+
+---
+
+### The ABO blood group system
+
+Once again, we never observe the latent variables (in this case the genotype
+frequencies). However we can again get useful information by maximizing 
+conditional expectations of the log-likelihood for the latent data, given the 
+observed data and model parameters.
+
+For observed blood types `\(AB\)` and `\(O\)` which can only happen given a single 
+genotype combination we have
+
+`\begin{align*}
+E(n_{AB} | \mathbf{X}, p_A, p_B, p_O) &amp;= n_{AB}\\
+E(n_{OO} | \mathbf{X}, p_A, p_B, p_O) &amp;= n_O\\
+\end{align*}`
+
+.question[
+How can we get information about genotype frequencies `\(n_{AA}\)` and `\(n_{AO}\)` 
+given our observed phenotype frequencies?
+]
+
+---
+
+### The ABO blood group system
+
+Note that `\(n_{AA} + n_{AO} = n_A\)`. Thus, we know
+
+`\begin{align*}
+n_{AA} | n_A \sim Binomial\left(n_{A}, \frac{p^2_A}{p^2_A + 2p_Ap_O} \right)
+\end{align*}`
+
+and so we have
+
+`\begin{align*}
+E(n_{AA} | \mathbf{X}, p_A, p_B, p_O) &amp;= \frac{n_Ap_A^2}{p^2_A + 2p_Ap_O}
+\end{align*}`
+
+---
+
+### The ABO blood group system
+
+Similarly,
+
+`\begin{align*}
+E(n_{BB} | \mathbf{X}, p_A, p_B, p_O) &amp;= \frac{n_Bp_B^2}{p^2_B + 2p_Bp_O}\\
+E(n_{AO} | \mathbf{X}, p_A, p_B, p_O) &amp;= \frac{2n_Ap_Ap_O}{p^2_A + 2p_Ap_O}\\
+E(n_{BO} | \mathbf{X}, p_A, p_B, p_O) &amp;= \frac{2n_Bp_Ap_O}{p^2_B + 2p_Bp_O}
+\end{align*}`
+
+We can thus plug in these conditional expectations to the expressions for the 
+MLE from the M-step, and use MLE estimates of `\(p_A\)`, `\(p_B\)`, and `\(p_O\)` from the 
+M-step to obtain estimates for these conditional expectations in the E-step, and 
+so on.
+
+---
+
+### The ABO blood group system
+
+The EM algorithm for estimating allele frequencies is thus given by 
+
+1. Initialize values `\(p_A\)`, `\(p_B\)`, and `\(p_O\)` (note that `\(p_A + p_B + p_O = 1\)`)
+2. Estimate genotype counts using current parameter estimates from M-step
+3. Update MLEs using parameter estimates and genotype counts from E-step
+4. Repeat until convergence criterion is satisfied
+
+.question[
+Suppose in a group of 300 individuals we observe 135 with blood type A, 39 with 
+blood type B, 108 with blood type O, and 18 with blood type AB. Try implementing 
+the EM algorithm. What initial parameter values did you use? What were your 
+final allele frequencies?
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

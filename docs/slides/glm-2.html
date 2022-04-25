@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Linear Models (2)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Yue Jiang" />
+    <script src="glm-2_files/header-attrs/header-attrs.js"></script>
+    <link href="glm-2_files/remark-css/default.css" rel="stylesheet" />
+    <link href="glm-2_files/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="sta440-slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Linear Models (2)
+### Yue Jiang
+### Duke University
+
+---
+
+
+
+
+
+
+### Estimating bike crashes in NC counties
+
+&lt;img src="img/bike_crash.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;!-- .center[Image credit: Petar Milošević, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0), via Wikimedia Commons] --&gt;
+
+---
+
+### Data
+
+
+```
+## # A tibble: 100 x 2
+##    county    crashes
+##    &lt;chr&gt;       &lt;dbl&gt;
+##  1 Alamance       77
+##  2 Alexander       1
+##  3 Alleghany       1
+##  4 Anson           7
+##  5 Ashe            4
+##  6 Avery           5
+##  7 Beaufort       37
+##  8 Bertie         10
+##  9 Bladen          9
+## 10 Brunswick      88
+## # ... with 90 more rows
+```
+Suppose we thought these crashes came from a Poisson distribution. 
+.question[
+How might we estimate the parameter of that Poisson distribution, given our
+observed data?
+]
+
+---
+  
+&lt;!-- ### Maximum likelihood estimation --&gt;
+
+&lt;!-- If `\(Y \sim Pois(\lambda)\)`, then --&gt;
+
+&lt;!-- \begin{align*} --&gt;
+&lt;!--   P(Y = y) = \frac{\lambda^y e^{-\lambda}}{y!} --&gt;
+&lt;!-- \end{align*} --&gt;
+
+&lt;!-- .question[ --&gt;
+&lt;!-- If `\(Y_1, Y_2, \cdots, Y_n\)` are each i.i.d. distributed with `\(Pois(\lambda)\)`, --&gt;
+&lt;!-- then what is the **Maximum Likelihood Estimate** (MLE) of `\(\lambda\)`? --&gt;
+
+### Maximum likelihood estimation
+
+We can maximize the .vocab[likelihood function]. Assuming the observations are
+i.i.d., in general we have:
+
+`\begin{align*}
+\mathcal{L}(\lambda | Y) &amp;= f(y_1, y_2, \cdots, y_n | \lambda)\\
+&amp;= f(y_1 | \lambda)f(y_2 | \lambda) \cdots f(y_n | \lambda)\\
+&amp;= \prod\limits^{n}_{i = 1} f(y_i | \lambda).
+\end{align*}`
+
+The likelihood function is the probability of "seeing our observed data," 
+**given** a value of `\(\lambda\)`. Do not get `\(f(y_i | \lambda)\)` confused with 
+`\(f(\lambda | y_i)\)`!
+
+.question[
+If `\(Y_1, Y_2, \cdots, Y_n\)` are each i.i.d. distributed with `\(Pois(\lambda)\)`,
+then what is the .vocab[Maximum Likelihood Estimate] (MLE) of `\(\lambda\)`?
+]
+
+---
+
+### Maximum likelihood estimation
+
+For our Poisson example, we thus have:
+
+`\begin{align*}
+\mathcal{L}(\lambda | Y) &amp;= \prod\limits^{n}_{i = 1} f(y_i | \lambda)\\
+&amp;= \prod\limits_{i = 1}^n \frac{\lambda^y_i e^{-\lambda}}{y_i!}\\
+\log \mathcal{L}(\lambda | Y) &amp;= \sum_{i = 1}^n \left( y_i\log \lambda - \lambda - \log y_i! \right)\\
+&amp;= \log \lambda \sum_{i = 1}^n y_i - n\lambda - \sum_{i = 1}^n \log y_i!
+\end{align*}`
+
+.question[
+Why do we maximize the log-likelihood function here?
+]
+
+---
+
+### Maximum likelihood estimation
+
+Setting the .vocab[score function] equal to 0:
+
+`\begin{align*}
+\frac{\partial}{\partial\lambda}\log \mathcal{L}(\lambda | Y) = \frac{1}{\lambda}\sum_{i = 1}^n y_i - n &amp;\stackrel{set}{=} 0\\
+\implies \hat{\lambda} = \frac{1}{n}\sum_{i = 1}^n y_i,
+\end{align*}`
+
+as expected. Next, let's verify that `\(\hat{\lambda}\)` is indeed a maximum:
+
+`\begin{align*}
+\frac{\partial^2}{\partial\lambda^2}\log \mathcal{L}(\lambda | Y) &amp;= -\frac{1}{\lambda^2}\sum_{i = 1}^n y_i - n\\
+&amp;&lt; 0.
+\end{align*}`
+
+---
+
+### Can we do better?
+
+
+```
+## # A tibble: 100 x 6
+##    county       pop med_hh_income traffic_vol pct_rural crashes
+##    &lt;chr&gt;      &lt;dbl&gt;         &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Alamance  166436          50.5         182        29      77
+##  2 Alexander  37353          49.1          13        73       1
+##  3 Alleghany  11161          39.7          28       100       1
+##  4 Anson      24877          38            79        79       7
+##  5 Ashe       27109          41.9          18        85       4
+##  6 Avery      17505          41.7          35        89       5
+##  7 Beaufort   47079          46.4          53        66      37
+##  8 Bertie     19026          35.4          24        83      10
+##  9 Bladen     33190          37            19        91       9
+## 10 Brunswick 136744          60.2          43        43      88
+## # ... with 90 more rows
+```
+
+We might expect that more populous, more urban counties might have more crashes.
+There might also be a relationship with traffic volume. 
+
+.quesiton[
+Can we incorporate this additional information while accounting for potential
+confounding?
+]
+
+---
+
+### Poisson regression
+
+`\begin{align*}
+\log\large(\underbrace{E(Y | \mathbf{X}}_{\lambda})\large) = \beta_0 + \mathbf{X}^T\boldsymbol\beta
+\end{align*}`
+
+.vocab[Generalized linear model] often used for count (or rate) data
+- Assumes outcome has Poisson distribution
+- Canonical link: log of conditional expectation of response has linear 
+relationship with predictors
+
+.question[
+Can we differentiate the (log) likelihood function, set it equal to zero, and
+solve for the MLEs for `\(\boldsymbol\beta = (\beta_0, \beta_1, \cdots, \beta_p)\)`
+as before?
+]
+
+---
+
+### Poisson regression
+
+`\begin{align*}
+\log \mathcal{L}&amp;= \sum_{i = 1}^n \left( y_i\log \lambda - \lambda - \log y_i! \right)\\
+&amp;= \sum_{i = 1}^n y_i\mathbf{X}_i\boldsymbol\beta - e^{\mathbf{X}_i\boldsymbol\beta} - \log y_i!
+\end{align*}`
+
+We would like to solve the equations
+
+`\begin{align*}
+\left(\frac{\partial \log \mathcal{L}}{\partial \beta_j}\right) \stackrel{set}{=} \mathbf{0},
+\end{align*}`
+
+but there is no closed-form solution, as this is a transcendental equation in 
+the parameters of interest.
+
+.question[
+How might we solve these equations numerically?
+]
+
+---
+
+### A one-dimensional problem
+
+Suppose you're trying to find the maximum of the following function:
+
+`\begin{align*}
+f(x) = \frac{x + \log(x)}{2^x}
+\end{align*}`
+
+Let's try differentiating, setting equal to 0, and solving:
+
+`\begin{align*}
+\frac{d}{dx}f(x) = 2^{-x}\left(1 + \frac{1}{x} - \log(2)(x + \log(x)) \right).
+\end{align*}`
+
+We run into a similar problem: we cannot algebraically solve for the root of 
+this equation.
+
+---
+
+### A one-dimensional problem
+
+&lt;img src="glm-2_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+.question[
+It looks lke the maximum is a bit shy of 2 (trust me on this one, it's a global
+maximum). How might we find where it is?
+]
+
+---
+
+### A one-dimensional problem
+
+&lt;img src="img/newton.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### A one-dimensional problem
+
+.vocab[Newton-Raphson] algorithm for root finding is based on second-order Taylor 
+approximation around true root:
+
+- Start with initial guess `\(\theta^{(0)}\)`
+- Iterate `\(\theta^{(t + 1)} = \theta^{(t)} - \frac{f^\prime(\theta^{(t)})}{f^{\prime\prime} (\theta^{(t)})}\)`
+- Stop when convergence criterion is satisfied
+
+Although it requires explicit forms of first two derivatives, the convergence
+speed is quite fast. 
+
+There are some necessary conditions for convergence, but this is beyond the
+scope of STA 440. Many likelihood functions you are likely to encounter (e.g., 
+GLMs with canonical link) will in fact converge from any starting value.
+
+---
+
+### A one-dimensional problem
+
+&lt;img src="glm-2_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### A one-dimensional problem
+
+`\begin{align*}
+f(x) &amp;= \frac{x + \log(x)}{2^x} \\
+\frac{d}{dx}f(x) &amp;= 2^{-x}\left(1 + \frac{1}{x} - \log(2)(x + \log(x)) \right).
+\end{align*}`
+
+
+```r
+testing &lt;- function(x){
+  2^(-1 * x) * (1 + 1/x - log(2) * (x + log(x)))
+}
+
+testing(1.729)
+```
+
+```
+## [1] 0.0001174952
+```
+
+That's pretty good (only six steps from starting guess of 0.3)!
+
+---
+
+### Newton-Raphson in higher dimensions
+
+.vocab[Score vector] and .vocab[Hessian] for `\(\log \mathcal{L}(\boldsymbol\theta | \mathbf{X})\)` with `\(\boldsymbol\theta = (\theta_1, \cdots, \theta_p)^T\)`:
+
+`$$\nabla \log \mathcal{L} = \begin{pmatrix}
+\frac{\partial \log \mathcal{L}}{\partial \boldsymbol\theta_1}\\
+\vdots\\
+\frac{\partial \log \mathcal{L}}{\partial \boldsymbol\theta_p}
+\end{pmatrix}$$`
+`$$\nabla^2 \log \mathcal{L} = \begin{pmatrix}
+\frac{\partial^2 \log\mathcal{L}}{\partial \theta_1^2} &amp; \frac{\partial^2 \log\mathcal{L}}{\partial \theta_1 \theta_2} &amp; \cdots &amp; \frac{\partial^2 \log\mathcal{L}}{\partial \theta_1\theta_p}\\
+\frac{\partial^2 \log\mathcal{L}}{\partial \theta_2\theta_1} &amp; \frac{\partial^2 \log\mathcal{L}}{\partial \theta_2^2} &amp; \cdots &amp; \frac{\partial^2 \log\mathcal{L}}{\partial \theta_2\theta_p} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\frac{\partial^2 \log\mathcal{L}}{\partial \theta_p\theta_1} &amp; \frac{\partial^2 \log\mathcal{L}}{\partial \theta_p\theta_2} &amp; \cdots &amp; \frac{\partial^2 \log\mathcal{L}}{\partial \theta_p^2}
+\end{pmatrix}$$`
+ 
+---
+
+### Newton-Raphson in higher dimensions
+
+We can modify the Newton-Raphson algorithm for higher dimensions: 
+
+- Start with initial guess `\(\boldsymbol\theta ^{(0)}\)`
+- Iterate `\(\boldsymbol\theta^{(t + 1)} = \boldsymbol\theta^{(t)} - \left(\nabla^2\log\mathcal{L}(\boldsymbol\theta^{(t)} | \mathbf{X}) \right)^{-1} \left( \nabla \log\mathcal{L}(\boldsymbol\theta^{(t)} | \mathbf{X}) \right)\)`
+- Stop when convergence criterion is satisfied
+
+Under certain conditions, a global maximum exists; this again is guaranteed for 
+many common applications. 
+
+Computing the Hessian can be computationally demanding (and annoying), but there 
+are ways around it in practice. 
+
+---
+
+### Poisson regression
+
+`\begin{align*}
+\log \mathcal{L}&amp;= \sum_{i = 1}^n y_i\mathbf{X}_i\boldsymbol\beta - e^{\mathbf{X}_i\boldsymbol\beta} - \log y_i!
+\end{align*}`
+
+.question[
+What are the score vector and Hessian corresponding to the Poisson regression
+log-likelihood? What would the Newton-Raphson update steps be?
+]
+
+---
+
+### Poisson regression
+
+`\begin{align*}
+\log \mathcal{L}&amp;= \sum_{i = 1}^n y_i\mathbf{X}_i\boldsymbol\beta - e^{\mathbf{X}_i\boldsymbol\beta} - \log y_i!\\
+\nabla \log \mathcal{L}&amp;= \sum_{i = 1}^n \left(y_i - e^{\mathbf{X}_i\boldsymbol\beta}\right)\mathbf{X}_i^T\\
+\nabla^2 \log \mathcal{L} &amp;= -\sum_{i = 1}^n e^{\mathbf{X}_i\boldsymbol\beta}\mathbf{X}_i\mathbf{X}_i^T
+\end{align*}`
+
+Newton-Raphson update steps for Poisson regression: 
+
+`\begin{align*}
+\boldsymbol\beta^{(t+1)} &amp;= \boldsymbol\beta^{(t)} - \left(-\sum_{i = 1}^n e^{\mathbf{X}_i\boldsymbol\beta}\mathbf{X}_i\mathbf{X}_i^T \right)^{-1}\left(\sum_{i = 1}^n \left(y_i - e^{\mathbf{X}_i\boldsymbol\beta}\right)\mathbf{X}_i^T \right)
+\end{align*}`
+
+---
+
+### Poisson regression
+
+Newton-Raphson update steps for Poisson regression: 
+
+`\begin{align*}
+\boldsymbol\beta^{(t+1)} &amp;= \boldsymbol\beta^{(t)} - \left(-\sum_{i = 1}^n e^{\mathbf{X}_i\boldsymbol\beta}\mathbf{X}_i\mathbf{X}_i^T \right)^{-1}\left(\sum_{i = 1}^n \left(y_i - e^{\mathbf{X}_i\boldsymbol\beta}\right)\mathbf{X}_i^T \right)
+\end{align*}`
+
+.question[
+Can you implement this in R?
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

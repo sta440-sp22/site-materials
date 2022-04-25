@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Linear Mixed Models (1)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Yue Jiang" />
+    <script src="lmm-1_files/header-attrs/header-attrs.js"></script>
+    <link href="lmm-1_files/remark-css/default.css" rel="stylesheet" />
+    <link href="lmm-1_files/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="sta440-slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Linear Mixed Models (1)
+### Yue Jiang
+### Duke University
+
+---
+
+
+
+
+
+
+### Coffee
+
+&lt;img src="img/coffee.jpg" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Dry vs. wet process
+
+In processing coffee beans, there are two methods prior to roasting that affect
+the flavor profile of the coffee. 
+
+Dry process beans are immediately dried after picking. Since the skin of the
+fruit is attached the entire time, it locks in the sugars, resulting in a
+sweeter, less acidic taste.
+
+Wet process beans have the skin and pulp of the fruit removed after picking, and
+the seeds ferment in a wet mass and then soaked in water before the drying 
+process. This results in a more acidic taste.
+
+We also know that the variety of coffee, the location of harvest, and other 
+factors are also associated with the final product.
+
+---
+
+### Coffee
+
+&lt;img src="lmm-1_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Coffee
+
+&lt;img src="lmm-1_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Processing vs. rating
+
+
+```
+## # A tibble: 2 x 5
+##   term                estimate std.error statistic p.value
+##   &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)           82.4       0.180    458.   0      
+## 2 processWashed / Wet   -0.659     0.211     -3.12 0.00187
+```
+
+---
+
+### Processing vs. rating
+
+
+```
+## # A tibble: 5 x 5
+##   term                estimate std.error statistic  p.value
+##   &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)           24.7       1.57      15.7  3.15e-48
+## 2 processWashed / Wet    0.317     0.119      2.67 7.84e- 3
+## 3 aroma                  1.28      0.247      5.17 3.04e- 7
+## 4 flavor                 5.00      0.250     20.0  3.43e-71
+## 5 body                   1.31      0.253      5.18 2.82e- 7
+```
+
+---
+
+### Coffee
+
+&lt;img src="lmm-1_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Processing vs. rating
+
+
+```
+## # A tibble: 11 x 5
+##    term                estimate std.error statistic  p.value
+##    &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+##  1 (Intercept)          27.8        1.71     16.2   9.15e-51
+##  2 processWashed / Wet   0.298      0.160     1.87  6.21e- 2
+##  3 aroma                 1.20       0.245     4.91  1.10e- 6
+##  4 flavor                4.90       0.249    19.6   2.42e-69
+##  5 body                  1.10       0.259     4.26  2.31e- 5
+##  6 countryColombia       0.212      0.226     0.937 3.49e- 1
+##  7 countryEthiopia       0.0508     0.329     0.155 8.77e- 1
+##  8 countryGuatemala     -0.186      0.229    -0.816 4.15e- 1
+##  9 countryMexico        -0.512      0.222    -2.30  2.17e- 2
+## 10 countryTaiwan        -0.126      0.267    -0.470 6.38e- 1
+## 11 countryUS (Hawaii)   -0.815      0.247    -3.30  1.03e- 3
+```
+
+---
+
+### Independence violations
+
+In this case, coffee-level observations are *not* independent. We might expect
+that beans grown in particular countries might share similar growing conditions, 
+climate, technique, etc., such that this country-specific relationship
+violates independence. 
+
+It is not appropriate to simply "control for" country, as within each country, 
+coffee beans are more similar to each other.
+
+.question[
+What are some consequences of this approach?
+]
+
+---
+
+### Independence violations
+
+We get inaccurate estimates of standard errors, leading to invalid inference.
+
+We do not shed light on actual mechanisms we're interested in - in this case,
+differences between within- and between-group variability of our observations.
+
+---
+
+### Independence violations
+
+How might we deal with a violation of independence due to this clustered 
+structure?
+
+1. Variability in score might be due to within-country variations, or 
+between-country variations. However, at the *country* level, we might be able
+to assume independence (well...let's say that for now). Why not take the
+mean values within each country and fit a model on that scale?
+
+2. If violation of independence is due to nesting within country, why not
+simply fit a different model for each country (and then compare the results)?
+
+.question[
+What are some of the advantages/disadvantages of these two approaches?
+]
+
+---
+
+### Linear mixed models
+
+`\begin{align*}
+\mathbf{y} = \mathbf{X\beta} + \mathbf{Zu} + \mathbf{\epsilon}
+\end{align*}`
+
+- `\(\mathbf{y}\)`, `\(\mathbf{X}\)`, and `\(\mathbf{\beta}\)` are just as in "normal" 
+regression (and `\(\mathbf{\epsilon}\)` still represent the individual residuals).
+- `\(\mathbf{u}\)` is a `\(q * K\)` vector of the `\(q\)` random effects for the `\(K\)` 
+groups. 
+- `\(\mathbf{Z}\)` is the `\(n \times (q * K)\)` design matrix corresponding to the 
+random effects.
+
+Commonly, we might assume `\(\mathbf{u} \sim N_q(\mathbf{0}, \mathbf{G})\)`, where
+`\(\mathbf{G}\)` represents the covariance matrix of the `\(q\)` different random 
+effects.
+
+We also might impose assumptions on the correlation structure for `\(\epsilon\)`. 
+These types of structures come up, for instance, in longitudinal data analysis.
+
+---
+
+### Linear mixed models
+
+Suppose we fit a linear model for score, with predictors process, aroma, flavor,
+and body. Let's also suppose we consider a single random intercept (more on 
+this later) for country. In this case, we have scores for 743 cups of coffee 
+from 7 unique countries. Thus, the dimensions of our linear mixed model are:
+
+`\begin{align*}
+\mathbf{y}_{743 \times 1} = \mathbf{X}_{743 \times 5}\mathbf{\beta}_{5 \times 1} + \mathbf{Z}_{743 \times 7}\mathbf{u}_{7 \times 1} + \mathbf{\epsilon}_{743 \times 1}
+\end{align*}`
+
+`\(\mathbf{Z}\)` is a block matrix with a special structure. Depending on how many
+random effects (and their levels) we have, this can become very unwieldy, very
+fast, as the number of columns is a multiple of the number of groups.
+
+---
+
+### A different way of thinking
+
+It's often easier to think of a mixed model intuitively in terms of the "levels" 
+at which the observations/variability occur. 
+
+For our coffee example, we might be interested in modeling
+the score for the `\(i\)`th cup of coffee in the `\(j\)`th country:
+
+`\begin{align*}
+Score_{ij} &amp;= \beta_{0j} + \beta_{1j}Process_{ij} + \beta_{2j}Aroma_{ij} + \\
+&amp;\mathrel{\phantom{=}} \beta_{3j}Flavor_{ij} + \beta_{4j}Body_{ij} + \epsilon_{ij}
+\end{align*}`
+
+How we think about the various `\(\beta\)` components might depend on our 
+assumptions for the random effects.
+
+---
+
+### A different way of thinking
+
+For now, let's think of a simplified model that looks at associations between
+the score (outcome), the aroma rating (predictor), and random effect due to
+country.
+
+For the `\(i\)`th cup of coffee in the `\(j\)`th country:
+
+`\begin{align*}
+Score_{ij} &amp;= \beta_{0j} + \beta_{1j}Aroma_{ij} + \epsilon_{ij}
+\end{align*}`
+
+Note that there is no `\(\beta\)` corresponding to country per se. Importantly,
+we are estimating variability corresponding to the random effects.
+
+---
+
+### A random intercept model
+
+For the `\(i\)`th cup of coffee in the `\(j\)`th country:
+
+`\begin{align*}
+Score_{ij} &amp;= \beta_{0j} + \beta_{1j}Aroma_{ij} + \epsilon_{ij}\\
+\beta_{0j} &amp;= \gamma_{00} + u_{0j}\\
+\beta_{1j} &amp;= \gamma_1
+\end{align*}`
+
+--
+
+`\begin{align*}
+Score_{ij} &amp;= (\gamma_{00} + u_{0j}) + \gamma_{1}Aroma_{ij} + \epsilon_{ij}\\
+\end{align*}`
+
+In this case, we may also specify `\(\epsilon_{ij} \sim N(0, \sigma^2_{\epsilon})\)` 
+and `\(u_{0j} \sim N(0, \sigma^2_{u})\)`.
+
+.question[
+What can we answer with this type of model? How is it different than simply 
+adding in country as a predictor? What is the dimension of `\(\mathbf{Z}\)` here?
+]
+
+---
+
+### A random intercept model
+
+`\begin{align*}
+Score_{ij} &amp;= (\gamma_{00} + u_{0j}) + \gamma_{1}Aroma_{ij} + \epsilon_{ij},\\
+\epsilon_{ij} &amp;\sim N(0, \sigma^2_{\epsilon})\\
+u_{0j} &amp;\sim N(0, \sigma^2_{u})
+\end{align*}`
+
+- *"What is the relationship between aroma and score (while taking into account the country-level clustering)?"*
+- *"How much variability in coffee score occurs at the country-specific level (while knowing that higher aromas are associated with higher score)?"*
+
+Depending on what we're interested in estimating, we might treat certain pieces
+of the model as .vocab[nuisance parameters]. 
+
+---
+
+### A random intercept model
+
+&lt;img src="lmm-1_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Adding in a random slope 
+
+What if we thought that the relationships between aroma and score might vary
+depending on country? Previously, we've considered this question using 
+interaction effects, but for clustered/hierarchical data like these we may get
+invalid standard error estimates.
+
+What if we were interested in the variation in score rating, *due to country*,
+as a function of the aroma rating of the coffee?
+
+---
+
+### Adding in a random slope 
+
+`\begin{align*}
+Score_{ij} &amp;= \beta_{0j} + \beta_{1j}Aroma_{ij} + \epsilon_{ij}\\
+\beta_{0j} &amp;= \gamma_{00} + u_{0j}\\
+\beta_{1j} &amp;= \gamma_{10} + u_{1j}
+\end{align*}`
+
+--
+
+`\begin{align*}
+Score_{ij} &amp;= (\gamma_{00} + u_{0j}) + (\gamma_{10} + u_{1j})Aroma_{ij} + \epsilon_{ij}\\
+\end{align*}`
+
+with some correlational structure for the `\(u_{0j}\)`s and `\(u_{1j}\)`s (perhaps
+jointly) and `\(\epsilon\)`s.
+
+.question[
+What can we answer with this type of model? How is it different than simply 
+adding in interactions?
+]
+
+
+---
+
+### Adding in a random slope
+
+&lt;img src="lmm-1_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Adding in a random slope
+
+.question[
+This looks very similar to an OLS model with interactions. What's the difference
+here?
+]
+
+--
+
+In our random effects model, the slopes are modeled as variables that have a 
+"combined mean" and associated variance parameters. This results in the ability
+to "borrow information" about the slopes across the groups.
+
+This leads to then phenomenon of "partial pooling" toward the
+group mean slope - the random slopes are shrunk toward the overall mean (and the
+other slopes).
+
+A simple OLS model with interaction doesn't include the parameters corresponding
+to group mean/variance of slopes, and so there is no pooling effect and 
+information about group means is not borrowed. 
+
+---
+
+### More predictors...
+
+Note that you add random effects for more than one variable in your model (even
+on interaction terms!) - the exact form will depend on your assumptions on what 
+is "going on." However, because of the correlation between random effects, it 
+may be the case that "adding too many" terms will make model parameters 
+unestimable. At the very least, the dimension of your `\(\mathbf{Zu}\)` component 
+will grow very large, which may make computation unwieldy.
+
+When in doubt, always think through what might make sense given the data and
+their context. Is what you are doing sensible in the given situation and how
+independence might be violated? Is the way you are thinking of the intercepts
+and slopes meaningful?
+
+You can always make things as complicated as you'd like (well, bound by
+estimability) - always be careful that what you are doing makes sense!
+
+---
+
+### Fitting mixed models in R
+
+
+```r
+library(lme4)
+
+m1 &lt;- lm(score ~ process + aroma + flavor + body + country, 
+         data = coffee)
+m2 &lt;- lmer(score ~ 1 + process + aroma + flavor + body + 
+             (1 | country), data = coffee)
+m3 &lt;- lmer(score ~ 1 + process + flavor + body + 
+             (1 + aroma | country), data = coffee)
+```
+
+---
+
+### Fitting mixed models in R
+
+
+```r
+summary(m1)
+```
+
+```
+## 
+## Call:
+## lm(formula = score ~ process + aroma + flavor + body + country, 
+##     data = coffee)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -9.2591 -0.2129  0.2461  0.6575  3.8947 
+## 
+## Coefficients:
+##                     Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)         27.80043    1.71419  16.218  &lt; 2e-16
+## processWashed / Wet  0.29849    0.15975   1.868  0.06210
+## aroma                1.20418    0.24502   4.915 1.10e-06
+## flavor               4.90092    0.24946  19.646  &lt; 2e-16
+## body                 1.10387    0.25909   4.260 2.31e-05
+## countryColombia      0.21154    0.22570   0.937  0.34892
+## countryEthiopia      0.05084    0.32905   0.155  0.87725
+## countryGuatemala    -0.18649    0.22868  -0.816  0.41505
+## countryMexico       -0.51171    0.22248  -2.300  0.02173
+## countryTaiwan       -0.12561    0.26702  -0.470  0.63820
+## countryUS (Hawaii)  -0.81508    0.24732  -3.296  0.00103
+## 
+## Residual standard error: 1.37 on 732 degrees of freedom
+## Multiple R-squared:  0.7228,	Adjusted R-squared:  0.719 
+## F-statistic: 190.8 on 10 and 732 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+
+### Fitting mixed models in R
+
+
+```r
+summary(m2)
+```
+
+```
+## Linear mixed model fit by REML ['lmerMod']
+## Formula: score ~ 1 + process + aroma + flavor + body + (1 | country)
+##    Data: coffee
+## 
+## REML criterion at convergence: 2591.2
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -6.7608 -0.1413  0.1801  0.4890  2.8766 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  country  (Intercept) 0.09761  0.3124  
+##  Residual             1.87680  1.3700  
+## Number of obs: 743, groups:  country, 7
+## 
+## Fixed effects:
+##                     Estimate Std. Error t value
+## (Intercept)          27.1050     1.6896  16.042
+## processWashed / Wet   0.3174     0.1486   2.137
+## aroma                 1.2240     0.2443   5.011
+## flavor                4.9271     0.2482  19.855
+## body                  1.1220     0.2574   4.359
+## 
+## Correlation of Fixed Effects:
+##             (Intr) prcW/W aroma  flavor
+## prcssWshd/W -0.208                     
+## aroma       -0.283 -0.025              
+## flavor      -0.038  0.036 -0.567       
+## body        -0.548  0.123 -0.158 -0.393
+```
+
+---
+
+### Fitting mixed models in R
+
+
+```r
+summary(m2)$coef
+```
+
+```
+##                       Estimate Std. Error   t value
+## (Intercept)         27.1049933  1.6896244 16.042023
+## processWashed / Wet  0.3174144  0.1485559  2.136666
+## aroma                1.2240265  0.2442577  5.011210
+## flavor               4.9271276  0.2481529 19.855207
+## body                 1.1219892  0.2573773  4.359316
+```
+
+---
+
+### Fitting mixed models in R
+
+
+```r
+summary(m3)
+```
+
+```
+## Linear mixed model fit by REML ['lmerMod']
+## Formula: score ~ 1 + process + flavor + body + (1 + aroma | country)
+##    Data: coffee
+## 
+## REML criterion at convergence: 2575.5
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -6.5716 -0.1567  0.1748  0.4798  2.6732 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev. Corr 
+##  country  (Intercept) 154.954  12.448        
+##           aroma         2.547   1.596   -1.00
+##  Residual               1.807   1.344        
+## Number of obs: 743, groups:  country, 7
+## 
+## Fixed effects:
+##                     Estimate Std. Error t value
+## (Intercept)          36.6355     2.1943  16.696
+## processWashed / Wet   0.3395     0.1373   2.472
+## flavor                4.7971     0.2494  19.236
+## body                  1.2599     0.2551   4.938
+## 
+## Correlation of Fixed Effects:
+##             (Intr) prcW/W flavor
+## prcssWshd/W -0.204              
+## flavor      -0.551  0.037       
+## body        -0.572  0.149 -0.366
+```
+
+---
+
+### Fitting mixed models in R
+
+
+```r
+summary(m3)$coef
+```
+
+```
+##                      Estimate Std. Error   t value
+## (Intercept)         36.635509  2.1942540 16.696111
+## processWashed / Wet  0.339477  0.1373031  2.472464
+## flavor               4.797067  0.2493800 19.235973
+## body                 1.259942  0.2551478  4.938086
+```
+
+.question[
+Why isn't a p-value provided? (Actually, don't answer this question...it's very 
+complicated)
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

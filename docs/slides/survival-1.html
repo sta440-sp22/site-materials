@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introduction to survival analysis</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Yue Jiang" />
+    <script src="libs/font-awesome/header-attrs-2.10/header-attrs.js"></script>
+    <link rel="stylesheet" href="sta440-slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introduction to survival analysis
+### Yue Jiang
+### Duke University
+
+---
+
+
+
+
+### Survival data
+
+In many studies, the outcome of interest is the amount of time from an initial 
+observation until the occurrence of some event of interest.
+
+Typically, the event of interest is called a .vocab[failure] (even if it's a 
+good thing), and the associated time interval between a starting point and 
+failure the .vocab[failure time], .vocab[survival time], or .vocab[event time].
+
+---
+
+### Digoxin
+
+&lt;img src="img/02/digoxin.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+.pull-left[
+&lt;img src="img/02/foxglove.jpg" width="100%" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+
+.pull-right[
+- Foxgloves have been used in medicine for centuries
+- Digoxin (the active ingredient) first isolated in 1930 
+- Traditionally used for heart arrhythmia and heart failure
+- One of the most prescribed drugs globally
+]
+
+---
+
+### The DIG Trial
+
+&lt;img src="img/02/dig_trial.png" width="120%" /&gt;
+
+Investigators compared the **primary outcome** of the number of days from the
+start of the study to either death or hospitalization from worsening heart
+failure.
+
+---
+
+### The DIG Trial
+
+&lt;img src="img/02/dig_trial.png" width="120%" /&gt;
+
+.question[
+How would ***you*** investigate this question, comparing the two treatment 
+groups of digoxin vs. placebo?
+]
+
+---
+
+### A naive analysis
+
+Death or hospitalization due to worsening heart failure:
+
+
+```r
+dig %&gt;% 
+  select(ID, TRTMT, DWHF, DWHFDAYS) %&gt;% 
+  slice(1:10)
+```
+
+```
+##    ID TRTMT DWHF DWHFDAYS
+## 1   1     0    1     1379
+## 2   2     0    1     1329
+## 3   3     0    1      631
+## 4   4     1    0     1157
+## 5   5     0    1      191
+## 6   6     0    0     1620
+## 7   7     1    0      903
+## 8   8     1    0     1369
+## 9   9     0    0     1747
+## 10 10     1    0     1074
+```
+
+---
+
+### A naive analysis
+
+
+```r
+dig %&gt;% 
+  filter(DWHF == 1) %&gt;% 
+  t.test(DWHFDAYS ~ TRTMT, data = .)
+```
+
+```
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  DWHFDAYS by TRTMT
+## t = -6.153, df = 2195.4, p-value = 9.01e-10
+## alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+## 95 percent confidence interval:
+##  -133.68940  -69.06796
+## sample estimates:
+## mean in group 0 mean in group 1 
+##        418.8768        520.2555
+```
+
+.question[
+Are you convinced? What if we made some sort of regression model to account for
+covariates? Would that be enough?
+]
+
+---
+
+### A naive analysis
+
+
+
+```r
+dig %&gt;% 
+  count(TRTMT)
+```
+
+```
+##   TRTMT    n
+## 1     0 3403
+## 2     1 3397
+```
+
+```r
+dig %&gt;% 
+  filter(DWHF == 1) %&gt;% 
+  count(TRTMT)
+```
+
+```
+##   TRTMT    n
+## 1     0 1291
+## 2     1 1041
+```
+
+---
+
+### Challenges
+
+The unique nature of survival data is that typically not all units are observed
+until their event times:
+- Maybe a patient moved to Fiji and was lost to follow-up
+- Maybe a patient never experienced the primary outcome at all because they got
+hit by a bus
+- Maybe the study was only funded to follow patients for two years after
+enrollment
+
+--
+
+In these cases, observations are said to be .vocab[censored] - we know that 
+they survived until at least their censoring time, but do not know any further
+information.
+
+Not accounting for censoring in an appropriate way leads to **biased** and/or
+**inefficient** analyses.
+
+---
+
+### Representing survival data
+
+See live visualization regarding .vocab[study time] vs. .vocab[patient time].
+
+---
+
+### Representing survival data
+
+Underlying data:
+- `\(T\)`: Failure time, a non-negative random variable
+- `\(C\)`: Censoring time, a non-negative random variable
+Observed data for individual `\(i\)`:
+- `\(Y_i\)`: `\((T_i \wedge C_i)\)`, the minimum of `\(T_i\)` and `\(C_i\)`
+- `\(\delta_i\)`: `\(1_{(T_i \le C_i)}\)`, whether we observe a failure
+
+--
+
+If `\(\delta_i = 0\)`, then we have .vocab[right-censoring]: the survival time is
+longer than the censoring time.
+
+Commonly, we assume `\(C_i\)` are *i.i.d.* random variables with some distribution
+and that the censoring mechanism is *independent* of the failure mechanism.
+
+--
+
+**Our goal is to make inferential statements about** `\(T\)`.
+
+---
+
+### Characterizing continuous `\(T\)`
+
+- Density function: `\(f(t) = \lim_{\Delta t \to 0^+} \frac{P(t \le T &lt; t + \Delta t)}{\Delta t}\)`
+
+- Distribution function: `\(F(t) = P(T \le t) = \int_0^t f(s)ds\)`
+
+- Survival function: `\(S(t) = P(T &gt; t) = 1 - F(t)\)`
+
+- Hazard function: `\(\lambda(t) = \lim_{\Delta t \to 0^+} \frac{P(t \le T &lt; t + \Delta t | T \ge t)}{\Delta t}\)`
+
+- Cumulative hazard function: `\(\Lambda(t) = \int_0^t \lambda(s)ds\)`
+
+Knowing one is equivalent to knowing the others.
+
+.question[
+How might you express the hazard function in terms of the density funciton and
+the survival function?
+]
+
+---
+
+### Survival vs. hazard functions:
+
+Survival (or survivor) function:
+
+`\begin{align*}
+S(t) = P(T &gt; t)
+\end{align*}`
+- Non-increasing with `\(S(0) = 1\)` and `\(\lim_{t \to \infty} S(t) = 0\)`
+- For any given time `\(t\)`, a probability
+
+--
+
+Hazard function:
+
+`\begin{align*}
+\lambda(t) = \lim_{\Delta t \to 0^+} \frac{P(t \le T &lt; t + \Delta t | T \ge t)}{\Delta t}
+\end{align*}`
+
+- Instantaneous failure rate, *given* already having survived to time `\(t\)`
+- **Not** a probability (for continuous `\(T\)`)
+- Non-negative and unbounded for all `\(t\)`
+- Often more useful interpretations than survival functions
+- Nice analytical properties under right-censoring
+
+---
+
+### Estimating the survival curve
+
+The .vocab[Kaplan-Meier estimate] provides an intuitive *non-parametric* 
+estimate of the survival curve:
+
+- `\(D_i\)`: # who fail at time `\(t_i\)`
+- `\(S_i\)`: # who have survived beyond `\(t_i\)` (includes those who were censored
+exactly at `\(t_i\)`)
+- `\(N_i\)`: # at risk of failure at time `\(t_i\)` (i.e., those who did not fail
+before `\(t_i\)` and were not censored before `\(t_i\)`)
+
+--
+
+The Kaplan-Meier estimate is
+
+`\begin{align*}
+\hat{S}(t) = \prod_{i:t_i \le t}\left(1 - \frac{D_i}{N_i} \right) = \prod_{i: t_i \le t} \frac{S_i}{N_i}
+\end{align*}`
+
+---
+
+### Estimating the survival curve
+
+`\begin{align*}
+\hat{S}(t) = \prod_{i:t_i \le t}\left(1 - \frac{D_i}{N_i} \right) = \prod_{i: t_i \le t} \frac{S_i}{N_i}
+\end{align*}`
+
+How might we calculate P(survived past `\(t_1 \cap t_2\)`)?
+
+--
+
+P(survive past `\(t_1\)`)P(survive past `\(t_2\)` | survived past `\(t_1\)`)
+
+...and so on. If an observation is censored, it is no longer at risk of failing
+at the next failure time and is taken out of the calculation.
+
+---
+
+### Estimating the survival curve
+
+Suppose we had a small study with the following data:
+
+| Patient | Event Time | Event Type | 
+| ------- | ---------: | ---------- |
+| 1       | 4.5        | Failure    |
+| 2       | 7.5        | Failure    |
+| 3       | 8.5        | Censoring  |
+| 4       | 11.5       | Failure    |
+| 5       | 13.5       | Censoring  |
+| 6       | 15.5       | Failure    |
+| 7       | 16.5       | Failure    |
+| 8       | 17.5       | Censoring  |
+| 9       | 19.5       | Failure    |
+| 10     | 21.5       | Censoring  |
+
+---
+
+### Estimating the survival curve
+
+| `\(t\)`  | Risk Set | # Failed | # Censored | `\(\hat{S}(t)\)` |
+| ---: | -------: | -------: | ---------: | :----------: |
+| 0    | 10       | 0        | 0          | `\(1\)`          |
+| 4.5  | 10       | 1        | 0          | `\(1 - \frac{1}{10} = 0.9\)` |
+| 7.5  | 9        | 1        | 0          | `\(0.9 \times (1 - \frac{1}{9}) = 0.8\)` |
+| 8.5  | 8        | 0        | 1          | `\(0.8 \times (1 - \frac{0}{8}) = 0.8\)` |
+| 11.5 | 7        | 1        | 0          | `\(0.8 \times (1 - \frac{1}{7}) = 0.69\)` |
+| 13.5 | 6        | 0        | 1          | `\(0.69 \times (1 - \frac{0}{6}) = 0.69\)` |
+| 15.5 | 5        | 1        | 0          | `\(0.69 \times (1 - \frac{1}{5}) = 0.552\)` |
+| 16.5 | 4        | 1        | 0          | `\(0.552 \times (1 - \frac{1}{4}) = 0.414\)` |
+| 17.5 | 3        | 0        | 1          | `\(0.414 \times (1 - \frac{0}{3}) = 0.414\)` |
+| 19.5 | 2        | 1        | 0          | `\(0.414 \times (1 - \frac{1}{2}) = 0.207\)` |
+| 21.5 | 1        | 0        | 1          | `\(0.207 \times (1 - \frac{0}{1}) = 0.207\)` |
+
+---
+
+### Estimating the survival curve
+
+
+
+```r
+dat
+```
+
+```
+## # A tibble: 10 x 2
+##    times event
+##    &lt;dbl&gt; &lt;dbl&gt;
+##  1   4.5     1
+##  2   7.5     1
+##  3   8.5     0
+##  4  11.5     1
+##  5  13.5     0
+##  6  15.5     1
+##  7  16.5     1
+##  8  17.5     0
+##  9  19.5     1
+## 10  21.5     0
+```
+
+---
+
+### Estimating the survival curve
+
+
+```r
+plot(survfit(Surv(times, event) ~ 1, data = dat), 
+     xlab = "Days", ylab = "Est. Survival Probability",
+     conf.int = F)
+```
+
+![](survival-1_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+
+---
+
+### Estimating the survival curve
+
+
+```r
+library(survminer)
+ggsurvplot(survfit(Surv(times, event) ~ 1, data = dat), 
+     xlab = "Days", ylab = "Est. Survival Probability",
+     conf.int = F)
+```
+
+![](survival-1_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+
+Check out the `ggsurvplot` function [here](https://www.rdocumentation.org/packages/survminer/versions/0.4.8/topics/ggsurvplot).
+
+---
+
+### Comparing multiple groups
+
+
+```r
+library(survminer)
+ggsurvplot(survfit(Surv(DWHFDAYS, DWHF) ~ TRTMT, data = dig), 
+     xlab = "Days", ylab = "Est. Survival Probability",
+     ylim = c(0, 1),
+     conf.int = T, censor = F, 
+     legend.labs = c("Placebo", "Digoxin"))
+```
+
+![](survival-1_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+
+---
+
+### Comparing multiple groups
+
+
+```r
+library(survminer)
+ggsurvplot(survfit(Surv(DWHFDAYS, DWHF) ~ TRTMT, data = dig), 
+     xlab = "Days", ylab = "Est. Event Probability", 
+     ylim = c(0, 1),
+     conf.int = T, censor = F, fun = "event", 
+     legend.labs = c("Placebo", "Digoxin"))
+```
+
+![](survival-1_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+
+---
+
+### Comparing multiple groups
+
+How might we formally test whether there is a difference in the two survival
+curves?
+
+`\begin{align*}
+H_0:&amp; S_1(t) = S_2(t)\\
+H_1:&amp; S_1(t) \neq S_2(t)
+\end{align*}`
+
+---
+
+### Comparing multiple groups
+
+The .vocab[log-rank] test constructs 2-by-2 contingency tables (assuming two
+groups) at each time at which a failure occurs. Then, these tables are 
+combined using Mantel-Haenszel to evaluate whether there is a differnce in the
+two curves:
+
+|         | Group 1 | Group 2 | Total |
+| ------- | --------- | ---------- | --- |
+| Deaths at `\(t_i\)`       | `\(D_{1i}\)`        | `\(D_{2i}\)`    | `\(D_i\)` |
+| Survivors past `\(t_i\)`       | `\(S_{1i}\)`        | `\(S_{2i}\)`    | `\(S_i\)` |
+| Total at risk | `\(N_{1i}\)` | `\(N_{2i}\)` | `\(N_i\)` |
+
+comparing observed failures `\(D_{1i}\)` against the expected count under `\(H_0\)`.
+
+The test statistic has an asymptotic `\(\chi^2_1\)` distribution under `\(H_0\)` (for
+two groups).
+
+---
+
+### Comparing multiple groups
+
+It is most powerful under proportional hazards (check empirically),
+and not very powerful at all if survival curves cross. Alternatives
+are available in this situation.
+
+The log-rank test can be extended to adjust for a categorical
+confounder by considering a stratified version, and can also be
+extended to test for differences in survival functions across more
+than 2 groups.
+
+---
+
+### Comparing multiple groups
+
+
+```r
+survdiff(Surv(DWHFDAYS, DWHF) ~ TRTMT, data = dig)
+```
+
+```
+## Call:
+## survdiff(formula = Surv(DWHFDAYS, DWHF) ~ TRTMT, data = dig)
+## 
+##            N Observed Expected (O-E)^2/E (O-E)^2/V
+## TRTMT=0 3403     1291     1126      24.1      46.6
+## TRTMT=1 3397     1041     1206      22.5      46.6
+## 
+##  Chisq= 46.6  on 1 degrees of freedom, p= 9e-12
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

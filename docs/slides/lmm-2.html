@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Linear Mixed Models (2)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Yue Jiang" />
+    <script src="lmm-2_files/header-attrs/header-attrs.js"></script>
+    <link href="lmm-2_files/remark-css/default.css" rel="stylesheet" />
+    <link href="lmm-2_files/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="sta440-slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Linear Mixed Models (2)
+### Yue Jiang
+### Duke University
+
+---
+
+
+
+
+### Review
+
+`\begin{align*}
+\mathbf{y} = \mathbf{X\beta} + \mathbf{Zu} + \mathbf{\epsilon}
+\end{align*}`
+
+- `\(\mathbf{y}\)`, `\(\mathbf{X}\)`, and `\(\mathbf{\beta}\)` are just as in "normal" 
+regression (and `\(\mathbf{\epsilon}\)` still represent the individual residuals).
+- `\(\mathbf{u}\)` is a `\(q * K\)` vector of the `\(q\)` random effects for the `\(K\)` 
+groups. 
+- `\(\mathbf{Z}\)` is the `\(n \times (q * K)\)` design matrix corresponding to the 
+random effects.
+
+Commonly, we might assume `\(\mathbf{u} \sim N_q(\mathbf{0}, \mathbf{G})\)`, where
+`\(\mathbf{G}\)` represents the covariance matrix of the `\(q\)` different random 
+effects.
+
+We also might impose assumptions on the correlation structure for `\(\epsilon\)`. 
+These types of structures come up, for instance, in **longitudinal data analysis**.
+
+---
+
+### Review
+
+A simple random slope + intercept model:
+
+`\begin{align*}
+y_{ij} = (\beta_0 + u_{0i}) + (\beta_1 + u_{1i})x_{ij} + \epsilon_{ij}
+\end{align*}`
+
+- Random intercept: heterogeneity at `\(x_{ij} = 0\)` (context-specific)
+- Random slope: heterogeneity in relationship between `\(Y\)` and `\(X\)`
+
+Assumptions on `\(F_{\mathbf{u}}\)` and `\(\epsilon\)`
+
+---
+
+### Longitudinal data
+
+Longitudinal data occur all the time, and are a flexible way of modeling data
+that have multiple measures per observation (regardless of at what time they 
+were measured). For instance:
+
+- Examining participant weight loss in a bariatric surgery study
+- Examining test scores in a cohort of schoolchildren
+- Examining how opinions or attitudes toward climate change shift in a voting bloc
+
+etc. 
+
+.question[
+Why might we want to perform a longitudinal data over a cross-sectional one?
+]
+
+---
+
+### Truck drivers
+
+&lt;img src="img/truck.jpg" width="80%" style="display: block; margin: auto;" /&gt;
+
+Belenky et al. (2003) conducted a study that examined the effects of sleep
+deprivation on reaction time. 
+
+---
+
+### The data
+
+&lt;img src="lmm-2_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+
+.question[
+What do you notice? 
+]
+
+---
+
+### The data
+
+&lt;img src="lmm-2_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+.question[
+What do you notice?
+]
+
+---
+
+### Driver-specific models
+
+&lt;img src="lmm-2_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+.question[
+What do you notice? 
+]
+
+---
+
+### Driver-specific models
+
+
+
+&lt;img src="lmm-2_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+
+(we could also examine individual CIs)
+
+---
+
+### Driver-specific models
+
+&lt;img src="lmm-2_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+
+(we could also examine individual CIs)
+
+---
+
+### Driver-specific models
+
+&lt;img src="lmm-2_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+.question[
+What correlation structure might be appropriate for random effects?
+]
+
+---
+
+### A linear mixed model
+
+`\begin{align*}
+Reaction_{ij} = (\beta_0 + u_{0i}) + (\beta_1 + u_{1i})Day_{ij} + \epsilon_{ij}
+\end{align*}`
+
+.question[
+What do the random intercept and random slope represent for this example? 
+]
+
+---
+
+### A linear mixed model
+
+
+```
+## Linear mixed model fit by REML ['lmerMod']
+## Formula: Reaction ~ 1 + Days + (1 + Days | Subject)
+##    Data: sleepstudy
+## 
+## REML criterion at convergence: 1743.6
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.9536 -0.4634  0.0231  0.4634  5.1793 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev. Corr
+##  Subject  (Intercept) 612.10   24.741       
+##           Days         35.07    5.922   0.07
+##  Residual             654.94   25.592       
+## Number of obs: 180, groups:  Subject, 18
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)  251.405      6.825  36.838
+## Days          10.467      1.546   6.771
+## 
+## Correlation of Fixed Effects:
+##      (Intr)
+## Days -0.138
+```
+
+---
+
+### A linear mixed model
+
+
+```r
+coef(m1)
+```
+
+```
+## $Subject
+##     (Intercept)       Days
+## 308    253.6637 19.6662617
+## 309    211.0064  1.8476053
+## 310    212.4447  5.0184295
+## 330    275.0957  5.6529356
+## 331    273.6654  7.3973743
+## 332    260.4447 10.1951090
+## 333    268.2456 10.2436499
+## 334    244.1725 11.5418676
+## 335    251.0714 -0.2848792
+## 337    286.2956 19.0955511
+## 349    226.1949 11.6407181
+## 350    238.3351 17.0815038
+## 351    255.9830  7.4520239
+## 352    272.2688 14.0032871
+## 369    254.6806 11.3395008
+## 370    225.7921 15.2897709
+## 371    252.2122  9.4791297
+## 372    263.7197 11.7513080
+## 
+## attr(,"class")
+## [1] "coef.mer"
+```
+
+---
+
+### GLMMs
+
+How might we "extend" linear mixed models to generalized linear mixed models?
+
+`\begin{align*}
+g(E(\mathbf{y})) = \mathbf{X\beta} + \mathbf{Zu}
+\end{align*}`
+
+---
+
+### GLMMs
+
+
+```
+## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: binomial  ( logit )
+## Formula: I(Reaction &gt; 250) ~ 1 + Days + (1 + Days | Subject)
+##    Data: sleepstudy
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##    107.9    123.9    -49.0     97.9      175 
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -2.38545  0.00194  0.01931  0.12337  1.25673 
+## 
+## Random effects:
+##  Groups  Name        Variance Std.Dev. Corr 
+##  Subject (Intercept) 13.7152  3.7034        
+##          Days         0.9035  0.9505   -0.14
+## Number of obs: 180, groups:  Subject, 18
+## 
+## Fixed effects:
+##             Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)   0.8604     1.3104   0.657   0.5114
+## Days          1.1188     0.4892   2.287   0.0222
+## 
+## Correlation of Fixed Effects:
+##      (Intr)
+## Days -0.329
+```
+
+---
+
+### Conditional vs. marginal models
+
+Interpreting the fixed effects are the *conditional* slopes for someone. Even 
+though we have only a single fixed effect here, we are still performing 
+estimation conditionally on something.
+
+.question[
+What are we "holding constant" in this model?
+]
+
+--
+
+We are conditioning on the random effect - here, each trucker (or at the very
+least, truckers with the same random effects).
+
+---
+
+### Conditional vs. marginal models
+
+If there is large between-group variability (i.e., in reaction times based on
+trucker), then maybe the relative associations due to the fixed effects (how
+many days each trucker was subjected to sleep deprivation) would be small.
+
+We might want to examine the slopes corresponding to fixed effects (of primary
+interest in this case) at different levels of the random effects, or even what
+the average fixed effects are while **marginalizing** out the random effects.
+
+.question[
+How might we do that?
+]
+
+---
+
+### Generalized estimating equations
+
+Generalized estimating equations (**GEE**) are often used for clustered or
+longitudinal data when we are interested in marginal effects of parameter 
+estimates - that is, a population average effect.
+
+This is in contrast to the cluster-specific models being estimated with
+conditional techniques (keep in mind, we could marginalize "by hand" if we
+wanted to from a mixed effects model).
+
+GEE doesn't rely on a likelihood-based approach, which has advantages (easier
+computation) and disadvantages (difficulties with inferential procedures).
+
+---
+
+### Correlation structure
+
+We can specify a correlation structure based on prior knowledge of the way 
+observations are correlated:
+
+- Independent (time points are independent, i.e., all off-diagonals are zero)
+- Exchangeable (pairs of points have identical correlations, i.e., all off-
+diagonals have same estimated correlation)
+- Autoregressive (time points have autoregressive structure, so correlation
+between two observations one unit apart is `\(\rho\)`, two units apart is `\(\rho^2\)`,
+etc.)
+- Toeplitz (band structure in matrix, with 0s outside of the band)
+- Unstructured (unique correlation estimated for each pair of points)
+
+---
+
+### Fitting a GEE
+
+
+```r
+library(gee)
+m3 &lt;- gee(Reaction ~ Days, data = sleepstudy,
+          id = Subject,
+          family = "gaussian",
+          corstr = "exchangeable")
+```
+
+```
+## (Intercept)        Days 
+##   251.40510    10.46729
+```
+
+---
+
+### Fitting a GEE
+
+
+```
+## 
+##  GEE:  GENERALIZED LINEAR MODELS FOR DEPENDENT DATA
+##  gee S-function, version 4.13 modified 98/01/27 (1998) 
+## 
+## Model:
+##  Link:                      Identity 
+##  Variance to Mean Relation: Gaussian 
+##  Correlation Structure:     Exchangeable 
+## 
+## Call:
+## gee(formula = Reaction ~ Days, id = Subject, data = sleepstudy, 
+##     family = "gaussian", corstr = "exchangeable")
+## 
+## Summary of Residuals:
+##         Min          1Q      Median          3Q         Max 
+## -110.847693  -27.482909    1.546014   26.141904  139.953079 
+## 
+## 
+## Coefficients:
+##              Estimate Naive S.E.  Naive z Robust S.E. Robust z
+## (Intercept) 251.40510  9.5378078 26.35879    6.632277  37.9063
+## Days         10.46729  0.8109579 12.90731    1.502237   6.9678
+## 
+## Estimated Scale Parameter:  2276.694
+## Number of Iterations:  1
+## 
+## Working Correlation
+##            [,1]      [,2]      [,3]      [,4]      [,5]      [,6]      [,7]
+##  [1,] 1.0000000 0.5710385 0.5710385 0.5710385 0.5710385 0.5710385 0.5710385
+##  [2,] 0.5710385 1.0000000 0.5710385 0.5710385 0.5710385 0.5710385 0.5710385
+##  [3,] 0.5710385 0.5710385 1.0000000 0.5710385 0.5710385 0.5710385 0.5710385
+##  [4,] 0.5710385 0.5710385 0.5710385 1.0000000 0.5710385 0.5710385 0.5710385
+##  [5,] 0.5710385 0.5710385 0.5710385 0.5710385 1.0000000 0.5710385 0.5710385
+##  [6,] 0.5710385 0.5710385 0.5710385 0.5710385 0.5710385 1.0000000 0.5710385
+##  [7,] 0.5710385 0.5710385 0.5710385 0.5710385 0.5710385 0.5710385 1.0000000
+##  [8,] 0.5710385 0.5710385 0.5710385 0.5710385 0.5710385 0.5710385 0.5710385
+##  [9,] 0.5710385 0.5710385 0.5710385 0.5710385 0.5710385 0.5710385 0.5710385
+## [10,] 0.5710385 0.5710385 0.5710385 0.5710385 0.5710385 0.5710385 0.5710385
+##            [,8]      [,9]     [,10]
+##  [1,] 0.5710385 0.5710385 0.5710385
+##  [2,] 0.5710385 0.5710385 0.5710385
+##  [3,] 0.5710385 0.5710385 0.5710385
+##  [4,] 0.5710385 0.5710385 0.5710385
+##  [5,] 0.5710385 0.5710385 0.5710385
+##  [6,] 0.5710385 0.5710385 0.5710385
+##  [7,] 0.5710385 0.5710385 0.5710385
+##  [8,] 1.0000000 0.5710385 0.5710385
+##  [9,] 0.5710385 1.0000000 0.5710385
+## [10,] 0.5710385 0.5710385 1.0000000
+```
+
+---
+
+### Fitting a GEE
+
+
+```r
+m4 &lt;- gee(Reaction ~ Days, data = sleepstudy,
+          id = Subject,
+          family = "gaussian",
+          corstr = "AR-M", Mv = 1)
+```
+
+```
+## (Intercept)        Days 
+##   251.40510    10.46729
+```
+
+---
+
+### Fitting a GEE
+
+
+```
+## 
+##  GEE:  GENERALIZED LINEAR MODELS FOR DEPENDENT DATA
+##  gee S-function, version 4.13 modified 98/01/27 (1998) 
+## 
+## Model:
+##  Link:                      Identity 
+##  Variance to Mean Relation: Gaussian 
+##  Correlation Structure:     AR-M , M = 1 
+## 
+## Call:
+## gee(formula = Reaction ~ Days, id = Subject, data = sleepstudy, 
+##     family = "gaussian", corstr = "AR-M", Mv = 1)
+## 
+## Summary of Residuals:
+##         Min          1Q      Median          3Q         Max 
+## -112.927733  -29.566326   -0.533766   24.060825  137.872000 
+## 
+## 
+## Coefficients:
+##              Estimate Naive S.E.   Naive z Robust S.E.  Robust z
+## (Intercept) 253.48930   10.70967 23.669193    6.356466 39.878969
+## Days         10.46677    1.67394  6.252775    1.439438  7.271427
+## 
+## Estimated Scale Parameter:  2281.077
+## Number of Iterations:  2
+## 
+## Working Correlation
+##            [,1]      [,2]      [,3]      [,4]      [,5]      [,6]      [,7]
+##  [1,] 1.0000000 0.7670216 0.5883221 0.4512558 0.3461229 0.2654837 0.2036318
+##  [2,] 0.7670216 1.0000000 0.7670216 0.5883221 0.4512558 0.3461229 0.2654837
+##  [3,] 0.5883221 0.7670216 1.0000000 0.7670216 0.5883221 0.4512558 0.3461229
+##  [4,] 0.4512558 0.5883221 0.7670216 1.0000000 0.7670216 0.5883221 0.4512558
+##  [5,] 0.3461229 0.4512558 0.5883221 0.7670216 1.0000000 0.7670216 0.5883221
+##  [6,] 0.2654837 0.3461229 0.4512558 0.5883221 0.7670216 1.0000000 0.7670216
+##  [7,] 0.2036318 0.2654837 0.3461229 0.4512558 0.5883221 0.7670216 1.0000000
+##  [8,] 0.1561900 0.2036318 0.2654837 0.3461229 0.4512558 0.5883221 0.7670216
+##  [9,] 0.1198011 0.1561900 0.2036318 0.2654837 0.3461229 0.4512558 0.5883221
+## [10,] 0.0918900 0.1198011 0.1561900 0.2036318 0.2654837 0.3461229 0.4512558
+##            [,8]      [,9]     [,10]
+##  [1,] 0.1561900 0.1198011 0.0918900
+##  [2,] 0.2036318 0.1561900 0.1198011
+##  [3,] 0.2654837 0.2036318 0.1561900
+##  [4,] 0.3461229 0.2654837 0.2036318
+##  [5,] 0.4512558 0.3461229 0.2654837
+##  [6,] 0.5883221 0.4512558 0.3461229
+##  [7,] 0.7670216 0.5883221 0.4512558
+##  [8,] 1.0000000 0.7670216 0.5883221
+##  [9,] 0.7670216 1.0000000 0.7670216
+## [10,] 0.5883221 0.7670216 1.0000000
+```
+
+---
+
+### Fitting a GEE
+
+
+```r
+m5 &lt;- gee(I(Reaction &gt; 250) ~ Days, data = sleepstudy,
+          id = Subject,
+          family = "binomial",
+          corstr = "exchangeable")
+```
+
+```
+## (Intercept)        Days 
+##   0.6020332   0.1947168
+```
+
+---
+
+### Fitting a GEE
+
+
+```
+## 
+##  GEE:  GENERALIZED LINEAR MODELS FOR DEPENDENT DATA
+##  gee S-function, version 4.13 modified 98/01/27 (1998) 
+## 
+## Model:
+##  Link:                      Logit 
+##  Variance to Mean Relation: Binomial 
+##  Correlation Structure:     Exchangeable 
+## 
+## Call:
+## gee(formula = I(Reaction &gt; 250) ~ Days, id = Subject, data = sleepstudy, 
+##     family = "binomial", corstr = "exchangeable")
+## 
+## Summary of Residuals:
+##         Min          1Q      Median          3Q         Max 
+## -0.92668743  0.07331257  0.12696659  0.21094886  0.32951465 
+## 
+## 
+## Coefficients:
+##              Estimate Naive S.E.  Naive z Robust S.E. Robust z
+## (Intercept) 0.7103810 0.43644464 1.627654   0.4648023 1.528351
+## Days        0.2029448 0.06327235 3.207480   0.1126510 1.801536
+## 
+## Estimated Scale Parameter:  1.153384
+## Number of Iterations:  4
+## 
+## Working Correlation
+##            [,1]      [,2]      [,3]      [,4]      [,5]      [,6]      [,7]
+##  [1,] 1.0000000 0.5198122 0.5198122 0.5198122 0.5198122 0.5198122 0.5198122
+##  [2,] 0.5198122 1.0000000 0.5198122 0.5198122 0.5198122 0.5198122 0.5198122
+##  [3,] 0.5198122 0.5198122 1.0000000 0.5198122 0.5198122 0.5198122 0.5198122
+##  [4,] 0.5198122 0.5198122 0.5198122 1.0000000 0.5198122 0.5198122 0.5198122
+##  [5,] 0.5198122 0.5198122 0.5198122 0.5198122 1.0000000 0.5198122 0.5198122
+##  [6,] 0.5198122 0.5198122 0.5198122 0.5198122 0.5198122 1.0000000 0.5198122
+##  [7,] 0.5198122 0.5198122 0.5198122 0.5198122 0.5198122 0.5198122 1.0000000
+##  [8,] 0.5198122 0.5198122 0.5198122 0.5198122 0.5198122 0.5198122 0.5198122
+##  [9,] 0.5198122 0.5198122 0.5198122 0.5198122 0.5198122 0.5198122 0.5198122
+## [10,] 0.5198122 0.5198122 0.5198122 0.5198122 0.5198122 0.5198122 0.5198122
+##            [,8]      [,9]     [,10]
+##  [1,] 0.5198122 0.5198122 0.5198122
+##  [2,] 0.5198122 0.5198122 0.5198122
+##  [3,] 0.5198122 0.5198122 0.5198122
+##  [4,] 0.5198122 0.5198122 0.5198122
+##  [5,] 0.5198122 0.5198122 0.5198122
+##  [6,] 0.5198122 0.5198122 0.5198122
+##  [7,] 0.5198122 0.5198122 0.5198122
+##  [8,] 1.0000000 0.5198122 0.5198122
+##  [9,] 0.5198122 1.0000000 0.5198122
+## [10,] 0.5198122 0.5198122 1.0000000
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,402 @@
+---
+title: "Introduction to survival analysis"
+author: "Yue Jiang"
+date: "Duke University"
+output:
+  xaringan::moon_reader:
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    css: "sta440-slides.css"
+    lib_dir: libs/font-awesome
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r, echo = F, warning = F, message = F}
+library(survival)
+library(tidyverse)
+
+dig <- read.csv("C:/Users/Yue/Courses/STA 440 2021 Spring/docs/datasets/UNUSED_dig_teaching/DIG_csv/DIG_csv/dig.csv")
+```
+
+### Survival data
+
+In many studies, the outcome of interest is the amount of time from an initial 
+observation until the occurrence of some event of interest.
+
+Typically, the event of interest is called a .vocab[failure] (even if it's a 
+good thing), and the associated time interval between a starting point and 
+failure the .vocab[failure time], .vocab[survival time], or .vocab[event time].
+
+---
+
+### Digoxin
+
+```{r, echo=FALSE, fig.align = "center", out.width = '70%'} 
+knitr::include_graphics("img/02/digoxin.png")
+```
+
+.pull-left[
+```{r, echo=FALSE, fig.align = "left", out.width = '100%'} 
+knitr::include_graphics("img/02/foxglove.jpg")
+```
+]
+
+.pull-right[
+- Foxgloves have been used in medicine for centuries
+- Digoxin (the active ingredient) first isolated in 1930 
+- Traditionally used for heart arrhythmia and heart failure
+- One of the most prescribed drugs globally
+]
+
+---
+
+### The DIG Trial
+
+```{r, echo=FALSE, out.width = '120%'} 
+knitr::include_graphics("img/02/dig_trial.png")
+```
+
+Investigators compared the **primary outcome** of the number of days from the
+start of the study to either death or hospitalization from worsening heart
+failure.
+
+---
+
+### The DIG Trial
+
+```{r, echo=FALSE, out.width = '120%'} 
+knitr::include_graphics("img/02/dig_trial.png")
+```
+
+.question[
+How would ***you*** investigate this question, comparing the two treatment 
+groups of digoxin vs. placebo?
+]
+
+---
+
+### A naive analysis
+
+Death or hospitalization due to worsening heart failure:
+
+```{r}
+dig %>% 
+  select(ID, TRTMT, DWHF, DWHFDAYS) %>% 
+  slice(1:10)
+```
+
+---
+
+### A naive analysis
+
+```{r}
+dig %>% 
+  filter(DWHF == 1) %>% 
+  t.test(DWHFDAYS ~ TRTMT, data = .)
+```
+
+.question[
+Are you convinced? What if we made some sort of regression model to account for
+covariates? Would that be enough?
+]
+
+---
+
+### A naive analysis
+
+
+```{r}
+dig %>% 
+  count(TRTMT)
+dig %>% 
+  filter(DWHF == 1) %>% 
+  count(TRTMT)
+```
+
+---
+
+### Challenges
+
+The unique nature of survival data is that typically not all units are observed
+until their event times:
+- Maybe a patient moved to Fiji and was lost to follow-up
+- Maybe a patient never experienced the primary outcome at all because they got
+hit by a bus
+- Maybe the study was only funded to follow patients for two years after
+enrollment
+
+--
+
+In these cases, observations are said to be .vocab[censored] - we know that 
+they survived until at least their censoring time, but do not know any further
+information.
+
+Not accounting for censoring in an appropriate way leads to **biased** and/or
+**inefficient** analyses.
+
+---
+
+### Representing survival data
+
+See live visualization regarding .vocab[study time] vs. .vocab[patient time].
+
+---
+
+### Representing survival data
+
+Underlying data:
+- $T$: Failure time, a non-negative random variable
+- $C$: Censoring time, a non-negative random variable
+Observed data for individual $i$:
+- $Y_i$: $(T_i \wedge C_i)$, the minimum of $T_i$ and $C_i$
+- $\delta_i$: $1_{(T_i \le C_i)}$, whether we observe a failure
+
+--
+
+If $\delta_i = 0$, then we have .vocab[right-censoring]: the survival time is
+longer than the censoring time.
+
+Commonly, we assume $C_i$ are *i.i.d.* random variables with some distribution
+and that the censoring mechanism is *independent* of the failure mechanism.
+
+--
+
+**Our goal is to make inferential statements about** $T$.
+
+---
+
+### Characterizing continuous $T$
+
+- Density function: $f(t) = \lim_{\Delta t \to 0^+} \frac{P(t \le T < t + \Delta t)}{\Delta t}$
+
+- Distribution function: $F(t) = P(T \le t) = \int_0^t f(s)ds$
+
+- Survival function: $S(t) = P(T > t) = 1 - F(t)$
+
+- Hazard function: $\lambda(t) = \lim_{\Delta t \to 0^+} \frac{P(t \le T < t + \Delta t | T \ge t)}{\Delta t}$
+
+- Cumulative hazard function: $\Lambda(t) = \int_0^t \lambda(s)ds$
+
+Knowing one is equivalent to knowing the others.
+
+.question[
+How might you express the hazard function in terms of the density funciton and
+the survival function?
+]
+
+---
+
+### Survival vs. hazard functions:
+
+Survival (or survivor) function:
+
+\begin{align*}
+S(t) = P(T > t)
+\end{align*}
+- Non-increasing with $S(0) = 1$ and $\lim_{t \to \infty} S(t) = 0$
+- For any given time $t$, a probability
+
+--
+
+Hazard function:
+
+\begin{align*}
+\lambda(t) = \lim_{\Delta t \to 0^+} \frac{P(t \le T < t + \Delta t | T \ge t)}{\Delta t}
+\end{align*}
+
+- Instantaneous failure rate, *given* already having survived to time $t$
+- **Not** a probability (for continuous $T$)
+- Non-negative and unbounded for all $t$
+- Often more useful interpretations than survival functions
+- Nice analytical properties under right-censoring
+
+---
+
+### Estimating the survival curve
+
+The .vocab[Kaplan-Meier estimate] provides an intuitive *non-parametric* 
+estimate of the survival curve:
+
+- $D_i$: # who fail at time $t_i$
+- $S_i$: # who have survived beyond $t_i$ (includes those who were censored
+exactly at $t_i$)
+- $N_i$: # at risk of failure at time $t_i$ (i.e., those who did not fail
+before $t_i$ and were not censored before $t_i$)
+
+--
+
+The Kaplan-Meier estimate is
+
+\begin{align*}
+\hat{S}(t) = \prod_{i:t_i \le t}\left(1 - \frac{D_i}{N_i} \right) = \prod_{i: t_i \le t} \frac{S_i}{N_i}
+\end{align*}
+
+---
+
+### Estimating the survival curve
+
+\begin{align*}
+\hat{S}(t) = \prod_{i:t_i \le t}\left(1 - \frac{D_i}{N_i} \right) = \prod_{i: t_i \le t} \frac{S_i}{N_i}
+\end{align*}
+
+How might we calculate P(survived past $t_1 \cap t_2$)?
+
+--
+
+P(survive past $t_1$)P(survive past $t_2$ | survived past $t_1$)
+
+...and so on. If an observation is censored, it is no longer at risk of failing
+at the next failure time and is taken out of the calculation.
+
+---
+
+### Estimating the survival curve
+
+Suppose we had a small study with the following data:
+
+| Patient | Event Time | Event Type | 
+| ------- | ---------: | ---------- |
+| 1       | 4.5        | Failure    |
+| 2       | 7.5        | Failure    |
+| 3       | 8.5        | Censoring  |
+| 4       | 11.5       | Failure    |
+| 5       | 13.5       | Censoring  |
+| 6       | 15.5       | Failure    |
+| 7       | 16.5       | Failure    |
+| 8       | 17.5       | Censoring  |
+| 9       | 19.5       | Failure    |
+| 10     | 21.5       | Censoring  |
+
+---
+
+### Estimating the survival curve
+
+| $t$  | Risk Set | # Failed | # Censored | $\hat{S}(t)$ |
+| ---: | -------: | -------: | ---------: | :----------: |
+| 0    | 10       | 0        | 0          | $1$          |
+| 4.5  | 10       | 1        | 0          | $1 - \frac{1}{10} = 0.9$ |
+| 7.5  | 9        | 1        | 0          | $0.9 \times (1 - \frac{1}{9}) = 0.8$ |
+| 8.5  | 8        | 0        | 1          | $0.8 \times (1 - \frac{0}{8}) = 0.8$ |
+| 11.5 | 7        | 1        | 0          | $0.8 \times (1 - \frac{1}{7}) = 0.69$ |
+| 13.5 | 6        | 0        | 1          | $0.69 \times (1 - \frac{0}{6}) = 0.69$ |
+| 15.5 | 5        | 1        | 0          | $0.69 \times (1 - \frac{1}{5}) = 0.552$ |
+| 16.5 | 4        | 1        | 0          | $0.552 \times (1 - \frac{1}{4}) = 0.414$ |
+| 17.5 | 3        | 0        | 1          | $0.414 \times (1 - \frac{0}{3}) = 0.414$ |
+| 19.5 | 2        | 1        | 0          | $0.414 \times (1 - \frac{1}{2}) = 0.207$ |
+| 21.5 | 1        | 0        | 1          | $0.207 \times (1 - \frac{0}{1}) = 0.207$ |
+
+---
+
+### Estimating the survival curve
+
+```{r, echo = F}
+dat <- tibble(times = c(4.5, 7.5, 8.5, 11.5, 13.5, 15.5, 16.5, 17.5, 19.5, 21.5),
+              event = c(1, 1, 0, 1, 0, 1, 1, 0, 1, 0))
+```
+```{r}
+dat
+```
+
+---
+
+### Estimating the survival curve
+
+```{r, message = F, warning = F, fig.height = 5}
+plot(survfit(Surv(times, event) ~ 1, data = dat), 
+     xlab = "Days", ylab = "Est. Survival Probability",
+     conf.int = F)
+```
+
+---
+
+### Estimating the survival curve
+
+```{r, message = F, warning = F, fig.height = 4}
+library(survminer)
+ggsurvplot(survfit(Surv(times, event) ~ 1, data = dat), 
+     xlab = "Days", ylab = "Est. Survival Probability",
+     conf.int = F)
+```
+
+Check out the `ggsurvplot` function [here](https://www.rdocumentation.org/packages/survminer/versions/0.4.8/topics/ggsurvplot).
+
+---
+
+### Comparing multiple groups
+
+```{r, message = F, warning = F, fig.height = 4}
+library(survminer)
+ggsurvplot(survfit(Surv(DWHFDAYS, DWHF) ~ TRTMT, data = dig), 
+     xlab = "Days", ylab = "Est. Survival Probability",
+     ylim = c(0, 1),
+     conf.int = T, censor = F, 
+     legend.labs = c("Placebo", "Digoxin"))
+```
+
+---
+
+### Comparing multiple groups
+
+```{r, message = F, warning = F, fig.height = 4}
+library(survminer)
+ggsurvplot(survfit(Surv(DWHFDAYS, DWHF) ~ TRTMT, data = dig), 
+     xlab = "Days", ylab = "Est. Event Probability", 
+     ylim = c(0, 1),
+     conf.int = T, censor = F, fun = "event", 
+     legend.labs = c("Placebo", "Digoxin"))
+```
+
+---
+
+### Comparing multiple groups
+
+How might we formally test whether there is a difference in the two survival
+curves?
+
+\begin{align*}
+H_0:& S_1(t) = S_2(t)\\
+H_1:& S_1(t) \neq S_2(t)
+\end{align*}
+
+---
+
+### Comparing multiple groups
+
+The .vocab[log-rank] test constructs 2-by-2 contingency tables (assuming two
+groups) at each time at which a failure occurs. Then, these tables are 
+combined using Mantel-Haenszel to evaluate whether there is a differnce in the
+two curves:
+
+|         | Group 1 | Group 2 | Total |
+| ------- | --------- | ---------- | --- |
+| Deaths at $t_i$       | $D_{1i}$        | $D_{2i}$    | $D_i$ |
+| Survivors past $t_i$       | $S_{1i}$        | $S_{2i}$    | $S_i$ |
+| Total at risk | $N_{1i}$ | $N_{2i}$ | $N_i$ |
+
+comparing observed failures $D_{1i}$ against the expected count under $H_0$.
+
+The test statistic has an asymptotic $\chi^2_1$ distribution under $H_0$ (for
+two groups).
+
+---
+
+### Comparing multiple groups
+
+It is most powerful under proportional hazards (check empirically),
+and not very powerful at all if survival curves cross. Alternatives
+are available in this situation.
+
+The log-rank test can be extended to adjust for a categorical
+confounder by considering a stratified version, and can also be
+extended to test for differences in survival functions across more
+than 2 groups.
+
+---
+
+### Comparing multiple groups
+
+```{r}
+survdiff(Surv(DWHFDAYS, DWHF) ~ TRTMT, data = dig)
+```

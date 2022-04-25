@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Categorical Data (1)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Yue Jiang" />
+    <script src="cat-1_files/header-attrs/header-attrs.js"></script>
+    <link href="cat-1_files/remark-css/default.css" rel="stylesheet" />
+    <link href="cat-1_files/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="sta440-slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Categorical Data (1)
+### Yue Jiang
+### Duke University
+
+---
+
+
+
+
+### Pneumococcal disease
+
+The World Health Organization estimates that in developing countries 814,000 children under the age of five die annually from invasive pneumococcal disease (IPD), with an estimated 1.6 million deaths affecting all ages globally.
+
+Several recent studies have identified associations between pneumococcal serotypes (species variations) and patient outcomes from IPD.  We consider data from a study of pneumococcal serotypes and mortality (Inverarity et al. (2011)).
+
+
+&lt;img src="img/ipd.jpg" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Pneumococcal disease
+
+
+
+|               | Alive  | Dead  | Total |
+| ------------- | -----: | -----:| ----: |
+| Serotype 10   | 37     | 7     | 44    |
+| Serotype 31   | 24     | 10    | 34    |
+| **Total**       | 61    | 17    | 78   |
+
+.question[
+Is there an association between serotype and mortality?
+]
+
+---
+
+### Chi-square tests
+
+`\(H_0\)`: There is no association between serotype and mortality
+`\(H_1\)`: There is an association between serotype and mortality
+
+Under `\(H_0\)`, we have independence between serotype and mortality, implying that
+joint probabilities should be equal to products of marginal distributions:
+
+|               | Alive  | Dead  | Total |
+| ------------- | -----: | -----:| ----: |
+| Serotype 10   | ?     | ?     | 44    |
+| Serotype 31   | ?     | ?     | 34    |
+| **Total**       | 61    | 17    | 78   |
+
+.question[
+What counts might we expect under `\(H_0\)`?
+]
+
+---
+
+### Chi-square tests
+
+The .vocab[chi-square test] compares the observed frequencies in each cell to 
+the expected count under `\(H_0\)`; if the total differences are large enough, we
+reject `\(H_0\)`:
+
+$$
+\chi^2 =\sum_{i=1}^{r\times c} \frac{(O_i-E_i)^2}{E_i},
+$$
+
+which has a `\(\chi^2_{(r-1) \times (c-1)}\)` distribution (under `\(H_0\)`). 
+
+---
+
+### Chi-square tests
+
+
+```r
+chisq.test(ipd2x2$Serotype, ipd2x2$Status)
+```
+
+```
+## 
+## 	Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  ipd2x2$Serotype and ipd2x2$Status
+## X-squared = 1.3359, df = 1, p-value = 0.2478
+```
+
+.question[
+What might we conclude?
+]
+
+---
+
+### Fisher's exact test
+
+The chi-square test relies on asymptotic results, which might not be appropriate
+if we have small cell counts (common rules of thumb are &gt;5 or &gt;10 observed in
+each cell). .vocab[Fisher's exact test] calculates an exact p-value under a
+specific distributional assumption. 
+
+|               | Alive  | Dead  | Total |
+| ------------- | -----: | -----:| ----: |
+| Serotype 10   | 37     | 7     | 44    |
+| Serotype 31   | 24     | 10    | 34    |
+| **Total**       | 61    | 17    | 78   |
+
+---
+
+### Fisher's exact test
+
+Fisher's exact test relies on the .vocab[hypergeometric distribution]. 
+
+|               | Alive  | Dead  | Total |
+| ------------- | -----: | -----:| ----: |
+| Serotype 10   | a     | b     | a+b    |
+| Serotype 31   | c     | d    | c+d    |
+| **Total**       | a+c    | b+d    | a+b+c+d   |
+
+Conditionally on the margins (assumed fixed), then each of the individual cells
+is distributed according to the hypergeometric distribution. We can thus 
+calculate the exact probabilities of obtaining specific *tables*. 
+
+---
+
+### Fisher's exact test
+
+Observed data:
+
+|               | Alive  | Dead  | Total |
+| ------------- | -----: | -----:| ----: |
+| Serotype 10   | 37     | 7     | 44    |
+| Serotype 31   | 24     | 10    | 34    |
+| **Total**       | 61    | 17    | 78   |
+
+We could use the hypergeometric distribution to calculate the probability of
+seeing this table, assuming 61 total alive patients, 17 dead, and 44 and 34 
+infections of serotypes 10 and 31, respectively (lots of
+factorials, so you could imagine it wasn't fun before modern computers).
+
+---
+
+### Fisher's exact test
+
+Another "possible" table:
+
+|               | Alive  | Dead  | Total |
+| ------------- | -----: | -----:| ----: |
+| Serotype 10   | *36*     | *8*     | 44    |
+| Serotype 31   | *25*     | *9*    | 34    |
+| **Total**       | 61    | 17    | 78   |
+
+Here we've displayed another table with the same margins, but with some slightly
+different potential cell counts. Again we could use the hypergeometric 
+distribution to calculate the probability of observing the cell counts 
+conditionally on fixed margins.
+
+---
+
+### Fisher's exact test
+
+Fisher's exact test relies on constructing *all possible* contingency tables
+with the same margins, and then summing up probabilities of all tables as 
+extreme or more extreme than the observed data.
+
+.question[
+What might "more extreme" mean in the context of contingency tables?
+]
+
+---
+
+### Fisher's exact test
+
+
+```r
+fisher.test(ipd2x2$Serotype, ipd2x2$Status)
+```
+
+```
+## 
+## 	Fisher's Exact Test for Count Data
+## 
+## data:  ipd2x2$Serotype and ipd2x2$Status
+## p-value = 0.1758
+## alternative hypothesis: true odds ratio is not equal to 1
+## 95 percent confidence interval:
+##  0.6465347 7.7636744
+## sample estimates:
+## odds ratio 
+##   2.179552
+```
+
+.question[
+What might we conclude?
+]
+
+---
+
+### Odds ratios
+
+|               | Alive  | Dead  | Total |
+| ------------- | -----: | -----:| ----: |
+| Serotype 10   | 37     | 7     | 44    |
+| Serotype 31   | 24     | 10    | 34    |
+| **Total**       | 61    | 17    | 78   |
+
+Odds of death among serotype 10 patients = `\(\frac{7/44}{37/44} = 7/37\)`
+
+Odds of death among serotype 31 patients = `\(\frac{10/34}{24/34} = 10/24\)`
+
+.vocab[Odds ratio] of death comparing 31 to 10 is thus `\(\frac{10/24}{7/37} \approx 2.2\)`
+
+---
+
+### Odds ratios
+
+|               | Alive  | Dead  | Total |
+| ------------- | -----: | -----:| ----: |
+| Serotype 10   | 37     | 7     | 44    |
+| Serotype 31   | 24     | 10    | 34    |
+| **Total**       | 61    | 17    | 78   |
+
+The standard error of the log-odds ratio is given by the square root of the sum 
+of the reciprocals of the cell counts. In this case, we would have:
+
+$$
+SE(log(OR)) = \sqrt{\frac{1}{37} + \frac{1}{7} + \frac{1}{24} + \frac{1}{10}} \approx 0.558.
+$$
+
+---
+
+### Odds ratios
+
+|               | Alive  | Dead  | Total |
+| ------------- | -----: | -----:| ----: |
+| Serotype 10   | 37     | 7     | 44    |
+| Serotype 31   | 24     | 10    | 34    |
+| **Total**       | 61    | 17    | 78   |
+
+A 95% CI for the odds ratio might thus be given by:
+
+`\begin{align*}
+\left\{e^{log(OR) - z^\star\times SE(log(OR))},  e^{log(OR) + z^\star\times SE(log(OR))}\right\}
+\end{align*}`
+
+.question[
+In constructing this OR and CI by hand, do your estimates match those provided
+by the `fisher.test()` function?
+]
+
+---
+
+### r by c tables
+
+
+
+|               | Alive  | Dead  | Total |
+| ------------- | -----: | -----:| ----: |
+| Serotype 10   | 37     | 7     | 44    |
+| Serotype 15   | 60     | 12    | 72    |
+| Serotype 20   | 97     | 9     | 106   | 
+| Serotype 31   | 24     | 10    | 34    |
+| **Total**       | 218    | 38    | 256   |
+
+---
+
+### r by c tables
+
+
+```r
+chisq.test(ipd$Serotype, ipd$Status)
+```
+
+```
+## 
+## 	Pearson's Chi-squared test
+## 
+## data:  ipd$Serotype and ipd$Status
+## X-squared = 9.322, df = 3, p-value = 0.0253
+```
+
+
+
+```r
+fisher.test(ipd$Serotype, ipd$Status)
+```
+
+```
+## 
+## 	Fisher's Exact Test for Count Data
+## 
+## data:  ipd$Serotype and ipd$Status
+## p-value = 0.02658
+## alternative hypothesis: two.sided
+```
+
+---
+
+### Winter Olympics training
+
+&lt;img src="img/gs.png" width="60%" style="display: block; margin: auto;" /&gt;
+**Image Credit**: Ola Matsson, used under CC BY 2.0 license.
+
+Suppose we were interested in whether a particular training regimen was
+associated with "success" as measured by whether an athlete qualified
+for being on the US Winter Olympic Team for giant slalom. 
+
+---
+
+### Winter Olympics training
+
+|                   | Qualified  | Did Not Qualify  |
+| -------------     | -----: | -----:| 
+| New Regimen       | 129     |  97  | 
+| Old Regimen       | 112     |  114  | 
+
+
+```r
+chisq.test(matrix(c(129, 97, 112, 114),
+                  byrow = T, nrow = 2))
+```
+
+```
+## 
+## 	Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  matrix(c(129, 97, 112, 114), byrow = T, nrow = 2)
+## X-squared = 2.2755, df = 1, p-value = 0.1314
+```
+
+.question[
+What might you conclude?
+]
+
+---
+
+### Paired data in 2x2 tables
+
+In the real world, we often see paired data, such as matched case-control
+studies or pre/post test designs. The use of pairing often allows us to obtain
+higher power and account for within-pair heterogeneity. If the outcome that
+we're interested is a proportion, we can use .vocab[McNemar's test] to 
+evaluate association.
+
+In such an analysis, we would restructure the contingency table to display
+data for the matched pairs.
+
+---
+
+### Winter Olympics training
+
+Perhaps each athlete's GS time was recorded under both the old regimen and the 
+new regimen.
+
+|                             | Old; Qualified  | Old; DNQ  |
+| -------------               | -----: | -----:| 
+| New; Qualified       | a     | b     | 
+| New; DNQ | c     | d    | 
+                    
+The cells along the diagonal (a and d) are called .vocab[concordant] - they
+have the same "outcome" across each condition (regimen). The cells on the off-
+diagonal (b and c) are called .vocab[discordant] - they depict data for 
+pairs that have a difference based on the condition.
+
+---
+
+### McNemar's Test
+
+|                             | Old; Qualified  | Old; DNQ  |
+| -------------               | -----: | -----:| 
+| New; Qualified       | a     | b     | 
+| New; DNQ | c     | d    | 
+
+.vocab[McNemar's Test] examines relative differences in the discordant pairs,
+looking for "imbalances" in the way they are distributed; information from
+concordant pairs are discarded. Specifically, the test statistic is given by
+the squared difference in the number of discordant pairs divided by the total
+sum of them, and has a `\(\chi^2_1\)` distribution under `\(H_0\)`:
+
+$$
+\chi^2 = \frac{(b - c)^2}{b + c}
+$$
+
+.question[
+What do you expect `\((b - c)^2\)` to be under `\(H_0\)`?
+]
+
+---
+
+### McNemar's Test
+
+|                   | Qualified  | Did Not Qualify  |
+| -------------     | -----: | -----:| 
+| New Regimen       | 129     |  97  | 
+| Old Regimen       | 112     |  114  | 
+
+|                             | Old; Qualified  | Old; DNQ  |
+| -------------               | -----: | -----:| 
+| New; Qualified       | 99     | 30     | 
+| New; DNQ | 13     | 84    | 
+
+.question[
+What do you notice about the new data representation?
+]
+
+---
+
+### McNemar's Test
+
+
+```r
+mcnemar.test(matrix(c(99, 30, 13, 84),
+                  byrow = T, nrow = 2))
+```
+
+```
+## 
+## 	McNemar's Chi-squared test with continuity correction
+## 
+## data:  matrix(c(99, 30, 13, 84), byrow = T, nrow = 2)
+## McNemar's chi-squared = 5.9535, df = 1, p-value = 0.01469
+```
+.question[
+What might we conclude?
+]
+
+---
+
+### Pregnancy, HIV, and AIDS
+
+&lt;img src="img/hiv.png" width="60%" style="display: block; margin: auto;" /&gt;
+**Image Credit**: Liza Gross, used under CCA 4.0 License
+
+---
+
+### Pregnancy, HIV, and AIDS
+
+Researchers are interested in the special population of `\(HIV+\)` women on 
+antiretroviral therapy in sub-Saharan Africa. They would like to know whether in 
+this population, a new pregnancy is related to the probability of having an 
+AIDS-defining event (that is, their HIV being classified as AIDS).
+
+To test for an association, they recruit women from a large network of health
+care clinics and find the following:
+
+|                   | AIDS  | No AIDS  |
+| -------------     | -----: | -----:| 
+| Pregnant       | 31     |  44  | 
+| Not Pregnant       | 124     |  99  | 
+
+.question[
+Calculate an odds ratio and associated 95% CI using these data for AIDS-defining
+events based on pregnancy status. What might you conclude?
+]
+
+---
+
+### Pregnancy, HIV, and AIDS
+
+Consider the following data, which is for all HIV+ women in the area, not just
+those who visited a clinic:
+
+|                   | AIDS  | No AIDS  |
+| -------------     | -----: | -----:| 
+| Pregnant       | 44     |  175  | 
+| Not Pregnant       | 248     |  990  | 
+
+.question[
+Calculate the same odds ratio as before and associated 95% CI using these data.
+What might you conclude? How might you explain this?
+]
+
+---
+
+### Pregnancy, HIV, and AIDS
+
+The original sample was collected due to easier data collection (the women are
+already in the clinic). However, this is problematic since not all HIV+ women 
+are equally likely to visit a health clinic - we have a .vocab[sampling bias]
+here:
+
+|                   | Visited clinic  | Did not visit clinic  |
+| -------------     | -----: | -----:| 
+| Pregnant + AIDS      | 31     |  13  | 
+| Pregnant only       | 44     |  131  | 
+| AIDS only         | 124 | 124 |
+| Neither          | 99 | 891 |
+
+---
+
+### Everyone's heard of Simpson's paradox...
+
+The previous example is an example of .vocab[Berkson's paradox]. In these cases,
+two *marginally* independent events become *dependent* conditionally on the
+occurrence of either one of the two events. That is, for two independent events,
+if we only consider the cases where either of the events occur, then they 
+become dependent (usually negatively). 
+
+Note that
+
+`\begin{align*}
+P(A) &amp;= \frac{P(A | A \cup B)}{P(A \cup B)}\\
+&amp;\le P(A | A \cup B) \times 1\\
+&amp;= P(A | A \cup B)
+\end{align*}`
+
+---
+
+### Berkson's paradox
+
+HIV+ women can go to the clinic to check on their pregnancy or because they are 
+experiencing a drastic lowering in health status. In our original case, we've
+*excluded* every woman who was neither pregnant nor particularly worried about 
+their HIV. We've conditioned on AIDS-defining event OR pregnancy when sampling
+these women. 
+
+A non-pregnant HIV+ woman who went to the clinic is more likely to have AIDS
+than HIV+ women in general, because she's specifically going to the clinic for
+a *non*-pregnancy-related reason (maybe AIDS). This is responsible for the 
+spurious observed conclusion of pregnant HIV+ women having lower AIDS risk than
+non-pregnant HIV+ women.
+
+---
+
+### Two more examples
+
+(see visualizations on Zoom)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

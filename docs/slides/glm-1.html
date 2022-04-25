@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Linear Models (1)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Yue Jiang" />
+    <script src="glm-1_files/header-attrs/header-attrs.js"></script>
+    <link href="glm-1_files/remark-css/default.css" rel="stylesheet" />
+    <link href="glm-1_files/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="sta440-slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Linear Models (1)
+### Yue Jiang
+### Duke University
+
+---
+
+
+
+
+
+
+### A quick survey
+
+https://duke.qualtrics.com/jfe/form/SV_cBmbywxmqDYyvhI
+
+---
+
+### Stop-question-frisk
+
+&lt;img src="img/case-3.jpg" width="60%" style="display: block; margin: auto;" /&gt;
+
+.small[Photo - Adapted from Kena Betancur, Agence France-Presse/Getty Images]
+
+- Police protocol intended to reduce crime by stopping, questioning, and 
+searching civilians
+- Instituted in early 2000s, peaking in 2011 with almost 700,000 stops
+- Fraught with controversy - many assert unfair targeting of Black and Hispanic
+citizens
+
+---
+
+### Stop-question-frisk
+
+&lt;img src="img/jasa_sqf.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+- Gelman, Fagan, and Kiss (JASA, 2007) found evidence of racial disparities,
+even after adjusting for potential confounders
+- A 2013 class-action lawsuit determined SQF was being used unconstitutionally; 
+number of events fell sharply, with only around 10,000 stops per year from 
+2016 onwards
+
+---
+
+### Writing a model
+
+
+
+
+```r
+# Note: you'll have to do the data cleaning yourself...
+# Keep it clear and reproducible!
+
+sqf &lt;- read_csv("dat/sqf_cleaned.csv")
+```
+
+
+```r
+table(sqf$build_clean)
+```
+
+```
+## 
+##   HEA   MED OTHER   THN 
+##  3085 12443  1354 16310
+```
+
+```r
+table(sqf$any_weapon)
+```
+
+```
+## 
+##     0     1 
+## 30096  3096
+```
+
+---
+
+### Writing a model
+
+
+```r
+summary(sqf$stop_duration_min)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00    5.00    8.00   11.75   14.00  999.00
+```
+
+```r
+summary(sqf$suspect_age)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00   19.00   25.00   28.48   35.00   99.00
+```
+
+---
+
+### Writing a model
+
+.question[
+Let's ignore model assumption issues and diagnostics for now. Suppose you wanted
+to create a linear model that related the stop duration of an SQF event to the
+build of the suspect, whether they had a weapon on their person, and their age.
+How would you express such a model mathematically?
+]
+
+---
+
+### What could go wrong?
+
+.question[
+What issue(s) do you see with the model below? (Again, ignore issues of whether
+the model itself is appropriate; assume we just want a linear model relating
+the outcome of stop duration to the three predictors)
+]
+
+`\begin{align*}
+duration = build + weapon + age
+\end{align*}`
+
+---
+
+### What could go wrong?
+
+.question[
+How about here?
+]
+
+`\begin{align*}
+duration = \beta_1 build + \beta_2 weapon + \beta_3 age
+\end{align*}`
+
+---
+
+### What could go wrong?
+
+.question[
+Or here?
+]
+
+`\begin{align*}
+duration &amp;= \beta_1 I(build = HEA) + \beta_2 I(build = MED) + \\
+&amp;\mathrel{\phantom{=}} \beta_3 I(build = OTHER) + \beta_4 weapon + \\
+&amp;\mathrel{\phantom{=}} \beta_5 age
+\end{align*}`
+
+---
+
+### What could go wrong?
+
+.question[
+Are we finished?
+]
+
+`\begin{align*}
+duration_i &amp;= \beta_0 + \beta_1 I(build_i = HEA) + \beta_2 I(build_i = MED) + \\
+&amp;\mathrel{\phantom{=}} \beta_3 I(build_i = OTHER) + \beta_4 weapon_i + \\ 
+&amp;\mathrel{\phantom{=}} \beta_5 age_i
+\end{align*}`
+
+---
+
+### What could go wrong?
+
+.question[
+What are the parameters in the model written below? How can we write it 
+succintly in matrix notation?
+]
+
+`\begin{align*}
+duration_i &amp;= \beta_0 + \beta_1 I(build_i = HEA) + \beta_2 I(build_i = MED) + \\
+&amp;\mathrel{\phantom{=}} \beta_3 I(build_i = OTHER) + \beta_4 weapon_i + \\ 
+&amp;\mathrel{\phantom{=}} \beta_5 age_i + \epsilon_i
+\end{align*}`
+
+where
+
+`\begin{align*}
+\epsilon_i \stackrel{i.i.d.}{\sim} N(0, \sigma^2)
+\end{align*}`
+
+---
+
+### Another model
+
+.question[
+Say instead of duration being the outcome variable, suppose we're interested in
+the log-odds of having a "long" SQF event (an event lasting over half an hour). 
+If we fit a logistic regression model for this question, what would our model 
+look like?
+]
+
+
+```r
+sqf %&gt;% 
+  mutate(long_sqf = ifelse(stop_duration_min &gt; 30, 1, 0)) %&gt;% 
+  count(long_sqf)
+```
+
+```
+##   long_sqf     n
+## 1        0 31731
+## 2        1  1461
+```
+
+---
+
+### A Bayesian model
+
+.question[
+Let's return to our original OLS model. Suppose we wanted to fit a Bayesian
+linear regression model. How would you formulate it? What priors on the 
+parameters might make sense?
+]
+
+---
+
+### References
+
+[1] Stop, Question, and Frisk Data, 2003 - 2019. Accessed on NYPD website.
+
+[2] Gelman A, Fagan J, Kiss A (2012). "Stop-and-frisk policy in the context of 
+claims of racial bias." Journal of the American Statistical Association. 
+102(479): 813 - 823.
+
+[3] Floyd, et al. v. City of New York, et al. United States District Court for
+the Southern District of New York. 959 F. Supp. 2d 540 (2013).
+
+[4] Mummolo, J (2018). "Modern Police Tactics, Police-Citizen Interactions, and 
+the Prospects for Reform". The Journal of Politics. 80: 1–15.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

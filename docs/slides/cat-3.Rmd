@@ -1,0 +1,299 @@
+---
+title: "Categorical Data (3)"
+author: "Yue Jiang"
+date: "Duke University"
+header-includes: \usepackage{bm}
+output:
+  xaringan::moon_reader:
+  mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+css: "sta440-slides.css"
+logo: img/sta199-sticker-icon.png
+lib_dir: libs/font-awesome
+nature:
+  highlightStyle: github
+highlightLines: true
+countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1
+  )
+# Set dpi and height for images
+library(knitr)
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+	fig.align = "center",
+	fig.height = 3.75,
+	fig.width = 6.25,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+### Licorice and post-op sore throat
+
+```{r, eval=TRUE, echo=FALSE, warning = F, message = F, out.width = "80%"}
+library(knitr)
+library(tidyverse)
+include_graphics("img/licorice.jpg")
+```
+
+---
+
+### Licorice and post-op sore throat
+
+```{r, message = F, warning = F, echo = F, fig.align='center', fig.height=5, fig.width=8, dpi = 300}
+dat <- read_csv("data/licorice.csv")
+ggplot(dat, aes(x = postOp4hour_throatPain)) +
+  geom_bar() + 
+  facet_grid(~treat) + 
+  labs(x = "Post-op 4 hour throat pain", y = "Count")
+```
+
+---
+
+### Licorice and post-op sore throat
+
+```{r, message = F, warning = F, echo = F, fig.align='center', fig.height=5, fig.width=8, dpi = 300}
+ggplot(dat, aes(x = preOp_calcBMI)) +
+  geom_histogram(bins = 10, fill = "deepskyblue", col = "darkblue") + 
+  facet_grid(treat~.) + 
+  labs(x = "Calculated BMI", y = "Count") +
+  theme_classic()
+```
+
+---
+
+### Licorice and post-op sore throat
+
+```{r, message = F, warning = F, echo = F, fig.align='center', fig.height=5, fig.width=8, dpi = 300}
+dat <- read_csv("data/licorice.csv")
+ggplot(dat, aes(x = postOp4hour_throatPain)) +
+  geom_bar() + 
+  facet_grid(~treat) + 
+  labs(x = "Post-op 4 hour throat pain", y = "Count")
+```
+
+
+---
+
+### Ordinal data
+
+In this case, our outcome is *ordered* (and categorical). Although we have 
+"numbers" on a pain scale from 0 to 10, these numbers don't have a linear
+relationship - a 4 isn't necessarily twice as painful as a 4; a 3 isn't three
+times as painful as 1.
+
+However, these data *are* ordered. We do know that a 4 is more painful than a 3,
+which is more painful than a 2, etc. 
+
+.question[
+What are some potential pitfalls of using an ordinary least squares regression?
+How about using a multinomial regression approach?
+]
+
+---
+
+### A cumulative link model
+
+We might consider an outcome $Y$ that looks at the *cumulative* distribution. For
+$j$ total ordered categories, we might model the cumulative probability for
+observation $i$:
+
+\begin{align*}
+\gamma_{ij} &= P(Y_i \le j)\\
+&= P(Y_i = 1) + P(Y_i = 2) + \cdots + P(Y_i = j).
+\end{align*}
+
+Note that $\gamma_{ij}$ is limited to values from 0 to 1, as it is a probability.
+We might consider a model
+
+\begin{align*}
+g(\gamma_{ij}) = \theta_j + X_i^T\beta,
+\end{align*}
+
+where $g()$ is a link function mapping 0 to 1 to $\mathbb{R}$.
+
+.question[
+What are the $\theta$ terms? What might each $X_i$ look like?
+]
+
+---
+
+### A cumulative link model
+
+The $\theta$ terms are constants representing the "baseline" value for each
+category (on the transformed scale). This implies that the design matrix will
+**not** contain an intercept term (and so that $\beta$s only correspond to
+observed covariates).
+
+\begin{align*}
+g(\gamma_{ij}) = \theta_j + X_i^T\beta
+\end{align*}
+
+.question[
+What is the interpretation of $\beta$? What are we implicitly assuming?
+]
+
+---
+
+### A cumulative link model
+
+In this case, we have the same covariate effects $\beta$ across **all** of the
+categories. This means that $\beta_k$ is the conditional change in (transformed)
+cumulative probabilities given a 1 unit difference in $X_{ik}$.
+
+---
+
+### Ordered logistic regression
+
+The ordered logistic regression model is a cumulative link model that assumes a
+logit transformation of the cumulative probabilities:
+
+\begin{align*}
+logit(\gamma_{ij}) &= \theta_j + X_i^T\beta\\
+log\left(\frac{\gamma_{ij}}{1 - \gamma_{ij}}\right) &= \theta_j + X_i^T\beta\\
+log\left(\frac{P(Y_i \le j)}{P(Y_i > j)}\right) &= \theta_j + X_i^T\beta\\
+\end{align*}
+
+Exponentiating, we have
+
+\begin{align*}
+\frac{P(Y_i \le j)}{P(Y_i > j)} &= \exp(\theta_j)\exp(X_i^T\beta)
+\end{align*}
+
+.question[
+What is the outcome here? How might we interpret $\exp(\theta_j)$? How might
+we interpret the $\beta$ terms here?
+]
+
+---
+
+### The proportional odds assumption
+
+Remember that we have only one $\beta$ term for each predictor across *all*
+categories. This implies that changes in $X_k$ have the same conditional 
+relationship with odds of being in category 1 vs. 2, 6 vs. 7, or any $j-1$ vs.
+$j$. 
+
+.question[
+When might this be a reasonable assumption? When might this assumption be
+violated? How might we modify the model in the case that this assumption does
+not hold? How might we gut-check this assumption using the data?
+]
+
+---
+
+### Fitting an ordinal logistic model
+
+Note that \texttt{R} calculates 
+
+\begin{align*}
+logit(\gamma_{ij}) &= \theta_j - X_{i1}\eta_1 - \cdots - X_{ip}\eta_p
+\end{align*}
+
+with $\eta_k = -\beta_k$.
+
+---
+
+### Fitting an ordinal logistic model
+
+```{r, message = F, warning = F}
+library(MASS)
+m1 <- polr(factor(postOp4hour_throatPain) ~ treat + preOp_calcBMI, data = dat)
+summary(m1)
+```
+
+---
+
+### Fitting an ordinal logistic model
+
+```{r}
+exp(coef(m1))
+```
+
+.question[
+How might we interpret the $\exp(\eta)$ term corresponding to treatment?
+]
+
+---
+
+### Fitting an ordinal logistic model
+
+```{r}
+exp(coef(m1))
+```
+
+Patients who receive licorice treatment have approximately 1/3 the
+odds of having the next higher pain category (e.g., 6 vs. 5, or 2 vs. 1, etc.)
+compared to patients receiving placebo, while controlling for BMI.
+
+For every $kg/m^2$ increase in BMI, the odds of being in the next higher pain
+category is multiplied by approx. 1.02, while controlling for treatment.
+
+---
+
+### Fitting an ordinal logistic model
+
+```{r}
+exp(confint(m1))
+```
+
+---
+
+### Fitting an ordinal logistic model
+
+```{r}
+round(head(m1$fitted.values), 3)
+```
+
+---
+
+### Fitting an ordinal logistic model
+
+```{r}
+predict(m1)
+```
+
+hmm...
+
+---
+
+### Other link functions
+
+Remember, $g()$ can be any function taking probabilities to the real line. 
+Depending on how the data "look," we may choose a different link function. For
+instance, a negative log-log link $g(Y) = -\log(-\log(Y))$ might fit better
+when the probability of "lower" categories is higher, or a complementary log-log
+link $g(Y) = \log(-\log(1 - Y))$ when "higher" categories are more likely.
+
+Keep in mind that this affects the relationship between $\beta$ and $\gamma$s;
+these types of link functions don't have the "nice" odds-based interpretations
+as does the logit link!
+
+For a full list of commonly used link functions, check the documentation for the
+`polr` package.
+
+---
+
+### Other link functions
+
+```{r}
+m2 <- polr(factor(postOp4hour_throatPain) ~ treat + preOp_calcBMI, data = dat,
+           method = "loglog")
+summary(m2)
+```

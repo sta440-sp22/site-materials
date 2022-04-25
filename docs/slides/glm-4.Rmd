@@ -1,0 +1,390 @@
+---
+title: "Linear Models (4)"
+author: "Yue Jiang"
+date: "Duke University"
+header-includes: \usepackage{bm}
+output:
+  xaringan::moon_reader:
+  mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+css: "sta440-slides.css"
+logo: img/sta199-sticker-icon.png
+lib_dir: libs/font-awesome
+nature:
+  highlightStyle: github
+highlightLines: true
+countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1
+  )
+# Set dpi and height for images
+library(knitr)
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+	fig.align = "center",
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+### Estimating bike crashes in NC counties
+
+```{r, eval=TRUE, echo=FALSE, warning = F, message = F, out.width = "100%"}
+library(knitr)
+include_graphics("img/bike_crash.jpg")
+```
+<!-- .center[Image credit: Petar Milošević, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0), via Wikimedia Commons] -->
+
+```{r, echo = F}
+bike <- read_csv("data/bikecrash.csv")
+```
+
+---
+
+### A familiar model
+
+```{r echo = F}
+bike
+```
+
+- `pop`: county population
+- `med_hh_income`: median household income in thousands
+- `traffic_vol`: mean traffic volume per meter of major roadways
+- `pct_rural`: percentage of county population living in rural area
+
+---
+
+### A familiar model
+
+.question[
+How might we formulate an analogous *Bayesian* Poisson model using population 
+rurality (let's ignore any offset for now)?
+]
+
+--
+
+\begin{align*}
+Y_i | \lambda_i &\stackrel{iid}{\sim} Pois(\lambda_i),\\
+\log(\lambda_i) &= \beta_0 + \beta_1(pop) + \beta_2(rural)\\
+\beta_0 &\sim \cdots\\
+\beta_1 &\sim \cdots\\
+\beta_2 &\sim \cdots\\
+\end{align*}
+
+.question[
+What sorts of priors might make sense here?
+]
+
+---
+
+### Stan
+
+```{r, eval=TRUE, echo=FALSE, warning = F, message = F, out.width = "10%"}
+library(knitr)
+include_graphics("img/stan_logo.png")
+```
+
+- .vocab[Stan] is a statistical programming language that allows users to 
+perform Bayesian inference using modified .vocab[Hamiltonian Monte Carlo] (HMC) 
+- Whereas Gibbs samplers you have programmed previously require calculation of
+full conditionals, HMC requires calculation of gradients of the log-density
+(which can be done numerically)
+- HMC often produces chains with less correlated samples, resulting in
+larger effective sample sizes for chains of the same length
+- Because HMC relies on gradients, it requires parameters to be continuous 
+(well, there are "ways around this," but that's beyond the scope of STA 440)
+- Tuning certain HMC parameters may be tricky at times, particularly for
+multi-modal situations or log-densities with very steep gradient changes
+(again, you probably won't need to worry about this too much in STA 440!)
+
+---
+
+### RStan
+
+.vocab[RStan] is an interface to call Stan code from within R. There's a bit of 
+a learning curve, but allows for full flexibility using the Stan language
+
+```{r eval = F}
+# From RStan vignette - simple normal model
+data {
+  int<lower=0> J;          // number of schools 
+  real y[J];               // estimated treatment effects
+  real<lower=0> sigma[J];  // s.e. of effect estimates 
+}
+parameters {
+  real mu; 
+  real<lower=0> tau;
+  vector[J] eta;
+}
+transformed parameters {
+  vector[J] theta;
+  theta = mu + tau * eta;
+}
+model {
+  target += normal_lpdf(eta | 0, 1);
+  target += normal_lpdf(y | theta, sigma);
+}
+```
+
+---
+
+### rstanarm
+
+.vocab[rstanarm] is an R package that allows users to harness the power of Stan 
+while specifying commonly-seen models using familiar R model syntax
+
+```{r eval = F}
+# From rstanarm vignette - logistic model
+test <- stan_glm(cbind(agree, disagree) ~ education + gender,
+                 data = womensrole,
+                 family = binomial(link = "logit"),
+                 prior = student_t(df = 7, 0, 5),
+                 prior_intercept = student_t(df = 7, 0, 5),
+                 cores = 2, seed = 12345)
+```
+
+https://mc-stan.org/rstanarm/articles/rstanarm.html
+
+---
+
+### Back to bike crashes
+
+\begin{align*}
+Y_i | \lambda_i &\stackrel{iid}{\sim} Pois(\lambda_i),\\
+\log(\lambda_i) &= \beta_0 + \beta_1(pop) + \beta_2(rural)\\
+\beta_0 &\sim \cdots\\
+\beta_1 &\sim \cdots\\
+\beta_2 &\sim \cdots\\
+\end{align*}
+
+.question[
+What are the dangers of using .vocab[flat priors]? Why might 
+.vocab[weakly informative] priors be preferred?
+]
+
+---
+
+### Back to bike crashes
+
+```{r}
+summary(bike$crashes)
+summary(bike$pop)
+summary(bike$pct_rural)
+```
+
+.question[
+What priors for $\beta$ might make sense? What about .vocab[hyperpriors]?
+]
+
+---
+
+### Back to bike crashes
+
+```{r, eval = F}
+library(rstanarm)
+m1 <- stan_glm(crashes ~ I(pop/1000000) + pct_rural, 
+                         data = bike, 
+                         family = poisson,
+                         prior_intercept = normal(5, 10),
+                         prior = normal(0, 2.5, autoscale = T), 
+                         chains = 2, iter = 10000, seed = 123, 
+                         prior_PD = F)
+```
+
+```{r, include = F}
+library(rstanarm)
+m1 <- stan_glm(crashes ~ I(pop/1000000) + pct_rural, 
+                         data = bike, 
+                         family = poisson,
+                         prior_intercept = normal(5, 10),
+                         prior = normal(0, 2.5, autoscale = T), 
+                         chains = 2, iter = 10000, seed = 123, 
+                         prior_PD = F)
+```
+
+.question[
+What do each of these function arguments mean?
+]
+
+---
+
+### Back to bike crashes
+
+```{r}
+prior_summary(m1)
+```
+
+---
+
+### Model checks and diagnostics
+
+```{r, fig.width = 10, fig.height = 5, dpi = 300}
+library(bayesplot)
+color_scheme_set(c("darkblue", "darkred", "darkgray", 
+                   "deepskyblue", "deeppink", "darkgreen"))
+plot(m1, "trace")
+```
+
+---
+
+### Model checks and diagnostics
+
+```{r, fig.width = 10, fig.height = 5, dpi = 300}
+plot(m1, "trace", pars = "pct_rural", ylab = "Asdf") +
+  labs(title = "Trace plot: percent rural", 
+       y = "Estimate", x = "Draw")
+```
+
+---
+
+### Model checks and diagnostics
+
+```{r, fig.width = 10, fig.height = 5, dpi = 300}
+pp_check(m1, plotfun = "hist", nreps = 5) + 
+  xlab("Crashes")
+```
+
+---
+
+### Model checks and diagnostics
+
+```{r, fig.width = 10, fig.height = 5, dpi = 300}
+pp_check(m1) + 
+  xlab("Crashes")
+```
+
+---
+
+### Model checks and diagnostics
+
+```{r, fig.width = 10, fig.height = 5, dpi = 300}
+plot(m1, "acf_bar") +         # compare to "acf"
+  labs(title = "ACF plots")
+```
+
+---
+
+### Model results
+
+```{r, fig.width = 10, fig.height = 5, dpi = 300}
+plot(m1, "dens_overlay")
+```
+
+---
+
+### Model results
+
+```{r}
+summary(m1)
+```
+
+---
+
+### Model results
+
+```{r}
+round(as.data.frame(summary(m1)), 2)
+```
+
+.question[
+How might you interpret these results?
+]
+
+---
+
+### Posterior predictions
+
+```{r}
+bike %>% filter(county == "Durham")
+durham <- posterior_predict(m1, 
+                            newdata = data.frame(pop = 316739,
+                                                 pct_rural = 6),
+                            draws = 1000)
+head(durham)
+```
+
+---
+
+### Posterior predictions
+
+```{r, fig.width = 10, fig.height = 5, dpi = 300}
+ggplot(as.data.frame(durham), aes(x = durham)) +
+  geom_histogram(color = "darkblue", fill = "skyblue") +
+  labs(x = "Posterior predictions", y = "Count") +
+  geom_vline(xintercept = 340, color = "darkred", lwd = 2)
+```
+
+---
+
+### Posterior predictions
+
+```{r, eval = F}
+preds <- posterior_predict(m1, newdata = bike, draws = 1000)
+ppc_intervals(bike$crashes[1:10], preds[,1:10]) +
+  ggplot2::scale_x_continuous(
+   labels = bike$county[1:10],
+   breaks = 1:10
+ ) +
+ xaxis_text(angle = 0, vjust = 0, hjust = 0.5) +
+  labs(x = "County", y = "Crashes")
+```
+
+---
+
+### Posterior predictions
+
+```{r, echo = F, fig.width = 10, fig.height = 5, dpi = 300}
+preds <- posterior_predict(m1, newdata = bike, draws = 1000)
+ppc_intervals(bike$crashes[1:10], preds[,1:10]) +
+  ggplot2::scale_x_continuous(
+   labels = bike$county[1:10],
+   breaks = 1:10
+ ) +
+ xaxis_text(angle = 0, vjust = 0, hjust = 0.5) +
+  labs(x = "County", y = "Crashes")
+```
+
+---
+
+### Other types of models
+
+You've learned about and used many GLMs in your previous courses, such as 
+logistic regression, Poisson regression, Gamma regression, etc. The `stan_glm()`
+function in `rstanarm` is an easy-to-use way to fit Bayesian GLMs using a modified
+HMC algorithm.
+
+http://mc-stan.org/rstanarm/articles/ provides great example vignettes for
+fitting models, thinking about prior distributions, and examples of commonly-
+encountered models.
+
+I also encourage you to use the help functions, e.g. `help(stan_glm)`.
+
+---
+
+### On your own
+
+.question[
+Denote counties with over 60 crashes per 100,000 residents per year to be
+"high-crash" counties. Is there evidence of an association between rurality and
+being a high-crash county, after adjusting for population? Explain, and 
+quantify any variability in your estimates.
+]

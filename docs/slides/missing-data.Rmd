@@ -1,0 +1,464 @@
+---
+title: "Missing data (1)"
+author: "Yue Jiang"
+date: "Duke University"
+header-includes: \usepackage{bm}
+output:
+  xaringan::moon_reader:
+  mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+css: "sta440-slides.css"
+logo: img/sta199-sticker-icon.png
+lib_dir: libs/font-awesome
+nature:
+  highlightStyle: github
+highlightLines: true
+countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1
+  )
+# Set dpi and height for images
+library(knitr)
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+	fig.align = "center",
+	fig.height = 3.75,
+	fig.width = 6.25,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+### Missing data
+
+Missing data occurs all the time in data analyses and must be dealt with 
+carefully. For instance:
+
+- Respondents to a survey may be unwilling to answer questions in ways that are
+socially undesirable (e.g., reporting high incomes, alcohol use habits, etc.).
+- Participants in a trial may be lost to follow-up and have censored data.
+- We may intentionally incorporate "missing" data to complex longitudinal
+survey designs in cases where it's overly burdensome to collect "complete" data.
+
+.question[
+In the past, how have you dealt with missing data?
+]
+
+---
+
+### Visualizing missing data
+
+```{r}
+library(mice)
+data("nhanes2")
+head(nhanes2)
+```
+
+---
+
+### Visualizing missing data
+
+```{r, fig.height = 6, fig.width = 10, dpi = 300, fig.align = "center"}
+library(naniar)
+vis_miss(nhanes2)
+```
+
+---
+
+### Visualizing missing data
+
+```{r, fig.height = 6, fig.width = 10, dpi = 300, fig.align = "center"}
+library(UpSetR)
+gg_miss_upset(nhanes2)
+```
+
+---
+
+### Visualizing missing data
+
+```{r, fig.height = 6, fig.width = 10, dpi = 300, fig.align = "center"}
+library(naniar)
+gg_miss_fct(x = nhanes2, fct = hyp)
+```
+
+---
+
+### Some terminology
+
+Suppose $\mathbf{Z} = (Z_1, \cdots, Z_k)$ is the full data, which may be 
+completely or partially missing for some observations, and suppose 
+$\mathbf{R} = (R_1, \cdots, R_k)$ is a vector of indicators for whether each
+$Z_i$ is observed (1 if observed, 0 if missing).
+
+- .vocab[Missing Completely at Random (MCAR)]: $P(\mathbf{R} = \mathbf{r} | \mathbf{Z})$ 
+does not depend on $\mathbf{Z}$ (that is, $\mathbf{R}$ and $\mathbf{Z}$ are
+independent).
+- .vocab[Missing at Random (MAR)]: $P(\mathbf{R} = \mathbf{r} | \mathbf{Z})$ 
+only depends on elements of $\mathbf{Z}$ that are observed for $\mathbf{R} = \mathbf{r}$.
+- .vocab[Missing Not at Random (MNAR)]: $P(\mathbf{R} = \mathbf{r} | \mathbf{Z})$
+depends on elements of $\mathbf{Z}$ that are *not* observed for $\mathbf{R} = \mathbf{r}$.
+
+---
+
+### Examples of missingness mechanisms
+
+Suppose you are designing a written survey examining alcohol consumption among 
+students and your goal is to quantify alcohol consumption and examine potential
+predictors.
+
+--
+
+.question[
+What types of analyses might you choose? What types of data might you collect?
+What would be examples of each type of missingness mechanism, MCAR, MAR, and
+MNAR?
+]
+
+- .vocab[Missing Completely at Random (MCAR)]: $P(\mathbf{R} = \mathbf{r} | \mathbf{Z})$ 
+does not depend on $\mathbf{Z}$ (that is, $\mathbf{R}$ and $\mathbf{Z}$ are
+independent).
+- .vocab[Missing at Random (MAR)]: $P(\mathbf{R} = \mathbf{r} | \mathbf{Z})$ 
+only depends on elements of $\mathbf{Z}$ that are observed for $\mathbf{R} = \mathbf{r}$.
+- .vocab[Missing Not at Random (MNAR)]: $P(\mathbf{R} = \mathbf{r} | \mathbf{Z})$
+depends on elements of $\mathbf{Z}$ that are *not* observed for $\mathbf{R} = \mathbf{r}$.
+
+---
+
+### MCAR example
+
+Under MCAR, *no systematic differences exist* between those with missing data
+and those with complete data - those with missing data are representative of the
+entire population. 
+
+Suppose you are designing a written survey examining alcohol consumption among 
+students, and suppose that some of these survey responses happened to get 
+destroyed because the building they were housed in burned down. In this case,
+whether a response is missing is completely unrelated to the data at hand - it's
+only those responses that happened to be in the (former) building.
+
+MCAR is a very strong assumption and usually unrealistic unless the study was
+deliberately designed to include missing data and account for it appropriately.
+
+---
+
+### MAR example
+
+Under MAR, missing data are related to observed data, but not with the 
+unobserved data. 
+
+Taking the same survey example, suppose statistical science students recognize
+the importance of having complete data and were more likely to complete the
+survey compared to other departments. Also suppose whether someone completed a 
+survey was due solely to major, and that we fully observed everyone's major. In
+this case, we would have MAR data.
+
+---
+
+### MNAR example
+
+Under MNAR, missing data are related to *unobserved* data.
+
+For instance, suppose instead that students who have higher alcohol consumption
+are less likely to respond to the survey. In this case, whether a survey is
+missing depends directly on the value of that unobserved response itself - the
+data are missing not at random.
+
+---
+
+### Are my data MAR or MNAR?
+
+.question[
+Do you think it's possible to test whether a particular missingness mechanism
+holds in your data at hand? If so, how would you do so?
+]
+
+--
+
+Unfortunately, it is **not** possible to test whether certain missingness
+mechanisms hold given the observed data. MNAR vs. MAR cannot be tested simply 
+because data that are MNAR involve unobserved data. 
+
+If the assumption of MAR is made, there are methods to test vs. MCAR (e.g.,
+examining associations in the observed data), but a decision should be made
+with the guidance of subject-matter expertise. Regardless, MAR is itself an
+*unverifiable* assumption and must be justified in the context of each problem.
+
+---
+
+### Complete case analysis
+
+Have you ever done something along the lines of
+
+```{r, eval = F}
+mean(data$var, na.rm = T)
+```
+
+or fit a regression model and see a message like
+
+```{r, eval = F}
+(_ observations deleted due to missingness)
+```
+
+In each of these cases, you are performing a .vocab[complete case analysis]. We
+are performing the analysis using only those observations without any missing
+variables of interest (and often analyzing the data "as if" we had the full
+unobserved dataset).
+
+---
+
+### Complete case analysis
+
+.question[
+Let's suppose we have ten variables of interest for a regression model, and
+that each of these variables only have 5% missing data (suppose that
+missingness is independent between the variables). What is the probability of
+observing a complete case? What potential consequences does this have on our
+analysis?
+]
+
+--
+
+Even under MCAR, we are using many fewer observations, which would result in
+lower power. If the data are MAR or MNAR, then we will generally get biased
+estimates for parameters of interest.
+
+---
+
+### Mean/median/mode imputation
+
+The idea behind .vocab[imputation] is to "fill in" missing values in the data
+in a reasonable way, and then carry out the analysis.
+
+Often times for missing continuous variables, researchers may simply plug in
+the mean or median of observed values for missing values. For categorical
+variables, researchers may plug in the most common category.
+
+.question[
+What are the potential consequences of this approach under various missing data
+mechanisms? How might this affect inference or uncertainty quantification?
+]
+
+---
+
+### Imputation based on regression models
+
+The previous approach is often termed "unconditional" mean/median/mode 
+imputation, because it doesn't take into consideration the other covariates in
+the dataset (which may be especially undesirable for MAR mechanisms, for 
+example).
+
+We might try instead to create a model for the missing values based on the
+observed data and use predictions from these models as imputed values (for
+instance, a linear model for missing continuous predictors). We might also try
+.vocab[hot deck] imputation, which fills in missing data based on observed
+values from other observations which "match" in some sense.
+
+.question[
+What are the potential consequences of these approaches under various missing 
+data mechanisms? How might this affect inference or uncertainty quantification?
+]
+
+---
+
+### Imputation based on regression models
+
+Imputation based on regression models can result in consistent estimators of
+certain model parameters under MAR if the model used to impute the data is
+correctly specified. However, correctly specifying this relationship is often
+an impossible task in practical settings (and furthermore is also unverifiable).
+
+These methods also suffer from similar issues regarding artificially decreased
+variability - in the case of a continuous variable, all missing values will 
+still lie on the same regression line, which may inflate type 1 error rates.
+We know that there should be some variability involved in the imputation 
+process, but in these methods we in fact get *decreased* variance of regression
+estimators!
+
+---
+
+### Likelihood-based inference
+
+We've learned a few full likelihood-based methods to deal with missing data.
+For instance, we used the EM algorithm to augment our observed data with an
+assumed latent data structure and used this complete-data likelihood in 
+performing statistical inference.
+
+.question[
+We used the EM algorithm to arrive at parameter estimates. But we ignored issues
+of constructing confidence intervals or performing inference for such estimates.
+How might we quantify uncertainty for estimates from the EM algorithm?
+]
+
+--
+
+Numerical algorithms for estimating standard error terms are often technically
+derivable, but very messy. In practice people often use bootstrap methods if
+appropriate, but such methods are very computationally intensive.
+
+---
+
+### The "ideal" imputation procedure
+
+.question[
+So far, we've discussed a few ad hoc imputation procedures and explored some
+statistical drawbacks of such approaches. What might an "ideal" imputation 
+procedure have/do?
+]
+
+--
+
+As a few general considerations, such methods should...
+
+- provide consistent estimation of parameters of interest,
+- take into consideration extra variability due to imputation procedure, and
+- allow for principled quantification of variability of estimated parameters.
+
+---
+
+### Multiple imputation
+
+.vocab[Multiple imputation] techniques are a broad class of methods intended to
+perform/satisfy the three considerations that characterize a good missing data
+analysis approach. There are three main steps in the analysis:
+
+1. For each observation with missing data, values are imputed $M$ times to 
+create $M$ datasets. Note that these datasets might be different from each 
+other.
+2. Carry out a statistical analysis of interest on each of the imputed datasets.
+3. Combine/pool the results in a principled way that properly deals with the 
+imputation process.
+
+Note that the model used for imputation should correspond to the models 
+eventually used for analysis. For instance, if you include interaction terms or
+variable transformations in your final intended analysis, these should also 
+be used for each imputation model.
+
+---
+
+### MICE
+
+.vocab[Multiple Imputation via Chained Equations (MICE)] is an algorithm that
+performs multiple imputation assuming MAR is satisfied:
+
+1. First, fill in *all* missing values by sampling randomly from
+observed data.
+2. Create a predictive model for the first variable with missing values $Z_1$ 
+based on other variables in the dataset $(Z_2, \cdots Z_k)$ for those with 
+*observed data* (that is, those with $R_1 = 1$). For those with $R_1 = 0$,
+simulate draws from the posterior predictive distribution of $Z_1$
+3. Create a predictive model for the next variable with missing values $Z_2$
+based on other variables in the dataset $(Z_1, Z_3, \cdots Z_k)$ for those with
+$R_2 = 1$. Importantly, for variable $Z_1$, we will use the imputed values if
+any are missing. For those with $R_2 = 0$, simulate draws from the posterior
+predictive distribution of $Z_2$.
+4. Repeat for all other variables.
+5. Once all variables have been addressed, repeat steps 2-4 until "convergence"
+of the imputed variables. This will correspond to a single imputed dataset.
+6. Repeat steps 1 - 5 $M$ times.
+
+---
+
+### MICE
+
+```{r}
+library(mice)
+md.pattern(nhanes2)
+```
+
+---
+
+### MICE
+
+```{r, message = F}
+nhanes2.imp = mice(nhanes2, 
+                   m = 5, 
+                   meth = c(age = "sample", 
+                            bmi = "pmm", 
+                            hyp = "logreg", 
+                            chl = "pmm"), 
+                   seed = 123)
+```
+
+---
+
+### MICE
+
+```{r}
+summary(nhanes2.imp)
+```
+
+---
+
+### MICE
+
+```{r}
+nhanes2.imp$imp$bmi
+```
+
+---
+
+### MICE
+
+```{r}
+head(nhanes2)
+```
+
+---
+
+### MICE
+
+```{r}
+head(complete(nhanes2.imp, 1))
+```
+
+```{r}
+head(complete(nhanes2.imp, 2))
+```
+
+---
+
+### MICE
+
+```{r, fig.height = 6, fig.width = 10, dpi = 300, fig.align = "center"}
+xyplot(nhanes2.imp, bmi ~ chl, pch = 19, alpha = 0.4)
+```
+
+---
+
+### MICE
+
+```{r, fig.height = 6, fig.width = 10, dpi = 300, fig.align = "center"}
+densityplot(nhanes2.imp)
+```
+
+---
+
+### MICE
+
+```{r}
+mod1 <- with(nhanes2.imp, lm(chl ~ age + bmi + hyp))
+summary(pool(mod1))
+```
+```{r}
+sum(complete.cases(nhanes2))
+summary(lm(chl ~ age + bmi + hyp, data = nhanes2))$coef
+```

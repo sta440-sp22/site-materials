@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Categorical Data (3)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Yue Jiang" />
+    <script src="cat-3_files/header-attrs/header-attrs.js"></script>
+    <link href="cat-3_files/remark-css/default.css" rel="stylesheet" />
+    <link href="cat-3_files/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="sta440-slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Categorical Data (3)
+### Yue Jiang
+### Duke University
+
+---
+
+
+
+
+### Licorice and post-op sore throat
+
+&lt;img src="img/licorice.jpg" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Licorice and post-op sore throat
+
+&lt;img src="cat-3_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Licorice and post-op sore throat
+
+&lt;img src="cat-3_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Licorice and post-op sore throat
+
+&lt;img src="cat-3_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Ordinal data
+
+In this case, our outcome is *ordered* (and categorical). Although we have 
+"numbers" on a pain scale from 0 to 10, these numbers don't have a linear
+relationship - a 4 isn't necessarily twice as painful as a 4; a 3 isn't three
+times as painful as 1.
+
+However, these data *are* ordered. We do know that a 4 is more painful than a 3,
+which is more painful than a 2, etc. 
+
+.question[
+What are some potential pitfalls of using an ordinary least squares regression?
+How about using a multinomial regression approach?
+]
+
+---
+
+### A cumulative link model
+
+We might consider an outcome `\(Y\)` that looks at the *cumulative* distribution. For
+`\(j\)` total ordered categories, we might model the cumulative probability for
+observation `\(i\)`:
+
+`\begin{align*}
+\gamma_{ij} &amp;= P(Y_i \le j)\\
+&amp;= P(Y_i = 1) + P(Y_i = 2) + \cdots + P(Y_i = j).
+\end{align*}`
+
+Note that `\(\gamma_{ij}\)` is limited to values from 0 to 1, as it is a probability.
+We might consider a model
+
+`\begin{align*}
+g(\gamma_{ij}) = \theta_j + X_i^T\beta,
+\end{align*}`
+
+where `\(g()\)` is a link function mapping 0 to 1 to `\(\mathbb{R}\)`.
+
+.question[
+What are the `\(\theta\)` terms? What might each `\(X_i\)` look like?
+]
+
+---
+
+### A cumulative link model
+
+The `\(\theta\)` terms are constants representing the "baseline" value for each
+category (on the transformed scale). This implies that the design matrix will
+**not** contain an intercept term (and so that `\(\beta\)`s only correspond to
+observed covariates).
+
+`\begin{align*}
+g(\gamma_{ij}) = \theta_j + X_i^T\beta
+\end{align*}`
+
+.question[
+What is the interpretation of `\(\beta\)`? What are we implicitly assuming?
+]
+
+---
+
+### A cumulative link model
+
+In this case, we have the same covariate effects `\(\beta\)` across **all** of the
+categories. This means that `\(\beta_k\)` is the conditional change in (transformed)
+cumulative probabilities given a 1 unit difference in `\(X_{ik}\)`.
+
+---
+
+### Ordered logistic regression
+
+The ordered logistic regression model is a cumulative link model that assumes a
+logit transformation of the cumulative probabilities:
+
+`\begin{align*}
+logit(\gamma_{ij}) &amp;= \theta_j + X_i^T\beta\\
+log\left(\frac{\gamma_{ij}}{1 - \gamma_{ij}}\right) &amp;= \theta_j + X_i^T\beta\\
+log\left(\frac{P(Y_i \le j)}{P(Y_i &gt; j)}\right) &amp;= \theta_j + X_i^T\beta\\
+\end{align*}`
+
+Exponentiating, we have
+
+`\begin{align*}
+\frac{P(Y_i \le j)}{P(Y_i &gt; j)} &amp;= \exp(\theta_j)\exp(X_i^T\beta)
+\end{align*}`
+
+.question[
+What is the outcome here? How might we interpret `\(\exp(\theta_j)\)`? How might
+we interpret the `\(\beta\)` terms here?
+]
+
+---
+
+### The proportional odds assumption
+
+Remember that we have only one `\(\beta\)` term for each predictor across *all*
+categories. This implies that changes in `\(X_k\)` have the same conditional 
+relationship with odds of being in category 1 vs. 2, 6 vs. 7, or any `\(j-1\)` vs.
+`\(j\)`. 
+
+.question[
+When might this be a reasonable assumption? When might this assumption be
+violated? How might we modify the model in the case that this assumption does
+not hold? How might we gut-check this assumption using the data?
+]
+
+---
+
+### Fitting an ordinal logistic model
+
+Note that \texttt{R} calculates 
+
+`\begin{align*}
+logit(\gamma_{ij}) &amp;= \theta_j - X_{i1}\eta_1 - \cdots - X_{ip}\eta_p
+\end{align*}`
+
+with `\(\eta_k = -\beta_k\)`.
+
+---
+
+### Fitting an ordinal logistic model
+
+
+```r
+library(MASS)
+m1 &lt;- polr(factor(postOp4hour_throatPain) ~ treat + preOp_calcBMI, data = dat)
+summary(m1)
+```
+
+```
+## Call:
+## polr(formula = factor(postOp4hour_throatPain) ~ treat + preOp_calcBMI, 
+##     data = dat)
+## 
+## Coefficients:
+##                  Value Std. Error t value
+## treat         -1.11716    0.28973 -3.8558
+## preOp_calcBMI  0.01853    0.03272  0.5662
+## 
+## Intercepts:
+##     Value   Std. Error t value
+## 0|1  0.7007  0.8624     0.8125
+## 1|2  1.5582  0.8695     1.7921
+## 2|3  2.5771  0.8901     2.8952
+## 3|4  3.6860  0.9485     3.8862
+## 4|5  4.1043  0.9904     4.1439
+## 5|6  4.8097  1.1081     4.3406
+## 6|7  5.5089  1.3139     4.1928
+## 
+## Residual Deviance: 476.6836 
+## AIC: 494.6836 
+## (2 observations deleted due to missingness)
+```
+
+---
+
+### Fitting an ordinal logistic model
+
+
+```r
+exp(coef(m1))
+```
+
+```
+##         treat preOp_calcBMI 
+##     0.3272071     1.0187007
+```
+
+.question[
+How might we interpret the `\(\exp(\eta)\)` term corresponding to treatment?
+]
+
+---
+
+### Fitting an ordinal logistic model
+
+
+```r
+exp(coef(m1))
+```
+
+```
+##         treat preOp_calcBMI 
+##     0.3272071     1.0187007
+```
+
+Patients who receive licorice treatment have approximately 1/3 the
+odds of having the next higher pain category (e.g., 6 vs. 5, or 2 vs. 1, etc.)
+compared to patients receiving placebo, while controlling for BMI.
+
+For every `\(kg/m^2\)` increase in BMI, the odds of being in the next higher pain
+category is multiplied by approx. 1.02, while controlling for treatment.
+
+---
+
+### Fitting an ordinal logistic model
+
+
+```r
+exp(confint(m1))
+```
+
+```
+##                   2.5 %    97.5 %
+## treat         0.1830655 0.5719223
+## preOp_calcBMI 0.9554557 1.0866260
+```
+
+---
+
+### Fitting an ordinal logistic model
+
+
+```r
+round(head(m1$fitted.values), 3)
+```
+
+```
+##       0     1     2     3     4     5     6     7
+## 1 0.770 0.118 0.069 0.029 0.005 0.005 0.002 0.002
+## 2 0.799 0.105 0.059 0.025 0.004 0.004 0.002 0.002
+## 3 0.789 0.109 0.062 0.026 0.005 0.004 0.002 0.002
+## 4 0.784 0.111 0.064 0.027 0.005 0.005 0.002 0.002
+## 5 0.778 0.114 0.066 0.028 0.005 0.005 0.002 0.002
+## 6 0.761 0.121 0.072 0.030 0.005 0.005 0.003 0.003
+```
+
+---
+
+### Fitting an ordinal logistic model
+
+
+```r
+predict(m1)
+```
+
+```
+##   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [38] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [75] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [112] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [149] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [186] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [223] 0 0 0 0 0 0 0 0 0 0 0
+## Levels: 0 1 2 3 4 5 6 7
+```
+
+hmm...
+
+---
+
+### Other link functions
+
+Remember, `\(g()\)` can be any function taking probabilities to the real line. 
+Depending on how the data "look," we may choose a different link function. For
+instance, a negative log-log link `\(g(Y) = -\log(-\log(Y))\)` might fit better
+when the probability of "lower" categories is higher, or a complementary log-log
+link `\(g(Y) = \log(-\log(1 - Y))\)` when "higher" categories are more likely.
+
+Keep in mind that this affects the relationship between `\(\beta\)` and `\(\gamma\)`s;
+these types of link functions don't have the "nice" odds-based interpretations
+as does the logit link!
+
+For a full list of commonly used link functions, check the documentation for the
+`polr` package.
+
+---
+
+### Other link functions
+
+
+```r
+m2 &lt;- polr(factor(postOp4hour_throatPain) ~ treat + preOp_calcBMI, data = dat,
+           method = "loglog")
+summary(m2)
+```
+
+```
+## Call:
+## polr(formula = factor(postOp4hour_throatPain) ~ treat + preOp_calcBMI, 
+##     data = dat, method = "loglog")
+## 
+## Coefficients:
+##                 Value Std. Error t value
+## treat         -0.9461    0.24720 -3.8271
+## preOp_calcBMI  0.0165    0.02707  0.6097
+## 
+## Intercepts:
+##     Value   Std. Error t value
+## 0|1  0.9470  0.7143     1.3258
+## 1|2  1.6786  0.7228     2.3223
+## 2|3  2.6253  0.7468     3.5152
+## 3|4  3.6990  0.8158     4.5342
+## 4|5  4.1107  0.8650     4.7522
+## 5|6  4.8096  0.9986     4.8164
+## 6|7  5.5057  1.2234     4.5004
+## 
+## Residual Deviance: 476.4605 
+## AIC: 494.4605 
+## (2 observations deleted due to missingness)
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

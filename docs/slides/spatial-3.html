@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Spatial data analysis (3)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Yue Jiang" />
+    <script src="spatial-3_files/header-attrs/header-attrs.js"></script>
+    <link href="spatial-3_files/remark-css/default.css" rel="stylesheet" />
+    <link href="spatial-3_files/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="sta440-slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Spatial data analysis (3)
+### Yue Jiang
+### Duke University
+
+---
+
+
+
+
+
+
+
+### Today's data
+
+&lt;img src="spatial-3_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Clustering of time in Durham?
+
+
+```r
+library(ape)
+dists &lt;- as.matrix(dist(cbind(durham$long, durham$lat))) + 0.01
+dists &lt;- 1/dists
+diag(dists) &lt;- 0
+Moran.I(durham$yrs_lived, dists, na.rm = T)
+```
+
+```
+## $observed
+## [1] 0.01819212
+## 
+## $expected
+## [1] -0.001324503
+## 
+## $sd
+## [1] 0.001383074
+## 
+## $p.value
+## [1] 0
+```
+
+
+
+---
+
+### Today's data
+
+
+```r
+head(durham)
+```
+
+```
+## Simple feature collection with 6 features and 14 fields
+## Attribute-geometry relationship: 14 constant, 0 aggregate, 0 identity
+## Geometry type: POINT
+## Dimension:     XY
+## Bounding box:  xmin: -78.99 ymin: 35.927 xmax: -78.756 ymax: 36.087
+## Geodetic CRS:  NAD83
+## # A tibble: 6 x 15
+##     qol police streets water_sewer yrs_lived housing_exp   age  male   own race 
+##   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+## 1     2      3       2           9        29           0     1     1     1 B    
+## 2     4      4       3           5        34           0     3     0     0 W    
+## 3     4      9       4           5        15           0     2     1     1 W    
+## 4     3      3       4           4        11           9     1     0     1 W    
+## 5     4      2       2           4         4           0     1     1     1 B    
+## 6     4      5       3           3        35           0     4     1     1 W    
+## # ... with 5 more variables: hhi &lt;dbl&gt;, zip &lt;dbl&gt;, long &lt;dbl&gt;, lat &lt;dbl&gt;,
+## #   geometry &lt;POINT [°]&gt;
+```
+
+---
+
+### Which census tract are we in?
+
+
+```r
+which_blocks &lt;- st_intersects(durham, nc)
+which_blocks
+```
+
+```
+## Sparse geometry binary predicate list of length 756, where the
+## predicate was `intersects'
+## first 10 elements:
+##  1: 15
+##  2: 36
+##  3: 13
+##  4: 4
+##  5: 58
+##  6: 27
+##  7: 43
+##  8: 16
+##  9: 31
+##  10: 16
+```
+
+---
+
+### Which census tract are we in?
+
+
+```r
+tracts &lt;- nc[as.numeric(which_blocks), c("NAME")] %&gt;%
+  st_drop_geometry()
+durham &lt;- cbind(durham, tracts) 
+head(durham)
+```
+
+```
+## Simple feature collection with 6 features and 15 fields
+## Geometry type: POINT
+## Dimension:     XY
+## Bounding box:  xmin: -78.99 ymin: 35.927 xmax: -78.756 ymax: 36.087
+## Geodetic CRS:  NAD83
+##   qol police streets water_sewer yrs_lived housing_exp age male own race hhi
+## 1   2      3       2           9        29           0   1    1   1    B   1
+## 2   4      4       3           5        34           0   3    0   0    W   2
+## 3   4      9       4           5        15           0   2    1   1    W   9
+## 4   3      3       4           4        11           9   1    0   1    W   9
+## 5   4      2       2           4         4           0   1    1   1    B   3
+## 6   4      5       3           3        35           0   4    1   1    W   4
+##     zip    long    lat               NAME               geometry
+## 1 27712 -78.877 36.087 Census Tract 16.01 POINT (-78.877 36.087)
+## 2 27705 -78.920 36.022  Census Tract 4.01  POINT (-78.92 36.022)
+## 3 27703 -78.756 35.927    Census Tract 19 POINT (-78.756 35.927)
+## 4 27713 -78.919 35.933 Census Tract 20.25 POINT (-78.919 35.933)
+## 5 27713 -78.882 35.939 Census Tract 20.27 POINT (-78.882 35.939)
+## 6 27705 -78.990 35.976 Census Tract 20.17  POINT (-78.99 35.976)
+```
+
+---
+
+### How many residents did we survey?
+
+
+```r
+resps &lt;- as.data.frame(table(tracts)) %&gt;%
+  rename("NAME" = "tracts",
+         "num_resp" = "Freq")
+nc &lt;- left_join(nc, resps, by = "NAME")
+nc$num_resp[is.na(nc$num_resp)] &lt;- 0
+nc$prop_resp &lt;- nc$num_resp/nc$POP2010*100
+```
+
+---
+
+### How many residents did we survey?
+
+&lt;img src="spatial-3_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### How many residents did we survey?
+
+&lt;img src="spatial-3_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### A modeling aside
+
+
+```r
+summary(lm(yrs_lived ~ own + race, 
+           data = durham))
+```
+
+```
+## 
+## Call:
+## lm(formula = yrs_lived ~ own + race, data = durham)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -30.808 -15.808  -4.872  12.208  57.190 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)   28.746      1.290  22.282  &lt; 2e-16
+## own            2.062      1.093   1.887  0.05949
+## raceO         -9.415      2.890  -3.258  0.00117
+## raceW         -5.935      1.469  -4.041 5.87e-05
+## 
+## Residual standard error: 19.26 on 752 degrees of freedom
+## Multiple R-squared:  0.03094,	Adjusted R-squared:  0.02707 
+## F-statistic: 8.003 on 3 and 752 DF,  p-value: 2.957e-05
+```
+
+---
+
+### A modeling aside
+
+
+```r
+summary(lm(yrs_lived ~ own + race, 
+           data = durham[durham$zip == 27703,]))
+```
+
+```
+## 
+## Call:
+## lm(formula = yrs_lived ~ own + race, data = durham[durham$zip == 
+##     27703, ])
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -27.045 -14.847  -6.045  10.445  48.153 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)   24.555      2.414  10.172   &lt;2e-16
+## own            4.490      1.854   2.422   0.0166
+## raceO        -11.819      5.580  -2.118   0.0357
+## raceW         -7.708      3.109  -2.480   0.0142
+## 
+## Residual standard error: 18.68 on 157 degrees of freedom
+## Multiple R-squared:  0.08189,	Adjusted R-squared:  0.06435 
+## F-statistic: 4.668 on 3 and 157 DF,  p-value: 0.003746
+```
+
+---
+
+### A modeling aside
+
+
+```r
+summary(lm(yrs_lived ~ own + race, 
+           data = durham[durham$zip == 27707,]))
+```
+
+```
+## 
+## Call:
+## lm(formula = yrs_lived ~ own + race, data = durham[durham$zip == 
+##     27707, ])
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -28.344 -15.592  -3.905  10.636  39.095 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 29.34424    3.43313   8.547  1.7e-13
+## own          0.07733    3.73059   0.021    0.984
+## raceO        6.79390    8.25435   0.823    0.412
+## raceW       -5.43955    3.57766  -1.520    0.132
+## 
+## Residual standard error: 17.46 on 98 degrees of freedom
+## Multiple R-squared:  0.03728,	Adjusted R-squared:  0.007812 
+## F-statistic: 1.265 on 3 and 98 DF,  p-value: 0.2907
+```
+
+---
+
+### A modeling aside
+
+
+```r
+summary(lm(yrs_lived ~ own + race, 
+           data = durham[durham$NAME == "Census Tract 21",]))
+```
+
+```
+## 
+## Call:
+## lm(formula = yrs_lived ~ own + race, data = durham[durham$NAME == 
+##     "Census Tract 21", ])
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -35.572 -18.572  -1.437  17.563  44.563 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)  38.5715     6.4801   5.952 3.68e-07
+## own          -6.4806     6.5335  -0.992    0.327
+## raceO         3.1688    16.1564   0.196    0.845
+## raceW        -0.6538     6.5179  -0.100    0.921
+## 
+## Residual standard error: 21.65 on 45 degrees of freedom
+## Multiple R-squared:  0.02392,	Adjusted R-squared:  -0.04115 
+## F-statistic: 0.3676 on 3 and 45 DF,  p-value: 0.7767
+```
+
+---
+
+### A modeling aside
+
+
+```r
+summary(lm(yrs_lived ~ own + race, 
+           data = durham[durham$NAME == "Census Tract 18.08",]))
+```
+
+```
+## 
+## Call:
+## lm(formula = yrs_lived ~ own + race, data = durham[durham$NAME == 
+##     "Census Tract 18.08", ])
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -26.089 -17.236  -6.483   8.436  47.911 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)   23.101      5.091   4.538 3.59e-05
+## own            4.988      2.508   1.989   0.0522
+## raceO         -8.431     13.365  -0.631   0.5311
+## raceW         -5.606      6.124  -0.915   0.3644
+## 
+## Residual standard error: 21.61 on 50 degrees of freedom
+## Multiple R-squared:  0.09068,	Adjusted R-squared:  0.03612 
+## F-statistic: 1.662 on 3 and 50 DF,  p-value: 0.1871
+```
+
+---
+
+### A modeling aside
+
+&lt;img src="spatial-3_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### A modeling aside
+
+
+```r
+summary(lm(yrs_lived ~ own + race, 
+           data = durham))
+```
+
+```
+## 
+## Call:
+## lm(formula = yrs_lived ~ own + race, data = durham)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -30.808 -15.808  -4.872  12.208  57.190 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)   28.746      1.290  22.282  &lt; 2e-16
+## own            2.062      1.093   1.887  0.05949
+## raceO         -9.415      2.890  -3.258  0.00117
+## raceW         -5.935      1.469  -4.041 5.87e-05
+## 
+## Residual standard error: 19.26 on 752 degrees of freedom
+## Multiple R-squared:  0.03094,	Adjusted R-squared:  0.02707 
+## F-statistic: 8.003 on 3 and 752 DF,  p-value: 2.957e-05
+```
+
+
+---
+
+### A modeling aside
+
+
+```r
+beta_dat &lt;- data.frame(as.data.frame(beta_own), names(beta_own))
+names(beta_dat) &lt;- c("beta", "NAME")
+
+nc &lt;- merge(nc, beta_dat, all.x = T)
+
+ggplot(nc) +
+  geom_sf(aes(fill = beta)) +
+  geom_point(data = durham, 
+             mapping = aes(x = long, y = lat),
+             alpha = 0.4, pch = 4) +
+  scale_fill_gradient2(low = "darkred", mid = "white", high = "darkblue",
+                       midpoint = 0) +
+  theme_bw() +
+  scale_x_continuous(breaks=seq(-79, -78.7, by = 0.1)) +
+  labs(x = "Long.", y = "Lat", fill = "Coef.")
+```
+
+
+
+---
+
+### A modeling aside
+
+&lt;img src="spatial-3_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### A modeling aside
+
+.question[
+Using what we've seen for the tract-level analyses, how might we create a 
+regression model for point-valued data?
+]
+
+---
+
+### Local regression
+
+For global models so far, we've assumed that all observations in the dataset
+are equally important in estimating regression coefficients. However, it might
+be the case that nearer observations are more "important" than ones farther
+away.
+
+In local regression, this is precisely the case, with a weighting scheme based
+on distance from each point. The relative importance of near vs. far points is
+given by the .vocab[bandwidth] used in the .vocab[kernel] - a smaller bandwidth
+is "more local" whereas a larger bandwidth is "more global." 
+
+---
+
+### Local regression
+
+In local regression, we perform many separate regression models estimated at
+reression points. In actuality, instead of a single point estimate of each
+regression parameter `\(\beta\)`, we have a *surface* of such estimates (that are
+estimated only at the observed points).
+
+We note that there may be different local estimates of `\(\beta\)` depending on 
+where the point lies - this indicates the changing relationship(s) between
+predictors and outcomes through space, which can be visualized. Note that we
+might also map the SEs associated with each parameter estimate.
+
+---
+
+### Local regression
+
+
+```r
+library(spgwr)
+spdf &lt;- SpatialPointsDataFrame(
+  coords = as.data.frame(st_drop_geometry(durham[,c("long", "lat")])), 
+  data = as.data.frame(st_drop_geometry(durham)),
+  proj4string = CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"))
+
+band &lt;- gwr.sel(yrs_lived ~ own + race, data = spdf, gweight = gwr.Gauss, verbose = TRUE)
+```
+
+```
+## Bandwidth: 17.40012 CV score: 276836.8 
+## Bandwidth: 28.12587 CV score: 279568.8 
+## Bandwidth: 10.77124 CV score: 272756.3 
+## Bandwidth: 6.674362 CV score: 268941.2 
+## Bandwidth: 4.142354 CV score: 264461.5 
+## Bandwidth: 2.577488 CV score: 263956 
+## Bandwidth: 2.902343 CV score: 262947.3 
+## Bandwidth: 3.301493 CV score: 262862.8 
+## Bandwidth: 3.622673 CV score: 263307.8 
+## Bandwidth: 3.149651 CV score: 262788.3 
+## Bandwidth: 3.139164 CV score: 262787.3 
+## Bandwidth: 3.12604 CV score: 262787 
+## Bandwidth: 3.127736 CV score: 262787 
+## Bandwidth: 3.127795 CV score: 262787 
+## Bandwidth: 3.127836 CV score: 262787 
+## Bandwidth: 3.127795 CV score: 262787
+```
+
+```r
+m1 &lt;- gwr(yrs_lived ~ own + race, data = spdf, bandwidth = band, gweight = gwr.Gauss, hatmatrix = T)
+```
+
+Also check out `ggwr` and `ggwr.sel` for generalized geographically weighted
+regression.
+
+---
+
+### Local regression
+
+
+```r
+m1
+```
+
+```
+## Call:
+## gwr(formula = yrs_lived ~ own + race, data = spdf, bandwidth = band, 
+##     gweight = gwr.Gauss, hatmatrix = T)
+## Kernel function: gwr.Gauss 
+## Fixed bandwidth: 3.127795 
+## Summary of GWR coefficient estimates at data points:
+##                  Min.  1st Qu.   Median  3rd Qu.     Max.  Global
+## X.Intercept.  17.5220  25.9962  29.5855  31.2938  42.4610 28.7455
+## own          -12.5570   0.3538   3.2746   4.5772  24.9878  2.0621
+## raceO        -22.4486 -14.5260  -9.9323  -6.5780  30.9291 -9.4148
+## raceW        -14.2133 -11.7954  -8.7546  -5.0430  13.2784 -5.9353
+## Number of data points: 756 
+## Effective number of parameters (residual: 2traceS - traceS'S): 57.43071 
+## Effective degrees of freedom (residual: 2traceS - traceS'S): 698.5693 
+## Sigma (residual: 2traceS - traceS'S): 18.22738 
+## Effective number of parameters (model: traceS): 41.09103 
+## Effective degrees of freedom (model: traceS): 714.909 
+## Sigma (model: traceS): 18.01788 
+## Sigma (ML): 17.52137 
+## AICc (GWR p. 61, eq 2.33; p. 96, eq. 4.21): 6564.198 
+## AIC (GWR p. 96, eq. 4.22): 6516.019 
+## Residual sum of squares: 232090.8 
+## Quasi-global R2: 0.193344
+```
+
+```r
+head(m1$SDF$own)
+```
+
+```
+## [1]  3.0952239  5.7883080  2.2210294 -2.6820486 -0.2568435  3.3321789
+```
+
+---
+
+### A modeling aside
+
+
+```r
+summary(lm(yrs_lived ~ own + race, 
+           data = durham))
+```
+
+```
+## 
+## Call:
+## lm(formula = yrs_lived ~ own + race, data = durham)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -30.808 -15.808  -4.872  12.208  57.190 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)   28.746      1.290  22.282  &lt; 2e-16
+## own            2.062      1.093   1.887  0.05949
+## raceO         -9.415      2.890  -3.258  0.00117
+## raceW         -5.935      1.469  -4.041 5.87e-05
+## 
+## Residual standard error: 19.26 on 752 degrees of freedom
+## Multiple R-squared:  0.03094,	Adjusted R-squared:  0.02707 
+## F-statistic: 8.003 on 3 and 752 DF,  p-value: 2.957e-05
+```
+
+---
+
+### Local regression
+
+
+```r
+durham &lt;- cbind(durham, m1$SDF$own)
+
+ggplot(nc) +
+  geom_sf(fill = "darkgray") +
+  geom_point(data = durham, 
+             mapping = aes(x = long, y = lat, col = m1.SDF.own),
+             alpha = 0.5, pch = 19) +
+  scale_color_gradient2(low = "darkred", mid = "white", high = "darkblue",
+                       midpoint = 0) +
+  scale_fill_gradient2(low = "darkred", mid = "white", high = "darkblue",
+                       midpoint = 0) +
+  theme_bw() +
+  scale_x_continuous(breaks=seq(-79, -78.7, by = 0.1)) +
+  labs(x = "Long.", y = "Lat", col = "Coef.")
+```
+
+
+---
+
+### Local regression
+
+&lt;img src="spatial-3_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

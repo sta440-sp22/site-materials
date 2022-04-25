@@ -1,0 +1,370 @@
+---
+title: "Introduction to survival analysis (3)"
+author: "Yue Jiang"
+date: "Duke University"
+output:
+  xaringan::moon_reader:
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    css: "sta440-slides.css"
+    lib_dir: libs/font-awesome
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r, echo = F, warning = F, message = F}
+library(survival)
+library(tidyverse)
+
+dig <- read.csv("C:/Users/Yue/Courses/STA 440 2021 Spring/docs/datasets/UNUSED_dig_teaching/DIG_csv/DIG_csv/dig.csv")
+```
+
+### The DIG Trial
+
+```{r, echo=FALSE, out.width = '120%'} 
+knitr::include_graphics("img/02/dig_trial.png")
+```
+
+Investigators compared the **primary outcome** of the number of days from the
+start of the study to either death or hospitalization from worsening heart
+failure.
+
+---
+
+### Review: accelerated failure time model
+
+An .vocab[accelerated failure time] (AFT) model assumes
+
+\begin{align*}
+\log(T_i) = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_px_p + \epsilon_i
+\end{align*}
+
+where $\epsilon_i$ are commonly assumed to be i.i.d. and follow some specified
+distribution.
+
+Covariates in an AFT model have a multiplicative effect on *time*. For instance,
+if $\beta_k = 0.4$, then $\exp(\beta_k) \approx 1.5$. Holding all else equal,
+an individual with covariate $x_k$ one unit greater than another is expected
+to survive approximately 1.5 times longer than the other.
+
+---
+
+### Fitting an AFT model
+
+```{r, message = F, warning = F}
+library(survival)
+aft_w <- survreg(Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+                 data = dig, dist = "lognormal")
+summary(aft_w)
+```
+
+---
+
+### Visualizing the AFT model
+
+```{r, echo = F, fig.align = 'center'}
+x <- seq(0, 50, 0.01)
+y <- pnorm((log(x) - 2)/0.75)
+plot(x, 1 - y, type = "l", ylim = c(0, 1), xlim = c(0, 20),
+     xlab = "Time", ylab = "Survival",
+     main = "Survival functions for various log-normal failure times")
+lines(x*0.5, (1 - y), col = "darkred")
+lines(x*2, (1 - y), col = "deepskyblue")
+lines(x, 1 - y, col = "black")
+text(10, 0.42, expression(S[0](t)))
+text(10, 0.17, expression(S[1](t)))
+text(10, 0.78, expression(S[2](t)))
+```
+
+---
+
+### A similar model for hazards?
+
+```{r, echo = F, fig.align = 'center'}
+y <- dnorm((log(x) - 2)/0.75)/((1-pnorm((log(x) - 2)/0.75))*x*0.75)
+plot(x, y, type = "l", xlim = c(0, 20), ylim = c(0, 0.4),
+     xlab = "Time", ylab = "Hazard",
+     main = "Hazard functions for various log-normal failure times")
+lines(x, 0.5*y, col = "deepskyblue")
+lines(x, 2*y, col = "darkred")
+text(10, 0.165, expression(lambda[0](t)))
+text(10, 0.09, expression(lambda[2](t)))
+text(10, 0.305, expression(lambda[1](t)))
+```
+
+---
+
+### A proportional hazards model
+
+\begin{align*}
+\lambda(t) &= \lambda_0(t)\exp\left(\beta_1x_1 + \beta_2x_2 + \cdots + \beta_px_p \right)
+\end{align*}
+
+where $\lambda_0$ is the .vocab[baseline hazard], which describes the hazard
+function for an individual with $\mathbf{X} = \mathbf{0}$.
+
+A .vocab[proportional hazards] model is a linear model for the log hazard ratio.
+
+.question[
+How might we interpret $\beta$ terms in such a model? Why is there no intercept
+term $\beta_0$?
+]
+
+---
+
+### A proportional hazards model
+
+\begin{align*}
+\lambda(t) &= \lambda_0(t)\exp\left(\beta_1x_1 + \beta_2x_2 + \cdots + \beta_px_p \right)
+\end{align*}
+
+Covariates in a PH model have a multiplicative effect on *hazards*. For
+instance, if $\beta_k = 0.4$, then $\exp(\beta_k) \approx 1.5$. Holding all else 
+equal, an individual with covariate $x_k$ one unit greater than another is 
+expected to have approximately 1.5 times the *hazard* of the event than the
+other. This multiplicative effect holds *regardless* of the time $t$.
+
+.question[
+Would you rather have a higher linear predictor or a lower linear predictor
+in a PH model? How does this compare to the AFT model?
+]
+
+---
+
+### A proportional hazards model
+
+```{r, echo = F, fig.align = 'center'}
+plot(seq(0, 20, 1), rep(0.8, 21), type = "l", xlim = c(0, 20), ylim = c(0, 2),
+     xlab = "Time", ylab = "Hazard",
+     main = "Hazard functions for various ___ failure times")
+lines(seq(0, 20, 1), rep(0.4, 21), col = "deepskyblue")
+lines(seq(0, 20, 1), rep(1.6, 21), col = "darkred")
+text(10, 0.9, expression(lambda[0](t)))
+text(10, 0.5, expression(lambda[2](t)))
+text(10, 1.7, expression(lambda[1](t)))
+```
+
+---
+
+### Fitting a PH model
+
+```{r, message = F, warning = F}
+library(eha)
+ph_ln <- phreg(Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+               data = dig, dist = "lognormal")
+ph_ln
+```
+
+.vocab[
+How might we interpret the coefficient estimates here? How do they relate to
+our previous models?
+]
+
+---
+
+### The Cox proportional hazards model
+
+\begin{align*}
+\lambda(t) &= \lambda_0(t)\exp\left(\beta_1x_1 + \beta_2x_2 + \cdots + \beta_px_p \right)
+\end{align*}
+
+In a parametric survival model (such as ones we've seen), the survival times
+are assumed to follow a specific distribution, which might be a strong
+assumption.
+
+--
+
+Often times, we only care about the $\beta$ terms and not so much the 
+$\lambda_0$. Using the concept of partial likelihood, Cox (1972) found that we 
+can "separate" inference for the $\beta$ terms from $\lambda_0$. 
+
+The Cox model is a *semiparametric* survival model; $\lambda_0(t)$ (*infinite*-
+dimensional) is left completely unspecified, with no assumptions made on its 
+shape. (A semi-parametric version of the AFT model also exists, but isn't very 
+popular for reasons we won't get into).
+
+---
+
+### Estimating $\beta$s
+
+.question[
+How can we estimate $\beta$ parameters if $\lambda_0(t)$ is infinite-dimensional?
+]
+
+---
+
+### Estimating $\beta$s
+
+For now, assume that there are no tied failure times. Suppose we know that there
+is one failure at time $t_j$. For this failure time, the contribution to the
+"likelihood" is the probability that individual $j$ fails, *given* that there is exactly one failure in the risk set at that time:
+
+\begin{align*}
+P(\text{individual }j\text{ fails} | \text{one failure from }\mathcal{R}(t_j))
+\end{align*}
+
+where $\mathcal{R}(t_j) = \left\{i: T_i \ge t_j \right\}$ is the risk set at time
+$t_j$.
+
+---
+
+### Estimating $\beta$s
+
+Note that the probability 
+
+\begin{align*}
+P(\text{individual }j\text{ fails} | \text{one failure from }\mathcal{R}(t_j))
+\end{align*}
+
+conditions on exactly one failure at time $t_j$; we don't know who it is! This
+is equivalent to the probability
+
+\begin{align*}
+&\mathrel{\phantom{=}} \frac{P(\text{individual }j\text{ fails} | \text{at risk at }t_j)}{\sum_{k \in \mathcal{R}(t_j)}P(\text{individual }k\text{ fails} | \text{at risk at }t_j)}\\
+&= \frac{\lambda(t_j | \mathbf{X}_j)}{\sum_{k \in \mathcal{R}(t_j)}\lambda(t_j | \mathbf{X}_k)}
+\end{align*}
+
+---
+
+### Estimating $\beta$s
+
+Under proportional hazards,
+$\lambda(t | \mathbf{X}) = \lambda_0(t)\exp(\mathbf{X}^T\beta)$. Thus, for each
+failure time $t_j$, we have 
+
+\begin{align*}
+&\mathrel{\phantom{=}} \frac{\lambda(t_j | \mathbf{X}_j)}{\sum_{k \in \mathcal{R}(t_j)}\lambda(t_j | \mathbf{X}_k)}\\
+&= \frac{\lambda_0(t_j)\exp(\mathbf{X}_j^T\beta)}{\sum_{k \in \mathcal{R}(t_j)}\lambda_0(t_j)\exp(\mathbf{X}_k^T\beta)}\\
+&= \frac{\exp(\mathbf{X}_j^T\beta)}{\sum_{k \in \mathcal{R}(t_j)}\exp(\mathbf{X}_k^T\beta)}
+\end{align*}
+
+---
+
+### Estimating $\beta$s
+
+If there are $J$ total failure times, the "likelihood" is thus the product over
+all possible failure times: 
+
+\begin{align*}
+\mathcal{L}^\star(\beta | \mathbf{X}) &= \prod_{j = 1}^J \frac{\exp(\mathbf{X}_j^T\beta)}{\sum_{k \in \mathcal{R}(t_j)}\exp(\mathbf{X}_k^T\beta)}
+\end{align*}
+
+Note that we can maximize this quantity with respect to $\beta$ terms *without* 
+having to estimate (or even specify) the baseline hazard $\lambda_0(t)$!
+
+---
+
+### The Cox proportional hazards model
+
+\begin{align*}
+\lambda(t) &= \lambda_0(t)\exp\left(\beta_1x_1 + \beta_2x_2 + \cdots + \beta_px_p \right)
+\end{align*}
+
+- Fewer assumptions than fully parametric models, but still requires PH 
+assumption
+- By far the most commonly used regression model for survival data
+- Attractive interpretations using hazard ratios
+- Can be extended to accommodate time-varying covariates, recurrent events, etc.
+
+---
+
+### Fitting the Cox PH model
+
+```{r}
+coxm1 <- coxph(Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+                    data = dig)
+summary(coxm1)
+```
+
+.question[
+How might we interpret these coefficients? How do they compare to our previous
+models?
+]
+
+---
+
+### Fitting the Cox PH model
+
+One strength of the Cox model is that we can ignore estimation of $\lambda_0$
+completely (it doesn't matter for valid inference on the $\beta$s).
+
+If we want to estimate survival probabilities, then we must estimate the 
+baseline hazard. A non-parametric estimate of the cumulative hazard (the 
+.vocab[Breslow estimator]) is implemented by the `basehaz` function in the 
+`survival` package by:
+
+\begin{align*}
+\hat{\Lambda}_0(t) = \sum_{i:t_{(i)} < t} \frac{1}{\sum_{k \in \mathcal{R}_i} \exp(\mathbf{X}_k\beta)}
+\end{align*}
+
+We can then estimate survival in the Cox model by:
+
+\begin{align*}
+\hat{S}(t|\mathbf{X}) = \exp(-\exp(\mathbf{X}\beta) \hat{\Lambda}_0(t))
+\end{align*}
+
+---
+
+### Cox model diagnostics
+
+Recall the inverse CDF result: if $T_i$ has survival function $S_i(t)$, then
+$S_i(T_i)$ should have a uniform distribution on (0, 1) and $\Lambda_i(T_i)$
+should follow Exp(1) distribution.
+
+Thus, if the model is correct, then the estimated cumulative hazard $\hat{\Lambda}$
+at observed times should be a censored sample from Exp(1). These $\hat{\Lambda}_i(Y_i)$
+are known as .vocab[Cox-Snell residuals].
+
+--
+
+Plotting $\log(-\log\hat{S}(Y_i))$ against $\log(Y_i)$ should thus follow a 
+straight line through the origin at a 45-degree angle. 
+
+Although Cox-Snell residuals can also be used for other models (e.g., checking
+whether distribution specified in AFT model is appropriate), they're not too
+useful in practice (for a variety of reasons).
+
+---
+
+### Cox model diagnostics
+
+To assess PH assumption, we can examine .vocab[Schoenfeld residuals]. 
+Intuitively, each Schoenfeld residual is the difference between the observed
+covariate and the expected covariate for each observed failure, conditioned on
+the risk set at that time.
+
+In plotting Schoenfeld residuals vs. survival times, we expect to see them
+randomly distributed around 0.
+
+---
+
+### Cox model diagnostics
+
+.vocab[Martingale residuals] are based on the difference between observed number 
+of events up until time $Y_i$ and the expected count based on the fitted model.
+
+.vocab[Deviance residuals] are a normalized transformation of the martingale
+residuals that correct their skewness. They should be randomly distributed 
+around mean 0 with a variance of 1.
+
+In practice, these residuals are useful for finding potential outliers: negative
+values "lived longer than expected" and positive values "died too soon."
+
+---
+
+### Cox model diagnostics
+
+```{r, message = F, warning = F, fig.height = 6, fig.width = 10}
+library(survminer)
+ggcoxdiagnostics(coxm1, type = "schoenfeld")
+```
+
+---
+
+### Cox model diagnostics
+
+```{r, message = F, warning = F, fig.height = 6, fig.width = 10}
+library(survminer)
+ggcoxdiagnostics(coxm1, type = "deviance", linear.predictions = F)
+```

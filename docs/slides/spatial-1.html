@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Spatial data analysis (1)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Yue Jiang" />
+    <script src="spatial-1_files/header-attrs/header-attrs.js"></script>
+    <link href="spatial-1_files/remark-css/default.css" rel="stylesheet" />
+    <link href="spatial-1_files/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="sta440-slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Spatial data analysis (1)
+### Yue Jiang
+### Duke University
+
+---
+
+
+
+
+
+
+### Spatial data
+
+Spatial data are an important class of data. Today, we will focus on exploratory
+data analysis, understanding spatial relationships, and detecting patterns and
+trends.
+
+Analysis of spatial data should reflect spatial structure!
+
+---
+
+### 1854 London cholera outbreak
+
+&lt;img src="img/cholera.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1826 French literacy map
+
+
+&lt;img src="img/literacy.jpg" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Napoleon's 1812 Russia Campaign
+
+&lt;img src="img/napoleon.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+--
+
+**Many others!**
+
+- [Migrations](http://maps.tnc.org/migrations-in-motion/#4/43.26/-112.02)
+- [World Population Density](https://luminocity3d.org/WorldPopDen/#3/12.00/10.00)
+- [Global Power](https://www.gocompare.com/gas-and-electricity/what-powers-the-world/)
+
+---
+
+### Spatial data are different
+
+&lt;img src="img/projections.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+Graphic from [QGIS documentation](https://docs.qgis.org/2.8/en/docs/gentle_gis_introduction/coordinate_reference_systems.html).
+
+---
+
+### Expressing spatial data
+
+.vocab[Vector] spatial data describes the world using shapes (points, lines, 
+polygons, etc).
+
+.vocab[Raster] spatial data describes the world using cells of constant size.  
+
+&lt;img src="img/vector_raster_comparison.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+The choice to use vector or raster data depends on the problem context. 
+
+*Source:* https://commons.wikimedia.org/wiki/File:Raster_vector_tikz.png
+
+
+---
+
+### Spatial data are different
+
+
+
+A .vocab[simple feature] is a standard way to describe how real-world 
+spatial objects (country, building, tree, road, etc) can be represented by a 
+computer. 
+
+The package `sf` implements simple features and other spatial functionality 
+using **tidy** principles for *vector* graphics.
+
+Simple features have a geometry type. Common choices are below.
+
+
+
+&lt;img src="spatial-1_files/figure-html/unnamed-chunk-9-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Spatial data are different
+
+
+```r
+library(sf)
+nc &lt;- st_read("https://opendata.arcgis.com/datasets/9728285994804c8b9f20ce58bae45899_0.geojson", 
+              quiet = T)
+nc[,1:3]
+```
+
+```
+## Simple feature collection with 100 features and 3 fields
+## Geometry type: POLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -84.32183 ymin: 33.8416 xmax: -75.45966 ymax: 36.58814
+## Geodetic CRS:  WGS 84
+## First 10 features:
+##    OBJECTID      County FIPS                       geometry
+## 1         1      Camden  029 POLYGON ((-75.90629 36.0858...
+## 2         2       Gates  073 POLYGON ((-76.69658 36.2961...
+## 3         3     Iredell  097 POLYGON ((-80.94812 35.4911...
+## 4         4      Wilkes  193 POLYGON ((-81.30257 36.0049...
+## 5         5       Union  179 POLYGON ((-80.55036 35.2084...
+## 6         6    Cabarrus  025 POLYGON ((-80.55036 35.2084...
+## 7         7        Wake  183 POLYGON ((-78.90607 35.8681...
+## 8         8    Franklin  069 POLYGON ((-78.25598 35.8181...
+## 9         9      Pender  141 POLYGON ((-78.01193 34.7319...
+## 10       10 New Hanover  129 POLYGON ((-77.71049 34.2979...
+```
+
+Data from [NC OneMap](https://www.nconemap.gov/), a service of the NC Geographic Information Coordinating Council.
+
+---
+
+### Basic plots
+
+
+```r
+ggplot(nc) + 
+  geom_sf() + 
+  labs(title = "North Carolina county boundaries") +
+  theme_bw()
+```
+
+&lt;img src="spatial-1_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+
+.question[
+Does anyone notice anything "weird" about this map?
+]
+
+---
+
+### Basic plots
+
+
+```r
+nc &lt;- st_read("data/nc.shp", quiet = TRUE)
+nc
+```
+
+```
+## Simple feature collection with 100 features and 1 field
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -84.32385 ymin: 33.88199 xmax: -75.45698 ymax: 36.58965
+## Geodetic CRS:  NAD27
+## First 10 features:
+##           name                       geometry
+## 1         ASHE MULTIPOLYGON (((-81.47276 3...
+## 2    ALLEGHANY MULTIPOLYGON (((-81.23989 3...
+## 3        SURRY MULTIPOLYGON (((-80.45634 3...
+## 4    CURRITUCK MULTIPOLYGON (((-76.00897 3...
+## 5  NORTHAMPTON MULTIPOLYGON (((-77.21767 3...
+## 6     HERTFORD MULTIPOLYGON (((-76.74506 3...
+## 7       CAMDEN MULTIPOLYGON (((-76.00897 3...
+## 8        GATES MULTIPOLYGON (((-76.56251 3...
+## 9       WARREN MULTIPOLYGON (((-78.30876 3...
+## 10      STOKES MULTIPOLYGON (((-80.02567 3...
+```
+
+
+---
+
+### Basic plots
+
+
+```r
+ggplot(nc) + 
+  geom_sf() + 
+  labs(title = "North Carolina county boundaries") +
+  theme_bw()
+```
+
+&lt;img src="spatial-1_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+  
+.question[
+What's different about this map and shapefile?
+]
+
+---
+
+### Basic plots
+
+The geographic CRS and geometry were different (as was the file format).
+
+.vocab[Coordinate Reference System] (CRS): defines how specific places are 
+mapped onto a sptial map. **WGS 84** (used in the first file) is the latest
+revision of the [World Geodetic System](https://en.wikipedia.org/wiki/World_Geodetic_System); **NAD27** (used
+in the second file) is the 1927 [North American Datum](https://en.wikipedia.org/wiki/North_American_Datum).
+
+.vocab[Geometry]: defines how the spatial object is "mapped"; the first file
+used a polygon geometry whereas the second file used a *multipolygon*.
+
+---
+
+### Spatial data plotting needs care
+
+&lt;img src="spatial-1_files/figure-html/unnamed-chunk-14-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Choropleth maps
+
+When working with .vocab[areal] data, a .vocab[choropleth map] is a great
+visualization that colors regions by the value of some *numeric* value (as
+opposed to a simple coloring by category).
+
+Let's create a choropleth map for the number of vaccines given out in NC using 
+data from the [NCDHHS](https://covid19.ncdhhs.gov/) (current as of October 28, 
+2021).
+
+
+```r
+doses &lt;- read_csv("data/nc_doses_102821.csv")
+head(doses)
+```
+
+```
+## # A tibble: 6 x 9
+##   name      partial fully    pop uninsured obesity    hs  mhhi rural
+##   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 ALAMANCE    96227 91165 169509        18    32.4    81  50.5  28.6
+## 2 ALEXANDER   15850 15030  37497        17    34.8    85  49.1  72.8
+## 3 ALLEGHANY    6391  5987  11137        22    25.7    92  39.7 100  
+## 4 ANSON       11092 10168  24446        16    38.6    84  38.0  78.5
+## 5 ASHE        14346 13431  27203        19    26      87  41.9  84.9
+## 6 AVERY        9445  8815  17557        24    26.5    94  41.7  88.8
+```
+
+---
+
+### Choropleth maps
+
+
+```r
+nc &lt;- merge(nc, doses, by = "name")
+nc
+```
+
+```
+## Simple feature collection with 100 features and 9 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -84.32385 ymin: 33.88199 xmax: -75.45698 ymax: 36.58965
+## Geodetic CRS:  NAD27
+## First 10 features:
+##         name partial fully    pop uninsured obesity hs   mhhi rural
+## 1   ALAMANCE   96227 91165 169509        18    32.4 81 50.480  28.6
+## 2  ALEXANDER   15850 15030  37497        17    34.8 85 49.138  72.8
+## 3  ALLEGHANY    6391  5987  11137        22    25.7 92 39.735 100.0
+## 4      ANSON   11092 10168  24446        16    38.6 84 38.023  78.5
+## 5       ASHE   14346 13431  27203        19    26.0 87 41.864  84.9
+## 6      AVERY    9445  8815  17557        24    26.5 94 41.701  88.8
+## 7   BEAUFORT   25319 23619  46994        17    39.3 83 46.411  65.6
+## 8     BERTIE   10286  9329  18947        16    43.3 84 35.433  83.2
+## 9     BLADEN   16150 14952  32722        20    43.7 90 36.976  91.2
+## 10 BRUNSWICK   88615 84205 142820        16    28.9 84 60.163  43.0
+##                          geometry
+## 1  MULTIPOLYGON (((-79.24619 3...
+## 2  MULTIPOLYGON (((-81.10889 3...
+## 3  MULTIPOLYGON (((-81.23989 3...
+## 4  MULTIPOLYGON (((-79.91995 3...
+## 5  MULTIPOLYGON (((-81.47276 3...
+## 6  MULTIPOLYGON (((-81.94135 3...
+## 7  MULTIPOLYGON (((-77.10377 3...
+## 8  MULTIPOLYGON (((-76.78307 3...
+## 9  MULTIPOLYGON (((-78.2615 34...
+## 10 MULTIPOLYGON (((-78.65572 3...
+```
+
+---
+
+### Choropleth maps
+
+
+```r
+ggplot(nc) + 
+  geom_sf(aes(fill = partial)) +
+  scale_fill_gradient(low = "#fee8c8", high = "#7f0000") +
+  labs(title = "Count of at least partially vaccinated residents",
+       fill = "People") +
+  theme_bw()
+```
+
+&lt;img src="spatial-1_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Choropleth maps
+
+
+```r
+ggplot(nc) + 
+  geom_sf(aes(fill = partial/pop)) +
+  scale_fill_gradient(low = "#fee8c8", high = "#7f0000") +
+  labs(title = "Proportion at least partially vaccinated",
+       fill = "Proportion") +
+  theme_bw()
+```
+
+&lt;img src="spatial-1_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Neighbors
+
+Counties that are "close together" spatially might be similar.
+
+One definition of "close" is to consider its .vocab[neighbors]. A neighbor is an 
+observation that is .vocab[contiguous] to another (i.e., that shares a 
+.vocab[border] or .vocab[point] in common). We can think of the .vocab[order] of 
+contiguity as well: neighbors are first-order contiguous; neighbors-of-neighbors 
+are second-order contiguous. Exact adjacency order depends on our 
+definition (e.g., rook vs. queen on a chess board).
+
+We might also consider observations to be "close" if they are within a certain
+distance of another observation. Distance-based adjacency measures are more
+commonly used with point data, while neighbor-based adjacency is more common
+with areal data.
+
+---
+
+### Spatial weight matrix
+
+A .vocab[spatial weight matrix] is a square matrix that identifies whether
+observations are neighbors (or more generally, the adjacency metric between all
+pairwise observations).
+
+In general, it's pretty computationally-intensive to construct such a matrix, 
+although built-in functions from R packages are pretty fast nowadays (and in 
+this case we only have 100 counties).
+
+
+```r
+library(spdep)
+sp_wts &lt;- poly2nb(nc, row.names=nc$name, queen = T)
+sp_wts
+```
+
+```
+## Neighbour list object:
+## Number of regions: 100 
+## Number of nonzero links: 490 
+## Percentage nonzero weights: 4.9 
+## Average number of links: 4.9
+```
+
+---
+
+### Spatial weight matrix
+
+
+```r
+summary(sp_wts)
+```
+
+```
+## Neighbour list object:
+## Number of regions: 100 
+## Number of nonzero links: 490 
+## Percentage nonzero weights: 4.9 
+## Average number of links: 4.9 
+## Link number distribution:
+## 
+##  2  3  4  5  6  7  8  9 
+##  8 15 17 23 19 14  2  2 
+## 8 least connected regions:
+## 21 22 27 28 65 69 75 89 with 2 links
+## 2 most connected regions:
+## 49 63 with 9 links
+```
+
+---
+
+### Spatial weight matrix
+
+
+```r
+nc %&gt;% 
+  slice(c(49, 63))
+```
+
+```
+## Simple feature collection with 2 features and 9 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -81.10889 ymin: 35.03736 xmax: -79.09589 ymax: 36.05335
+## Geodetic CRS:  NAD27
+##      name partial fully    pop uninsured obesity hs   mhhi rural
+## 1 IREDELL   92444 87334 181806        14    31.9 89 60.044  37.9
+## 2   MOORE   56344 53100 100880        14    26.3 89 59.471  50.7
+##                         geometry
+## 1 MULTIPOLYGON (((-80.72652 3...
+## 2 MULTIPOLYGON (((-79.60747 3...
+```
+
+---
+
+### Spatial weight matrix
+
+
+```r
+sp_mat &lt;- nb2mat(sp_wts, style='B') # Binary 1/0
+sp_mat[1:10,1:10]
+```
+
+```
+##    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+## 1     0    0    0    0    0    0    0    0    0     0
+## 2     0    0    0    0    0    0    0    0    0     0
+## 3     0    0    0    0    1    0    0    0    0     0
+## 4     0    0    0    0    0    0    0    0    0     0
+## 5     0    0    1    0    0    0    0    0    0     0
+## 6     0    0    0    0    0    0    0    0    0     0
+## 7     0    0    0    0    0    0    0    0    0     0
+## 8     0    0    0    0    0    0    0    0    0     0
+## 9     0    0    0    0    0    0    0    0    0     0
+## 10    0    0    0    0    0    0    0    0    0     0
+```
+
+---
+
+### Spatial weight matrix
+
+
+```r
+nc %&gt;% 
+  slice(which(sp_mat[which(nc$name == "DURHAM"),] == 1)) %&gt;% 
+  select(name) %&gt;% 
+  st_drop_geometry()
+```
+
+.question[
+What does the above code do?
+]
+
+---
+
+### Spatial weight matrix
+
+
+```r
+nc %&gt;% 
+  slice(which(sp_mat[which(nc$name == "DURHAM"),] &gt; 0)) %&gt;% 
+  select(name) %&gt;% 
+  st_drop_geometry()
+```
+
+---
+
+### Spatial weight matrix
+
+
+```r
+cbind(nc, neighbors = rowSums(sp_mat))
+```
+
+```
+## Simple feature collection with 100 features and 10 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -84.32385 ymin: 33.88199 xmax: -75.45698 ymax: 36.58965
+## Geodetic CRS:  NAD27
+## First 10 features:
+##         name partial fully    pop uninsured obesity hs   mhhi rural neighbors
+## 1   ALAMANCE   96227 91165 169509        18    32.4 81 50.480  28.6         6
+## 2  ALEXANDER   15850 15030  37497        17    34.8 85 49.138  72.8         4
+## 3  ALLEGHANY    6391  5987  11137        22    25.7 92 39.735 100.0         3
+## 4      ANSON   11092 10168  24446        16    38.6 84 38.023  78.5         4
+## 5       ASHE   14346 13431  27203        19    26.0 87 41.864  84.9         3
+## 6      AVERY    9445  8815  17557        24    26.5 94 41.701  88.8         5
+## 7   BEAUFORT   25319 23619  46994        17    39.3 83 46.411  65.6         6
+## 8     BERTIE   10286  9329  18947        16    43.3 84 35.433  83.2         5
+## 9     BLADEN   16150 14952  32722        20    43.7 90 36.976  91.2         5
+## 10 BRUNSWICK   88615 84205 142820        16    28.9 84 60.163  43.0         3
+##                          geometry
+## 1  MULTIPOLYGON (((-79.24619 3...
+## 2  MULTIPOLYGON (((-81.10889 3...
+## 3  MULTIPOLYGON (((-81.23989 3...
+## 4  MULTIPOLYGON (((-79.91995 3...
+## 5  MULTIPOLYGON (((-81.47276 3...
+## 6  MULTIPOLYGON (((-81.94135 3...
+## 7  MULTIPOLYGON (((-77.10377 3...
+## 8  MULTIPOLYGON (((-76.78307 3...
+## 9  MULTIPOLYGON (((-78.2615 34...
+## 10 MULTIPOLYGON (((-78.65572 3...
+```
+
+---
+
+### Spatial weight matrix
+
+
+```r
+sp_mat_std &lt;- nb2mat(sp_wts, style='W') # Row-standardized
+sp_mat_std[1:10,1:10]
+```
+
+```
+##    [,1] [,2]      [,3] [,4]      [,5] [,6] [,7] [,8] [,9] [,10]
+## 1     0    0 0.0000000    0 0.0000000    0    0    0    0     0
+## 2     0    0 0.0000000    0 0.0000000    0    0    0    0     0
+## 3     0    0 0.0000000    0 0.3333333    0    0    0    0     0
+## 4     0    0 0.0000000    0 0.0000000    0    0    0    0     0
+## 5     0    0 0.3333333    0 0.0000000    0    0    0    0     0
+## 6     0    0 0.0000000    0 0.0000000    0    0    0    0     0
+## 7     0    0 0.0000000    0 0.0000000    0    0    0    0     0
+## 8     0    0 0.0000000    0 0.0000000    0    0    0    0     0
+## 9     0    0 0.0000000    0 0.0000000    0    0    0    0     0
+## 10    0    0 0.0000000    0 0.0000000    0    0    0    0     0
+```
+
+---
+
+### Moran's I
+
+
+```r
+sp_mat_list &lt;-  nb2listw(sp_wts, style='B')
+sp_mat_list
+```
+
+```
+## Characteristics of weights list object:
+## Neighbour list object:
+## Number of regions: 100 
+## Number of nonzero links: 490 
+## Percentage nonzero weights: 4.9 
+## Average number of links: 4.9 
+## 
+## Weights style: B 
+## Weights constants summary:
+##     n    nn  S0  S1    S2
+## B 100 10000 490 980 10696
+```
+
+---
+
+### Moran's I
+
+`\begin{align*}
+I = \frac{n}{\sum_i \sum_j w_{ij}}\frac{\sum_i \sum_j w_{ij}(y_i - \bar{y})(y_j - \bar{y})}{\sum_i (y_i - \bar{y})^2}
+\end{align*}`
+
+- `\(n\)` is the number of spatial observations
+- `\(w_{ij}\)` is the spatial weight between spatial observations `\(i\)` and `\(j\)`
+
+`\(I\)` thus depends on how we constructed our spatial weight matrix. We've shown a
+binary weight matrix and its row-standardized version, but we can also include
+information regarding how much border they share, or distance between centroids,
+etc.
+
+---
+
+### Moran's I
+
+
+```r
+moran(nc$partial/nc$pop, sp_mat_list, nrow(nc), sum(sp_mat))
+```
+
+```
+## $I
+## [1] 0.1395074
+## 
+## $K
+## [1] 3.564305
+```
+
+Positive `\(I\)` suggests spatial clustering - that higher values are "close" to 
+other higher values, and lower values are "close" to other lower values. 
+Negative `\(I\)` suggests spatial dispersion - that higher values are "close" to 
+lower values, and vice-versa.
+
+---
+
+### Moran's I
+
+
+```r
+set.seed(123)
+moran.mc(nc$partial/nc$pop, sp_mat_list, nsim = 999)
+```
+
+```
+## 
+## 	Monte-Carlo simulation of Moran I
+## 
+## data:  nc$partial/nc$pop 
+## weights: sp_mat_list  
+## number of simulations + 1: 1000 
+## 
+## statistic = 0.13951, observed rank = 989, p-value = 0.011
+## alternative hypothesis: greater
+```
+
+.question[
+What might we conclude regarding proportion of residents receiving at least
+one dose of the vaccine?
+]
+
+---
+
+### Moran's I
+
+
+```r
+sp_mat_list_std &lt;-  nb2listw(sp_wts, style='W')
+moran.plot(nc$partial/nc$pop, sp_mat_list_std,
+           xlab = "Partially vaccinated proportion",
+           ylab = "Spatially lagged proportion")
+```
+
+&lt;img src="spatial-1_files/figure-html/unnamed-chunk-30-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Moran's I
+
+&lt;img src="spatial-1_files/figure-html/unnamed-chunk-31-1.png" style="display: block; margin: auto;" /&gt;
+
+.question[
+What counties have a relatively high proportion of at least partially
+vaccinated people, but are surrounded by less-vaccinated counties?
+]
+
+---
+
+### Moran's I
+
+
+```r
+nc %&gt;% 
+  slice(c(63)) %&gt;% 
+  mutate(prop = partial/pop) %&gt;% 
+  dplyr::select(name, prop) %&gt;% 
+  st_drop_geometry
+```
+
+```
+##    name     prop
+## 1 MOORE 0.558525
+```
+
+---
+
+### Moran's I
+
+
+```r
+nc %&gt;% 
+  slice(which(sp_mat[63,] &gt; 0)) %&gt;% 
+  mutate(prop = partial/pop) %&gt;% 
+  dplyr::select(name, prop) %&gt;% 
+  st_drop_geometry()
+```
+
+```
+##         name      prop
+## 1    CHATHAM 0.5521955
+## 2 CUMBERLAND 0.6467069
+## 3    HARNETT 0.3967833
+## 4       HOKE 0.3398088
+## 5        LEE 0.5405235
+## 6 MONTGOMERY 0.4336290
+## 7   RANDOLPH 0.4270083
+## 8   RICHMOND 0.4754289
+## 9   SCOTLAND 0.4896764
+```
+
+.question[
+How might we further account for population size when determining proportion
+of (at least partially) vaccinated neighbors?
+]
+
+---
+
+### Point-valued data
+
+&lt;img src="spatial-1_files/figure-html/unnamed-chunk-34-1.png" style="display: block; margin: auto;" /&gt;
+
+.question[
+How might we compute Moran's I for point-valued data? What would a potential 
+weight matrix look like?
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

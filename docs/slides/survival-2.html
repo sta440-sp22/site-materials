@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introduction to survival analysis (2)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Yue Jiang" />
+    <script src="libs/font-awesome/header-attrs-2.10/header-attrs.js"></script>
+    <link rel="stylesheet" href="sta440-slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introduction to survival analysis (2)
+### Yue Jiang
+### Duke University
+
+---
+
+
+
+
+### The DIG Trial
+
+&lt;img src="img/02/dig_trial.png" width="120%" /&gt;
+
+Investigators compared the **primary outcome** of the number of days from the
+start of the study to either death or hospitalization from worsening heart
+failure.
+
+---
+
+### Representing survival data
+
+Underlying data:
+- `\(T\)`: Failure time, a non-negative random variable
+- `\(C\)`: Censoring time, a non-negative random variable
+Observed data for individual `\(i\)`:
+- `\(Y_i\)`: `\((T_i \wedge C_i)\)`, the minimum of `\(T_i\)` and `\(C_i\)`
+- `\(\delta_i\)`: `\(1_{(T_i \le C_i)}\)`, whether we observe a failure
+
+If `\(\delta_i = 0\)`, then we have .vocab[right-censoring]: the survival time is
+longer than the censoring time.
+
+Commonly, we assume `\(C_i\)` are *i.i.d.* random variables with some distribution
+and that the censoring mechanism is *independent* of the failure mechanism.
+
+---
+
+### Characterizing continuous `\(T\)`
+
+- Density function: `\(f(t) = \lim_{\Delta t \to 0^+} \frac{P(t \le T &lt; t + \Delta t)}{\Delta t}\)`
+
+- Distribution function: `\(F(t) = P(T \le t) = \int_0^t f(s)ds\)`
+
+- Survival function: `\(S(t) = P(T &gt; t) = 1 - F(t)\)`
+
+- Hazard function: `\(\lambda(t) = \lim_{\Delta t \to 0^+} \frac{P(t \le T &lt; t + \Delta t | T \ge t)}{\Delta t}\)`
+
+- Cumulative hazard function: `\(\Lambda(t) = \int_0^t \lambda(s)ds\)`
+
+Knowing one is equivalent to knowing the others.
+
+---
+
+### Hazard distributions
+
+Exponential distribution:
+
+- `\(f(t) = \lambda e^{-\lambda t}\)` (don't get the rate parameter `\(\lambda\)` 
+confused with the hazard)
+- `\(F(t) = 1 - e^{-\lambda t}\)`
+- `\(S(t) = e^{-\lambda t}\)`
+- `\(\lambda(t) = \lambda\)`
+- `\(\Lambda(t) = \lambda t\)`
+
+.question[
+What do you notice about the hazard for survival times that have an exponential 
+distribution?
+]
+
+---
+
+### Hazard distributions
+
+Weibull distribution:
+
+- `\(f(t) = p\lambda^p t^{p - 1}e^{-(\lambda t)^p}\)`
+- `\(F(t) = 1 - e^{-(\lambda t)^p}\)`
+- `\(S(t) = e^{-(\lambda t)^p}\)`
+- `\(\lambda(t) = p\lambda^p t^{p - 1}\)`
+- `\(\Lambda(t) = (\lambda t)^p\)`
+
+When the shape parameter `\(p\)` is 1, then we have the exponential distribution.
+
+The hazard increases monotonically over time if `\(p &gt; 1\)` and decreases 
+monotonically if `\(p &lt; 1\)` (is this reasonable to assume?).
+
+---
+
+### Hazard distributions
+
+Plotting Weibull hazard with `\(\lambda = 1\)` and various shape parameters `\(p\)`:
+
+&lt;img src="survival-2_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Hazard distributions
+
+Log-normal distribution:
+
+- `\(f(t) = \frac{1}{t \sigma}\phi\left(\frac{\log(t) - \mu}{\sigma} \right)\)`
+- `\(F(t) = \Phi\left(\frac{\log(t) - \mu}{\sigma} \right)\)`
+- `\(S(t) = 1 - F(t)\)`
+- `\(\lambda(t) = f(t)/S(t)\)`
+- `\(\Lambda(t) = \int_0^t \lambda(s)ds\)`
+
+---
+
+### Hazard distributions
+
+Plotting log-normal hazard with `\(\mu = 0\)` and `\(\sigma^2 = 1\)`:
+
+&lt;img src="survival-2_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Hazard distributions
+
+Log-logistic distribution:
+
+- `\(f(t) = \frac{(\beta/\alpha)(t/\alpha)^{\beta - 1}}{(1 + (t/\alpha)^\beta)^2}\)`
+- `\(F(t) = \frac{(t/\alpha)^\beta}{1 + (t/\alpha)^\beta}\)`
+- `\(S(t) = \frac{1}{1 + (t/\alpha)^\beta}\)`
+- `\(\lambda(t) = \frac{(\beta/\alpha)(t/\alpha)^{\beta - 1}}{1 + (t/\alpha)^\beta}\)`
+- `\(\Lambda(t) = \log(1 + (t/\alpha)^\beta)\)`
+
+---
+
+### Hazard distributions
+
+Plotting log-logistic hazards with `\(\alpha = 1\)` and various `\(\beta\)`:
+
+&lt;img src="survival-2_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Estimation
+
+Suppose we had a series of *non-censored* observations `\(t_1, t_2, \cdots, t_n\)`, 
+and we thought that these survival times were i.i.d. and came from some
+distribution with density `\(f(t)\)`.
+
+.question[
+How might we estimate the parameter(s) `\(\theta\)` of that distribution?
+]
+
+---
+
+### Review: maximum likelihood estimation
+
+`\begin{align*}
+\mathcal{L}(\theta | T) &amp;= f(t_1, t_2, \cdots, t_n | \theta)\\
+&amp;= f(t_1 | \theta)f(t_2 | \theta) \cdots f(t_n | \theta)\\
+&amp;= \prod_{i = 1}^n f(t_i|\theta),
+\end{align*}`
+
+which we can often maximize in closed form for many familiar distributions (or 
+numerically). 
+
+---
+
+### Review: maximum likelihood estimation
+
+For instance, if we thought `\(T \stackrel{i.i.d}{\sim} Exp(\lambda)\)`, then 
+
+`\begin{align*}
+\mathcal{L}(\lambda | T) &amp;= \lambda^n \exp \left(-\lambda\sum_{i = 1}^n t_n \right)\\
+\log \mathcal{L}(\lambda | T) &amp;= n\log(\lambda) - \lambda \sum_{i = 1}^n t_i,\\
+\hat{\lambda}_{MLE} &amp;= \frac{n}{\sum_{i = 1}^n t_i}
+\end{align*}`
+
+---
+
+### Estimation for censored data
+
+How might we perform maximum likelihood estimation for *censored* data? What
+would the likelihood look like? Suppose we have `\(n\)` i.i.d. observations with the
+same `\(f(t)\)`, `\(S(t)\)`, and hazard `\(\lambda(t)\)`. Consider what might happen at time
+`\(t_i\)`:
+
+- Case 1: Individual experiences event at `\(t_i: \delta_i = 1\)`. In 
+this case, they contribute the density at `\(t_i\)`, which is `\(f(t_i)\)`.
+
+.question[
+What would their contribution to the likelihood be if they were censored?
+]
+
+--
+
+- Case 2: Individual is still alive at `\(t_i: \delta_i = 0\)`. In this
+case, we know that their survival time is greater than `\(t_i\)`, which happens with
+probability `\(S(t_i)\)`.
+
+--
+
+So, this individual's contribution to the likelihood is 
+
+`\begin{align*}
+f(t_i)^{\delta_i}S(t_i)^{1 - \delta_i}
+\end{align*}`
+
+---
+
+### Estimation for censored data
+
+Note that
+
+`\begin{align*}
+\lambda(t) &amp;= \lim_{\Delta t \to 0^+} \frac{P(t \le T &lt; t + \Delta t | T \ge t)}{\Delta t}\\
+&amp;= \lim_{\Delta t \to 0^+} \frac{P(t \le T &lt; t + \Delta t \cap T \ge t)/P(T \ge t)}{\Delta t}\\
+&amp;= \lim_{\Delta t \to 0^+} \frac{P(t \le T &lt; t + \Delta t)}{P(T \ge t)\Delta t}\\
+&amp;= \lim_{\Delta t \to 0^+} \frac{f(t)\Delta t}{P(T \ge t)\Delta t}\\
+&amp;= \frac{f(t)}{S(t)}, \\
+f(t) &amp;= \lambda(t)S(t)
+\end{align*}`
+
+---
+
+### Estimation for censored data
+
+An individual's contribution to the likelihood is thus
+
+`\begin{align*}
+&amp;\mathrel{\phantom{=}} f(t_i)^{\delta_i}S(t_i)^{1 - \delta_i}\\
+&amp;= \lambda(t_i)^{\delta_i}S(t_i)^{\delta_i}S(t_i)^{1 - \delta_i}\\
+&amp;= \lambda(t_i)^{\delta_i}S(t_i)
+\end{align*}`
+
+For our exponential example with `\(T \stackrel{i.i.d.}{\sim} Exp(\lambda)\)`, since
+the hazard is given by `\(\lambda\)` and the survival function is given by 
+`\(e^{-\lambda t}\)`, we would thus have
+
+`\begin{align*}
+\mathcal{L}(\lambda | T) &amp;= \prod_{i = 1}^n \lambda^{\delta_i}\exp(-\lambda t_i),
+\end{align*}`
+
+which we could then maximize using familiar methods.
+
+---
+
+### Covariates?
+
+.question[
+How might we adjust for potential covariates that might be related to our
+outcome? Is there any way to create a predictive model for survival time?
+]
+
+---
+
+### Some candidate models
+
+Could we use the following model for survival outcomes?
+
+`\begin{align*}
+T_i = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \cdots + \beta_px_{pi} + \epsilon_i
+\end{align*}`
+
+--
+
+How about this model?
+
+`\begin{align*}
+\log(T_i) = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \cdots + \beta_px_{pi} + \epsilon_i
+\end{align*}`
+
+---
+
+### An accelerated failure time model
+
+An .vocab[accelerated failure time] (AFT) model assumes
+
+`\begin{align*}
+\log(T_i) = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \cdots + \beta_px_{pi} + \epsilon_i
+\end{align*}`
+
+where `\(\epsilon_i\)` are commonly assumed to be i.i.d. and follow some specified
+distribution.
+
+.question[
+How might we "know" what distribution `\(\epsilon\)` takes on?
+]
+
+---
+
+### An accelerated failure time model
+
+`\begin{align*}
+\log(T_i) = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \cdots + \beta_px_{pi} + \epsilon_i
+\end{align*}`
+
+There is a one-to-one relationship between the distribution of `\(T\)` and the
+assumed error distribution in the AFT model. 
+
+For instance, assuming `\(\epsilon_i\)` has a normal distribution implies `\(T_i\)` 
+has a log-normal distribution.
+
+---
+
+### An accelerated failure time model
+
+Note that we can also write the AFT model as
+
+`\begin{align*}
+\log(T_i) &amp;= \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \cdots + \beta_px_{pi} + \epsilon_i\\
+T_i &amp;= \exp\left(\beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \cdots + \beta_px_{pi} \right)e^{\epsilon_i}
+\end{align*}`
+
+.question[
+How might we interpret coefficients in the AFT model?
+]
+
+---
+
+### An accelerated failure time model
+
+`\begin{align*}
+T_i &amp;= \exp\left(\beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \cdots + \beta_px_{pi} \right)e^{\epsilon_i}\\
+&amp;= e^{\beta_0}e^{\beta_1x_{1i}}e^{\beta_2x_{2i}}\cdots e^{\beta_px_{pi}}e^{\epsilon_i}
+\end{align*}`
+
+Covariates in an AFT model have a multiplicative effect on *time*. 
+
+For instance,
+if `\(\beta_k = 0.4\)`, then `\(\exp(\beta_k) \approx 1.5\)`. Holding all else equal,
+an individual with covariate `\(x_k\)` one unit greater than another is expected
+to survive approximately 1.5 times longer than the other. The probability that
+they have survived to time `\(1.5t\)` is the same as the probability that the other
+individual is alive has survived to time `\(t\)`.
+
+---
+
+### Estimation in survival models
+
+Remember that an individual's contribution to the likelihood is
+
+`\begin{align*}
+\lambda(t)^{\delta_i}S(t),
+\end{align*}`
+
+and so the full likelihood function is given by
+
+`\begin{align*}
+\mathcal{L}(\theta | Y) = \prod_{i = 1}^n \lambda(t_i)^{\delta_i}S(t_i).
+\end{align*}`
+
+This likelihood function holds regardless of what type of model is being
+estimated (for independently right-censored data).
+
+---
+
+### Fitting an AFT model
+
+Recall that our model specifies a functional form between `\(Y\)`, `\(\beta\)`, and 
+`\(\mathbf{X}\)`. For the AFT model,
+
+`\begin{align*}
+\log(T_i) = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \cdots + \beta_px_{pi} + \epsilon_i,
+\end{align*}`
+
+Suppose we think `\(T\)` follows an exponential distribution such that
+`\(T \sim Exp(\exp(\mathbf{X}^T\beta))\)`; that is, `\(\epsilon\)` has a standard 
+extreme value distribution: `\(f(u) = \exp(u - \exp(u))\)`.
+
+Then we have:
+
+`\begin{align*}
+S(t | \mathbf{X}) &amp;= \exp(-t\exp(\mathbf{X}^T\beta))\\
+\lambda(t | \mathbf{X}) &amp;= \exp(\mathbf{X}^T\beta)
+\end{align*}`
+
+---
+
+### Fitting an AFT model
+
+Thus we can maximize the likelihood for this model
+
+`\begin{align*}
+&amp;\mathrel{\phantom{=}} \prod_{i = 1}^n \lambda(t_i | \mathbf{X}_i)^{\delta_i}S(t_i | \mathbf{X}_i)\\
+&amp;= \prod_{i = 1}^n \exp(\mathbf{X}_i^T\beta)^{\delta_i}\exp(-t\exp(\mathbf{X}_i^T\beta))
+\end{align*}`
+
+with respect to the regression parameters of interest `\(\beta\)`. Different 
+assumptions re: error distributions (and thus of `\(T\)`) result in different hazard 
+and survival functions being plugged into our generic likelihood.
+
+Note that there is no closed form for this likelihood function with respect to 
+`\(\beta\)`; choose your favorite numerical method (we'll see Newton-Raphson once
+again in model output on the following slides).
+
+
+
+---
+
+### Fitting an AFT model
+
+
+```r
+library(survival)
+aft_e &lt;- survreg(Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+                 data = dig, dist = "exponential")
+summary(aft_e)
+```
+
+```
+## 
+## Call:
+## survreg(formula = Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+##     data = dig, dist = "exponential")
+##                Value Std. Error     z       p
+## (Intercept)  6.62850    0.07495 88.43 &lt; 2e-16
+## TRTMT        0.29856    0.04167  7.17 7.7e-13
+## EJF_PER      0.04037    0.00239 16.92 &lt; 2e-16
+## PREVMI      -0.04978    0.04364 -1.14    0.25
+## 
+## Scale fixed at 1 
+## 
+## Exponential distribution
+## Loglik(model)= -20511.5   Loglik(intercept only)= -20680.3
+## 	Chisq= 337.51 on 3 degrees of freedom, p= 7.6e-73 
+## Number of Newton-Raphson Iterations: 5 
+## n= 6799
+```
+
+---
+
+### Fitting an AFT model
+
+
+```r
+library(survival)
+aft_w &lt;- survreg(Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+                 data = dig, dist = "weibull")
+summary(aft_w)
+```
+
+```
+## 
+## Call:
+## survreg(formula = Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+##     data = dig, dist = "weibull")
+##                Value Std. Error     z       p
+## (Intercept)  6.58614    0.10266 64.15 &lt; 2e-16
+## TRTMT        0.39910    0.05768  6.92 4.5e-12
+## EJF_PER      0.05263    0.00337 15.61 &lt; 2e-16
+## PREVMI      -0.06661    0.06001 -1.11    0.27
+## Log(scale)   0.31844    0.01891 16.84 &lt; 2e-16
+## 
+## Scale= 1.37 
+## 
+## Weibull distribution
+## Loglik(model)= -20351.2   Loglik(intercept only)= -20504.9
+## 	Chisq= 307.43 on 3 degrees of freedom, p= 2.5e-66 
+## Number of Newton-Raphson Iterations: 5 
+## n= 6799
+```
+
+---
+
+### Fitting an AFT model
+
+
+```r
+library(survival)
+aft_n &lt;- survreg(Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+                 data = dig, dist = "lognormal")
+summary(aft_n)
+```
+
+```
+## 
+## Call:
+## survreg(formula = Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+##     data = dig, dist = "lognormal")
+##                Value Std. Error     z       p
+## (Intercept)  6.06283    0.12297 49.30 &lt; 2e-16
+## TRTMT        0.55329    0.06741  8.21 2.2e-16
+## EJF_PER      0.05932    0.00385 15.42 &lt; 2e-16
+## PREVMI      -0.11991    0.07059 -1.70   0.089
+## Log(scale)   0.82037    0.01636 50.14 &lt; 2e-16
+## 
+## Scale= 2.27 
+## 
+## Log Normal distribution
+## Loglik(model)= -20343.2   Loglik(intercept only)= -20501
+## 	Chisq= 315.72 on 3 degrees of freedom, p= 3.9e-68 
+## Number of Newton-Raphson Iterations: 3 
+## n= 6799
+```
+
+---
+
+### Fitting an AFT model
+
+
+```r
+library(survival)
+aft_l &lt;- survreg(Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+                 data = dig, dist = "loglogistic")
+summary(aft_l)
+```
+
+```
+## 
+## Call:
+## survreg(formula = Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+##     data = dig, dist = "loglogistic")
+##                Value Std. Error     z       p
+## (Intercept)  6.04825    0.11365 53.22 &lt; 2e-16
+## TRTMT        0.48004    0.06243  7.69 1.5e-14
+## EJF_PER      0.05570    0.00359 15.50 &lt; 2e-16
+## PREVMI      -0.08625    0.06517 -1.32    0.19
+## Log(scale)   0.19883    0.01835 10.84 &lt; 2e-16
+## 
+## Scale= 1.22 
+## 
+## Log logistic distribution
+## Loglik(model)= -20342   Loglik(intercept only)= -20498.1
+## 	Chisq= 312.28 on 3 degrees of freedom, p= 2.2e-67 
+## Number of Newton-Raphson Iterations: 4 
+## n= 6799
+```
+
+---
+
+### How well are we fitting?
+
+In each of these past examples, we've assumed a distribution of survival times.
+How can we check if we've made an appropriate assumption? Suppose we use the
+following residuals:
+
+`\begin{align*}
+\widehat{e}_i &amp;= \frac{\log(Y_i) - \mathbf{X}_i^T\widehat{\beta}}{\widehat{\phi}}
+\end{align*}`
+
+where `\(\phi\)` is the scale parameter from the model (don't worry about this).
+
+.question[
+What does `\(\widehat{e}_i\)` represent? Is it appropriate to use these in some way?
+]
+
+---
+
+### How well are we fitting?
+
+`\(\widehat{e}_i\)` examine scaled differences from `\(Y_i\)`, the *observed* data. 
+Thus, these are *censored* residuals, which we must take into account. 
+
+One way to deal with this issue is to plot a Kaplan-Meier plot of these 
+residuals against the survival function of the assumed distribution.
+
+
+```r
+resids &lt;- (log(dig$DWHFDAYS) - aft_ll$linear.predictors) / 
+  (aft_ll$scale)
+m1 &lt;- survfit(Surv(resids, DWHF) ~ 1, data = dig)
+plot(m1, xlab = "AFT Residuals (Logistic model)", 
+     ylab = "Survival Probability")
+exp.x &lt;- seq(min(resids), max(resids), length = 100)
+exp.y &lt;- plogis(exp.x, lower.tail = F) # F(t)
+lines(exp.x, exp.y, col = "red", lwd = 2)
+```
+
+---
+
+### How well are we fitting?
+
+&lt;img src="survival-2_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Intro. to Mediation Analysis</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="CGIBD GI Epi Conference" />
+    <meta name="date" content="2021-12-08" />
+    <script src="mediation_files/header-attrs/header-attrs.js"></script>
+    <link href="mediation_files/remark-css/default.css" rel="stylesheet" />
+    <link href="mediation_files/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="sta440-slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Intro. to Mediation Analysis
+### CGIBD GI Epi Conference
+### December 8, 2021
+
+---
+
+
+
+
+
+
+### A disclaimer
+
+Today's seminar is an introductory surface level treatment of
+mediation analysis. We focus on applications and use cases -- there are no 
+theoretical results presented (even for important subjects like variance
+estimation). Much of the discussion comes from VanderWeele (2016).
+
+---
+
+### Smoking and lung function
+
+&lt;img src="img/med4.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Smoking and DNA methylation
+
+&lt;img src="img/med3.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### DNA methylation and lung function
+
+&lt;img src="img/med1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### DNA methylation and lung function
+
+&lt;img src="img/med2.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Smoking, DNA methylation and lung function?
+
+&lt;img src="img/med4.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+The "total effect of smoking on lung function"
+
+---
+
+### Smoking, DNA methylation and lung function?
+
+&lt;img src="img/med5.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+The "indirect effect of smoking on lung function, as mediated through DNA
+methylation" (note also the "direct effect" of smoking on lung function)
+
+---
+
+### Smoking, DNA methylation and lung function?
+
+&lt;img src="img/med6.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+--
+
+Mediation analysis examines the **process** by which a exposure might "impact"
+an outcome - that is, a pathway examining *how* one variable might "influence"
+another. We might be able to better understand biological pathways or maybe
+provide evidence supporting/refuting a certain theory.
+
+---
+
+### Why care?
+
+&lt;img src="img/med8.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Why care?
+
+&lt;img src="img/med7.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+At 3 months in, patients receiving the CBT had higher rates of antidepressant
+use. Could this be the driver for the efficacy seen later in the trial? 
+
+--
+
+Might we instead be able to focus on pharmacological management rather than costly 
+one-on-one sessions with trained therapists?
+
+---
+
+### Brief detour: causal interpretation
+
+We can interpret mediation analysis in the potential outcomes framework 
+(Robins and Greenland, 1992; Pearl, 2001; VanderWeele, 2015):
+
+- `\(M_{X = x}\)`: the value of `\(M\)` if `\(X\)` were (perhaps counter to fact) equal to `\(x\)`
+- `\(Y_{X = x, M = m}\)`: the value of `\(Y\)` that would have occurred if `\(X = x\)` and
+`\(M = x\)`
+- `\(Y_{X = x, M = M_{X = x}}\)`: nested counterfactual of the value of `\(Y\)` if
+`\(X = x\)` and `\(M\)` took on its own counterfactual value if `\(X = x\)`.
+
+--
+
+The .vocab[total causal effect] (TCE) comparing two levels of the exposure
+`\(X = x\)` to `\(X = x^\star\)` is:
+
+`\begin{align*}
+TCE = Y_{X = x} - Y_{X = x^\star}
+\end{align*}`
+
+---
+
+### Brief detour: causal interpretation
+
+The TCE may be decomposed as follows:
+
+`\begin{align*}
+Y_{X = x} - Y(X = ^\star) &amp;= Y_{X = x, M = M_{X = x}} - Y_{X = x^\star, M = M_{X = x^\star}}\\
+&amp;= \underbrace{\left(Y_{X = x, M = M_{X = x^\star}} - Y_{X = x^\star, M = M_{X = x^\star}}\right)}_{NDE} + \\
+&amp;\mathrel{\phantom{=}}\underbrace{\left(Y_{X = x, M = M_{X = x}} - Y_{X = x, M = M_{X = x^\star}}\right)}_{NIE}. 
+\end{align*}`
+
+The .vocab[natural direct effect] (NDE) represents the difference between two
+potential outcomes differing in the counterfactual value of the exposure, but 
+where the value of the mediator is held constant at its counterfactual value 
+when `\(X = x^\star\)` for both. The direct effect represents all causal effects of 
+the exposure on the outcome *not* carried through the mediator. 
+
+---
+
+### Brief detour: causal interpretation
+
+The TCE may be decomposed as follows:
+
+`\begin{align*}
+Y_{X = x} - Y(X = ^\star) &amp;= Y_{X = x, M = M_{X = x}} - Y_{X = x^\star, M = M_{X = x^\star}}\\
+&amp;= \underbrace{\left(Y_{X = x, M = M_{X = x^\star}} - Y_{X = x^\star, M = M_{X = x^\star}}\right)}_{NDE} + \\
+&amp;\mathrel{\phantom{=}}\underbrace{\left(Y_{X = x, M = M_{X = x}} - Y_{X = x, M = M_{X = x^\star}}\right)}_{NIE}. 
+\end{align*}`
+
+The .vocab[natural indirect effect] (NIE) represents the difference between two
+potential outcomes: one in which the mediator takes on its potential outcome 
+under `\(X = x\)`, and one in which the mediator takes on its potential outcome if 
+instead `\(X\)` were equal to `\(x^\star\)`, but where the exposure is held constant at 
+`\(X = x\)` for both.  
+
+--
+
+The .vocab[average causal mediation effect] (ACME) is the expectation (in the
+mathematical sense) of the NIE.
+
+---
+
+### The classical "four steps" 
+
+
+
+For the sake of illustration, let's use some simulated data intended to 
+represent the Agricultural Health Study, a prospective cohort of pesticide 
+applicators in Iowa and North Carolina. 
+
+&lt;img src="img/ahs.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### The total effect model
+
+&lt;img src="mediation_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### The total effect model
+
+
+```r
+tot.mod &lt;- lm(fev1 ~ smokecat, data = dat)
+summary(tot.mod)
+```
+
+```
+## 
+## Call:
+## lm(formula = fev1 ~ smokecat, data = dat)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2003.85  -583.85   -70.54   586.40  2701.77 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)           2511.23      51.05   49.19   &lt;2e-16
+## smokecatNever-smoker   135.62      62.80    2.16   0.0311
+## 
+## Residual standard error: 842 on 800 degrees of freedom
+## Multiple R-squared:  0.005796,	Adjusted R-squared:  0.004553 
+## F-statistic: 4.664 on 1 and 800 DF,  p-value: 0.0311
+```
+
+---
+
+### The mediator model
+
+&lt;img src="mediation_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### The mediator model
+
+
+```r
+med.mod &lt;- lm(cg05575921 ~ smokecat, data = dat)
+summary(med.mod)
+```
+
+```
+## 
+## Call:
+## lm(formula = cg05575921 ~ smokecat, data = dat)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.38787 -0.01490  0.00835  0.03130  0.10400 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)          0.875113   0.003826  228.74   &lt;2e-16
+## smokecatNever-smoker 0.057687   0.004706   12.26   &lt;2e-16
+## 
+## Residual standard error: 0.0631 on 800 degrees of freedom
+## Multiple R-squared:  0.1581,	Adjusted R-squared:  0.1571 
+## F-statistic: 150.2 on 1 and 800 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+
+### The outcome model
+
+&lt;img src="mediation_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### The outcome model
+
+
+```r
+out.mod &lt;- lm(fev1 ~ smokecat + cg05575921, data = dat)
+summary(out.mod)
+```
+
+```
+## 
+## Call:
+## lm(formula = fev1 ~ smokecat + cg05575921, data = dat)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2020.22  -589.49   -73.29   579.83  2616.52 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)           1295.56     414.00   3.129  0.00182
+## smokecatNever-smoker    55.49      68.11   0.815  0.41554
+## cg05575921            1389.15     469.51   2.959  0.00318
+## 
+## Residual standard error: 837.9 on 799 degrees of freedom
+## Multiple R-squared:  0.01657,	Adjusted R-squared:  0.01411 
+## F-statistic: 6.732 on 2 and 799 DF,  p-value: 0.001262
+```
+
+---
+
+### Specifying a causal model
+
+
+```r
+library(mediation)
+med &lt;- mediate(med.mod, out.mod, 
+               treat = "smokecat",
+               mediator = "cg05575921",
+               boot = T, sims = 500)
+summary(med)
+```
+
+```
+## 
+## Causal Mediation Analysis 
+## 
+## Nonparametric Bootstrap Confidence Intervals with the Percentile Method
+## 
+##                Estimate 95% CI Lower 95% CI Upper p-value
+## ACME             80.135       31.232       137.40  &lt;2e-16
+## ADE              55.486      -71.725       180.63    0.44
+## Total Effect    135.621       16.066       263.58    0.02
+## Prop. Mediated    0.591        0.172         3.04    0.02
+## 
+## Sample Size Used: 802 
+## 
+## 
+## Simulations: 500
+```
+
+---
+
+### Assumptions for model-based causal mediation
+
+Some (pretty strong) necessary assumptions needed for causal interpretations of 
+mediation include the following:
+
+1. Strong ignorability of treatment: `\(\left\{Y_{X = x^\star, M = m}, M_{X = x} \right\} \perp X | Z = z\)`
+2. *Sequential* ignorability for mediators: `\(Y_{X = x^\star, M = m} \perp M_{X = x} | X = x, Z = z\)`
+
+What do these actually mean?
+
+---
+
+### Assumptions for model-based causal mediation
+
+We can't have
+
+1. Confounding between the .vocab[exposure] and .vocab[outcome]
+2. Confounding between the .vocab[exposure] and .vocab[mediator]
+3. Confounding between the .vocab[mediator] and .vocab[outcome]
+4. Confounding between the .vocab[mediator] and .vocab[outcome] *itself*
+affected by the .vocab[exposure].
+
+--
+
+Ideally, these assumptions would be dealt with when *designing* your study.
+
+--
+
+Randomization might take care of (1) and (2), but (3) and (4) are a bit 
+trickier to deal with. Essentially, (3) and (4) require that no post-exposure
+confounders exist *and* that no unmeasured pre-treatment confounders exist
+(unfortunately, this is basically untestable).
+
+--
+
+Why are these assumptions needed?
+
+---
+
+### Assumptions for model-based causal mediation
+
+&lt;img src="img/med7.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+A naive mediation analysis of the data gives an NDE estimate of -0.37, an NIE
+of 0.03, and suggests that antidepressant use increases depression (????).
+
+.question[
+**What's going on here?**
+]
+
+---
+
+### Back to our example...
+
+
+```r
+med.mod &lt;- lm(cg05575921 ~ smokecat + gender + age + height + weight, 
+              data = dat)
+out.mod &lt;- lm(fev1 ~ smokecat + cg05575921 + gender + age + height + weight, 
+              data = dat)
+```
+
+---
+
+### Back to our example...
+
+
+```r
+med2 &lt;- mediate(med.mod, out.mod, 
+                treat = "smokecat",
+                mediator = "cg05575921",
+                boot = T, sims = 500)
+summary(med2)
+```
+
+```
+## 
+## Causal Mediation Analysis 
+## 
+## Nonparametric Bootstrap Confidence Intervals with the Percentile Method
+## 
+##                Estimate 95% CI Lower 95% CI Upper p-value
+## ACME             65.164       28.040       104.06  &lt;2e-16
+## ADE              63.773      -22.671       148.55   0.112
+## Total Effect    128.937       46.811       208.66   0.004
+## Prop. Mediated    0.505        0.219         1.37   0.004
+## 
+## Sample Size Used: 802 
+## 
+## 
+## Simulations: 500
+```
+
+---
+
+### What about a non-linear outcome?
+
+
+```r
+med.mod &lt;- lm(cg05575921 ~ smokecat + gender + age, 
+              data = dat)
+out.mod &lt;- glm(asthma ~ smokecat + cg05575921 + gender + age, 
+               family = "binomial",
+               data = dat)
+```
+
+---
+
+### What about a non-linear outcome?
+
+
+```r
+med3 &lt;- mediate(med.mod, out.mod, 
+                treat = "smokecat",
+                mediator = "cg05575921",
+                boot = T, sims = 500)
+summary(med3)
+```
+
+```
+## 
+## Causal Mediation Analysis 
+## 
+## Nonparametric Bootstrap Confidence Intervals with the Percentile Method
+## 
+##                          Estimate 95% CI Lower 95% CI Upper p-value
+## ACME (control)            0.03820      0.00698         0.08   0.012
+## ACME (treated)            0.03825      0.00721         0.08   0.012
+## ADE (control)             0.00137     -0.06485         0.07   0.924
+## ADE (treated)             0.00142     -0.06675         0.08   0.924
+## Total Effect              0.03962     -0.02686         0.11   0.236
+## Prop. Mediated (control)  0.96408     -4.69239        11.33   0.248
+## Prop. Mediated (treated)  0.96533     -4.49920        11.06   0.248
+## ACME (average)            0.03822      0.00706         0.08   0.012
+## ADE (average)             0.00140     -0.06580         0.08   0.924
+## Prop. Mediated (average)  0.96470     -4.59580        11.19   0.248
+## 
+## Sample Size Used: 802 
+## 
+## 
+## Simulations: 500
+```
+
+---
+
+### Some great resources
+
+&lt;img src="img/medref.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Some great resources
+
+&lt;img src="img/medref2.png" width="1287" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

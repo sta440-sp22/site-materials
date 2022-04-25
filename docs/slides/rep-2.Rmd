@@ -1,0 +1,101 @@
+---
+title: "Reproducible Research (2)"
+author: "Yue Jiang"
+date: "Duke University"
+header-includes: \usepackage{bm}
+output:
+  xaringan::moon_reader:
+  mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+css: "sta440-slides.css"
+logo: img/sta199-sticker-icon.png
+lib_dir: libs/font-awesome
+nature:
+  highlightStyle: github
+highlightLines: true
+countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1
+  )
+# Set dpi and height for images
+library(knitr)
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+	fig.align = "center",
+	fig.height = 3.75,
+	fig.width = 6.25,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(knitr)
+```
+
+### Disclaimer
+
+Today's class is an interactive in-class activity aimed at reproducing tables
+and figures from an existing work, given only the dataset, data dictionary, and
+original publication. These materials are available on the course Sakai page.
+
+---
+
+### Deceased donor hyperglycemia 
+
+```{r, echo=FALSE, warning = F, fig.align = 'center', out.width = "80%"}
+library(knitr)
+include_graphics("img/ddh1.png")
+```
+
+---
+
+### Deceased donor hyperglycemia 
+
+```{r, echo=FALSE, warning = F, fig.align = 'center', out.width = "80%"}
+library(knitr)
+include_graphics("img/ddh2.png")
+```
+
+---
+
+### Deceased donor hyperglycemia
+
+```{r, echo=FALSE, warning = F, fig.align = 'center', out.width = "80%"}
+library(knitr)
+include_graphics("img/ddh3.png")
+```
+
+---
+
+### Deceased donor hyperglycemia
+
+```{r, echo=FALSE, warning = F, fig.align = 'center', out.width = "100%"}
+library(knitr)
+include_graphics("img/ddh5.png")
+```
+
+---
+
+### Deceased donor hyperglycemia
+
+```{r, echo=FALSE, warning = F, fig.align = 'center', out.width = "50%"}
+library(knitr)
+include_graphics("img/ddh4.png")
+```

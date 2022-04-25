@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Spatial data analysis (2)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Yue Jiang" />
+    <script src="spatial-2_files/header-attrs/header-attrs.js"></script>
+    <link href="spatial-2_files/remark-css/default.css" rel="stylesheet" />
+    <link href="spatial-2_files/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="sta440-slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Spatial data analysis (2)
+### Yue Jiang
+### Duke University
+
+---
+
+
+
+
+
+
+### Motivating example
+
+
+```
+##         name uninsured   mhhi rural
+## 1   ALAMANCE        18 50.480  28.6
+## 2  ALEXANDER        17 49.138  72.8
+## 3  ALLEGHANY        22 39.735 100.0
+## 4      ANSON        16 38.023  78.5
+## 5       ASHE        19 41.864  84.9
+## 6      AVERY        24 41.701  88.8
+## 7   BEAUFORT        17 46.411  65.6
+## 8     BERTIE        16 35.433  83.2
+## 9     BLADEN        20 36.976  91.2
+## 10 BRUNSWICK        16 60.163  43.0
+## 11  BUNCOMBE        16 53.960  24.1
+## 12     BURKE        18 44.946  42.7
+## 13  CABARRUS        13 69.297  19.3
+## 14  CALDWELL        17 43.328  34.4
+## 15    CAMDEN        14 65.955  99.5
+```
+
+.question[
+Is there an association between the adult uninsured % in each county and the
+rurality of a county, adjusting for median household income?
+]
+
+---
+
+### Linear regression model
+
+
+```r
+m1 &lt;- lm(uninsured ~ rural + mhhi, data = nc)
+summary(m1)
+```
+
+```
+## 
+## Call:
+## lm(formula = uninsured ~ rural + mhhi, data = nc)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.7702 -1.5317 -0.1947  1.2996  5.9702 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 20.18807    1.69199  11.932  &lt; 2e-16
+## rural        0.02630    0.00942   2.792 0.006316
+## mhhi        -0.10264    0.02761  -3.718 0.000336
+## 
+## Residual standard error: 2.384 on 97 degrees of freedom
+## Multiple R-squared:  0.2787,	Adjusted R-squared:  0.2638 
+## F-statistic: 18.74 on 2 and 97 DF,  p-value: 1.316e-07
+```
+
+---
+
+### Linear regression model
+
+
+```r
+temp &lt;- tibble(res = m1$residuals, 
+               fitted = m1$fitted.values)
+ggplot(data = temp, aes(x = fitted, y = res)) + 
+  geom_point() + 
+  labs(x = "Fitted values", y = "Residuals",
+       title = "Slight evidence of non-constant variance") +
+  geom_hline(yintercept = 0, color = "red")
+```
+
+&lt;img src="spatial-2_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Linear regression model
+
+
+```r
+ggplot(data = temp, aes(x = res)) + 
+  geom_histogram(bins = 15) +
+  labs(x = "Residuals", y = "Frequency",
+       title = "Slight evidence of right-skew in residuals")
+```
+
+&lt;img src="spatial-2_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Exploratory data analysis
+
+
+
+&lt;img src="spatial-2_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Exploratory data analysis
+
+&lt;img src="spatial-2_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Exploratory data analysis
+
+&lt;img src="spatial-2_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Independence assumption of model is violated!
+
+&lt;img src="spatial-2_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Moran's I for model residuals
+
+
+```r
+nc_sp &lt;- as(nc, "Spatial")
+sp_wts &lt;- poly2nb(nc_sp)
+sp_wts_mat &lt;- nb2mat(sp_wts, style='W')
+sp_wts_list &lt;- mat2listw(sp_wts_mat, style='W')
+```
+
+
+```r
+lm.morantest(m1, sp_wts_list, alternative = "two.sided")
+```
+
+.question[
+Why can't we simply calculate Moran's I on the residuals themselves like we 
+did previously (note the different function)?
+]
+
+---
+
+### Moran's I for model residuals
+
+
+```r
+lm.morantest(m1, sp_wts_list, alternative = "two.sided")
+```
+
+```
+## 
+## 	Global Moran I for regression residuals
+## 
+## data:  
+## model: lm(formula = uninsured ~ mhhi + rural, data = nc)
+## weights: sp_wts_list
+## 
+## Moran I statistic standard deviate = 2.9452, p-value = 0.003227
+## alternative hypothesis: two.sided
+## sample estimates:
+## Observed Moran I      Expectation         Variance 
+##      0.175500899     -0.015183947      0.004191698
+```
+
+.question[
+What might we conclude? Is there evidence for spatial clustering or dispersion
+among the residuals in our model? What are the consequences?
+]
+
+---
+
+### Spatial regression models
+
+There are two main ways of dealing with spatial dependence in regression models:
+spatial error models, and spatial lag models*
+
+.vocab[Spatial error models]: assume that the error terms are correlated;
+however, independence may still be reasonable - perhaps the residuals are
+correlated due to an unmeasured confounding variable (and were to measure
+them, no longer have issues with spatial dependency).
+
+.vocab[Spatial lag models]: independence of observations is violated due to 
+some underlying spatial process - perhaps the *outcome itself* is associated
+with the outcome in neighboring spatial areas (and must be handled by 
+incorporating spatial lag as a predictor).
+
+*.small[(let's not get into CAR vs. SAR models for now...)]
+
+---
+
+### Spatial regression models
+
+Spatial error model:
+
+`\begin{align*}
+Y = \mathbf{X}\boldsymbol{\beta} + \lambda\mathbf{W}\mathbf{u} + \boldsymbol{\epsilon}
+\end{align*}`
+
+Spatial lag model:
+
+`\begin{align*}
+Y = \rho\mathbf{W}Y + \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}
+\end{align*}`
+
+We can use Lagrange multiplier tests for *specific* alternatives by comparing
+each of these models to a constrained model (where `\(\lambda\)` or `\(\rho\)` equal 0,
+respectively).
+
+---
+
+### Tests for spatial dependence
+
+
+```r
+lm.LMtests(m1, sp_wts_list, test = c("LMerr", "LMlag"))
+```
+
+```
+## 
+## 	Lagrange multiplier diagnostics for spatial dependence
+## 
+## data:  
+## model: lm(formula = uninsured ~ mhhi + rural, data = nc)
+## weights: sp_wts_list
+## 
+## LMerr = 6.8982, df = 1, p-value = 0.008628
+## 
+## 
+## 	Lagrange multiplier diagnostics for spatial dependence
+## 
+## data:  
+## model: lm(formula = uninsured ~ mhhi + rural, data = nc)
+## weights: sp_wts_list
+## 
+## LMlag = 4.0042, df = 1, p-value = 0.04539
+```
+
+---
+
+### Tests for spatial dependence
+
+There was evidence against both null hypotheses. Unfortunately, the Lagrange
+multiplier tests also have some power against the other alternative, and so if
+both are significant, we still don't have a good idea regarding which type(s) of
+spatial dependence might be present.
+
+We can use robust tests (Anselin et al. 1996) to account for this consideration.
+
+---
+
+### Tests for spatial dependence
+
+
+```r
+lm.LMtests(m1, sp_wts_list, test = c("RLMerr", "RLMlag"))
+```
+
+```
+## 
+## 	Lagrange multiplier diagnostics for spatial dependence
+## 
+## data:  
+## model: lm(formula = uninsured ~ mhhi + rural, data = nc)
+## weights: sp_wts_list
+## 
+## RLMerr = 4.1472, df = 1, p-value = 0.0417
+## 
+## 
+## 	Lagrange multiplier diagnostics for spatial dependence
+## 
+## data:  
+## model: lm(formula = uninsured ~ mhhi + rural, data = nc)
+## weights: sp_wts_list
+## 
+## RLMlag = 1.2532, df = 1, p-value = 0.2629
+```
+
+---
+
+### Aside: SARMA models
+
+`\begin{align*}
+Y = \rho\mathbf{W}Y + \mathbf{X}\boldsymbol{\beta} + \lambda\mathbf{W}\mathbf{u} + \boldsymbol{\epsilon}
+\end{align*}`
+
+Presence of *both* spatial error dependency and spatial lag
+
+
+```r
+lm.LMtests(m1, sp_wts_list, test = c("SARMA"))
+```
+
+```
+## 
+## 	Lagrange multiplier diagnostics for spatial dependence
+## 
+## data:  
+## model: lm(formula = uninsured ~ mhhi + rural, data = nc)
+## weights: sp_wts_list
+## 
+## SARMA = 8.1514, df = 2, p-value = 0.01698
+```
+
+---
+
+### Fitting a spatial lag model
+
+`\begin{align*}
+Y = \rho\mathbf{W}Y + \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}
+\end{align*}`
+
+
+```r
+m2 &lt;- lagsarlm(uninsured ~ mhhi + rural, data = nc, 
+               listw = sp_wts_list)
+```
+
+Remember, spatial lag suggests that the value of the response variable in one
+area might *depend* on the value of the response(s) of its neighbor(s), *beyond*
+other potentially unaccounted-for confounders. In these models, we assume that 
+neither the outcomes of the observations are independent, *nor* the errors
+are independent.
+
+Tests for spatial dependence should not be the only criterion by which you
+decide what type of spatial model to fit!
+
+---
+
+### Fitting a spatial lag model
+
+
+```r
+summary(m2)
+```
+
+&lt;img src="img/sar.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Interpreting a spatial lag model
+
+.question[
+Can we say that on average, for each additional $1,000 increase in median 
+household income in a county, we expect to see a decrease of 8.6 percentage
+points in the adult uninsured population (holding rurality constant)?
+]
+
+--
+
+**No!**
+
+---
+
+### Interpreting a spatial lag model
+
+Median household income and rurality in Durham county are associated with
+the uninsured rate in Durham county.
+
+--
+
+However, the uninsured rates of neighboring counties are also associated with
+the uninsured rate in Durham county!
+
+--
+
+Even worse, the median household incomes and rurality of neighboring counties
+are associated with the uninsured rate in their respective counties as well!
+
+...and so on.
+
+--
+
+In short, the covariate effects depend on both the .vocab[direct effect] in
+the associated spatial unit as well as the .vocab[indirect effect] due to
+spatial lag from its neighboring units.
+
+---
+
+### Interpreting a spatial lag model
+
+
+```r
+sp_wts_sparce &lt;- as(sp_wts_list, "CsparseMatrix")
+traces &lt;- trW(sp_wts_sparce, type="MC")
+m2_decomp &lt;- impacts(m2, tr = traces, R = 1000)
+m2_decomp
+```
+
+```
+## Impact measures (lag, trace):
+##            Direct     Indirect       Total
+## mhhi  -0.08716950 -0.027843401 -0.11501290
+## rural  0.02785422  0.008897107  0.03675133
+```
+
+---
+
+### Interpreting a spatial lag model
+
+
+```r
+summary(m2_decomp)$direct_sum
+```
+
+```
+## 
+## Iterations = 1:1000
+## Thinning interval = 1 
+## Number of chains = 1 
+## Sample size per chain = 1000 
+## 
+## 1. Empirical mean and standard deviation for each variable,
+##    plus standard error of the mean:
+## 
+##           Mean       SD  Naive SE Time-series SE
+## mhhi  -0.08898 0.027708 0.0008762      0.0008762
+## rural  0.02768 0.008887 0.0002810      0.0002810
+## 
+## 2. Quantiles for each variable:
+## 
+##            2.5%      25%      50%      75%    97.5%
+## mhhi  -0.143033 -0.10779 -0.08840 -0.06969 -0.03617
+## rural  0.009944  0.02139  0.02751  0.03353  0.04553
+```
+
+---
+
+### Interpreting a spatial lag model
+
+
+```r
+summary(m2_decomp)$indirect_sum
+```
+
+```
+## 
+## Iterations = 1:1000
+## Thinning interval = 1 
+## Number of chains = 1 
+## Sample size per chain = 1000 
+## 
+## 1. Empirical mean and standard deviation for each variable,
+##    plus standard error of the mean:
+## 
+##            Mean       SD  Naive SE Time-series SE
+## mhhi  -0.028787 0.020104 0.0006357      0.0006357
+## rural  0.009259 0.006955 0.0002199      0.0002199
+## 
+## 2. Quantiles for each variable:
+## 
+##             2.5%       25%       50%      75%     97.5%
+## mhhi  -7.593e-02 -0.038968 -0.025986 -0.01508 0.0003603
+## rural -8.205e-05  0.004615  0.008046  0.01226 0.0251918
+```
+
+---
+
+### Interpreting a spatial lag model
+
+
+```r
+summary(m2_decomp)$total_sum
+```
+
+```
+## 
+## Iterations = 1:1000
+## Thinning interval = 1 
+## Number of chains = 1 
+## Sample size per chain = 1000 
+## 
+## 1. Empirical mean and standard deviation for each variable,
+##    plus standard error of the mean:
+## 
+##           Mean      SD  Naive SE Time-series SE
+## mhhi  -0.11776 0.03809 0.0012044      0.0012044
+## rural  0.03694 0.01331 0.0004208      0.0004208
+## 
+## 2. Quantiles for each variable:
+## 
+##           2.5%      25%      50%      75%    97.5%
+## mhhi  -0.19585 -0.14100 -0.11627 -0.09296 -0.04873
+## rural  0.01318  0.02744  0.03592  0.04490  0.06714
+```
+
+---
+
+### Fitting a spatial error model
+
+`\begin{align*}
+Y = \mathbf{X}\boldsymbol{\beta} + \lambda\mathbf{W}\mathbf{u} + \boldsymbol{\epsilon}
+\end{align*}`
+
+
+```r
+m3 &lt;- errorsarlm(uninsured ~ mhhi + rural, data = nc, 
+                 listw = sp_wts_list)
+```
+
+Remember, spatial error models suggest that the spatial dependency comes through
+the error term only, and estimates variables treating spatial dependence as
+a nuisance parameter. In these models, we still assume that the outcomes of the
+observations are independent, but we do *not* need to assume that the errors
+are independent.
+
+Once again, tests for spatial dependence should not be the only criterion by which you
+decide what type of spatial model to fit!
+
+---
+
+### Fitting a spatial error model
+
+
+```r
+summary(m3)
+```
+
+```
+## 
+## Call:
+## errorsarlm(formula = uninsured ~ mhhi + rural, data = nc, listw = sp_wts_list)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -5.18649 -1.55960 -0.13406  1.18661  5.93112 
+## 
+## Type: error 
+## Coefficients: (asymptotic standard errors) 
+##               Estimate Std. Error z value  Pr(&gt;|z|)
+## (Intercept) 19.5427226  1.6922752 11.5482 &lt; 2.2e-16
+## mhhi        -0.0966632  0.0287121 -3.3666 0.0007609
+## rural        0.0321375  0.0088566  3.6286 0.0002849
+## 
+## Lambda: 0.333, LR test value: 6.2254, p-value: 0.012593
+## Asymptotic standard error: 0.12598
+##     z-value: 2.6434, p-value: 0.0082083
+## Wald statistic: 6.9874, p-value: 0.0082083
+## 
+## Log likelihood: -224.1174 for error model
+## ML residual variance (sigma squared): 5.0461, (sigma: 2.2463)
+## Number of observations: 100 
+## Number of parameters estimated: 5 
+## AIC: 458.23, (AIC for lm: 462.46)
+```
+
+&lt;img src="img/sem.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### What about generalized linear models?
+
+We can use .vocab[Moran eigenvector filtering] to attempt to remove spatial
+autocorrelation from "residuals" of GLMs.
+
+In this method, we include specific eigenvectors of the spatial weight matrix as 
+predictors in the model of interest:
+
+--
+
+- The spatial weights matrix is symmetrized and eigenvectors are calculated.
+- Candidate models are fit including the predictors in the original model and 
+each of individual eigenvectors in turn.
+- The model that has the lowest Moran's I is chosen to "continue." Individual
+eigenvectors are added to this model, and the process repeats until the Moran's
+I is no longer significant at a prespecified level.
+
+See `R` function documentation for the
+appropriate function 
+[here](https://www.rdocumentation.org/packages/spdep/versions/1.0-2/topics/ME)
+(speaking of which, the documentation for the `spdep` pacakge is excellent!).
+
+For more information, come see me in office hours.
+
+---
+
+### Resources and references
+
+[The Center for Spatial Data Science](https://spatialanalysis.github.io/) at
+the University of Chicago
+
+Additional resources (for R) which may be helpful are available [here](https://spatialanalysis.github.io/links/)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,626 @@
+---
+title: "Spatial data analysis (1)"
+author: "Yue Jiang"
+date: "Duke University"
+header-includes: \usepackage{bm}
+output:
+  xaringan::moon_reader:
+  mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+css: "sta440-slides.css"
+logo: img/sta199-sticker-icon.png
+lib_dir: libs/font-awesome
+nature:
+  highlightStyle: github
+highlightLines: true
+countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1
+  )
+# Set dpi and height for images
+library(knitr)
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+	fig.align = "center",
+	fig.height = 3.75,
+	fig.width = 6.25,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(sf)
+```
+
+### Spatial data
+
+Spatial data are an important class of data. Today, we will focus on exploratory
+data analysis, understanding spatial relationships, and detecting patterns and
+trends.
+
+Analysis of spatial data should reflect spatial structure!
+
+---
+
+### 1854 London cholera outbreak
+
+```{r, echo=FALSE, out.width="75%"}
+knitr::include_graphics("img/cholera.png")
+```
+
+---
+
+### 1826 French literacy map
+
+
+```{r, echo=FALSE, out.width="60%"}
+knitr::include_graphics("img/literacy.jpg")
+```
+
+---
+
+### Napoleon's 1812 Russia Campaign
+
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("img/napoleon.png")
+```
+
+--
+
+**Many others!**
+
+- [Migrations](http://maps.tnc.org/migrations-in-motion/#4/43.26/-112.02)
+- [World Population Density](https://luminocity3d.org/WorldPopDen/#3/12.00/10.00)
+- [Global Power](https://www.gocompare.com/gas-and-electricity/what-powers-the-world/)
+
+---
+
+### Spatial data are different
+
+```{r, eval=TRUE, echo=FALSE, warning = F, message = F, out.width = "80%"}
+library(knitr)
+include_graphics("img/projections.png")
+```
+
+Graphic from [QGIS documentation](https://docs.qgis.org/2.8/en/docs/gentle_gis_introduction/coordinate_reference_systems.html).
+
+---
+
+### Expressing spatial data
+
+.vocab[Vector] spatial data describes the world using shapes (points, lines, 
+polygons, etc).
+
+.vocab[Raster] spatial data describes the world using cells of constant size.  
+
+```{r, echo=FALSE, out.width="40%"}
+knitr::include_graphics("img/vector_raster_comparison.png")
+```
+
+The choice to use vector or raster data depends on the problem context. 
+
+*Source:* https://commons.wikimedia.org/wiki/File:Raster_vector_tikz.png
+
+
+---
+
+### Spatial data are different
+
+```{r echo = FALSE}
+library(tidyverse)
+library(sf)
+```
+
+A .vocab[simple feature] is a standard way to describe how real-world 
+spatial objects (country, building, tree, road, etc) can be represented by a 
+computer. 
+
+The package `sf` implements simple features and other spatial functionality 
+using **tidy** principles for *vector* graphics.
+
+Simple features have a geometry type. Common choices are below.
+
+```{r echo=FALSE, dpi = 300}
+pt <- st_point(c(30, 10))
+ls <- st_linestring(matrix(c(30, 10, 10, 30, 40, 40), byrow = TRUE, ncol =
+                            2))
+poly <- st_polygon(list(matrix(
+  c(30, 10, 40, 40, 20, 40, 10, 20, 30, 10),
+  ncol = 2,
+  byrow = TRUE
+)))
+poly_hole <- st_polygon(list(matrix(
+  c(35, 10, 45, 45, 15, 40, 10, 20, 35, 10),
+  ncol = 2,
+  byrow = TRUE
+),
+matrix(
+  c(20, 30, 35, 35, 30, 20, 20, 30),
+  ncol = 2,
+  byrow = TRUE
+)))
+
+pts <- st_multipoint(matrix(
+  c(10, 40, 40, 30, 20, 20, 30, 10),
+  ncol = 2,
+  byrow = TRUE
+))
+lss <- st_multilinestring(list(matrix(
+  c(10, 10, 20, 20, 10, 40), ncol = 2, byrow = TRUE
+),
+matrix(
+  c(40, 40, 30, 30, 40, 20, 30, 10),
+  ncol = 2,
+  byrow = TRUE
+)))
+polys <- st_multipolygon(list(list(matrix(
+  c(30, 20, 45, 40, 10, 40, 30, 20),
+  ncol = 2,
+  byrow = TRUE
+)),
+list(matrix(
+  c(15, 5, 40, 10, 10, 20, 5, 10, 15, 5),
+  ncol = 2,
+  byrow = TRUE
+))))
+polys_hole <- st_multipolygon(list(list(matrix(
+  c(40, 40, 20, 45, 45, 30, 40, 40),
+  ncol = 2,
+  byrow = TRUE
+)),
+list(
+  matrix(
+    c(20, 35, 10, 30, 10, 10, 30, 5, 45, 20, 20, 35),
+    ncol = 2,
+    byrow = TRUE
+  ),
+  matrix(
+    c(30, 20, 20, 15, 20, 25, 30, 20),
+    ncol = 2,
+    byrow = TRUE
+  )
+)))
+```
+
+```{r echo=FALSE, fig.width=8, fig.height=6, fig.align="center", out.width="90%"}
+par(mar = c(1, 1, 2, 1), mfrow = c(4, 4))
+
+plot(pt,
+     axes = FALSE,
+     main = "Point",
+     pch = 16)
+box()
+plot(ls, axes = FALSE, main = "Linestring")
+box()
+plot(poly,
+     axes = FALSE,
+     col = "lightgrey",
+     main = "Polygon")
+box()
+plot(poly_hole,
+     axes = FALSE,
+     col = "lightgrey",
+     main = "Polygon w/ Hole(s)")
+box()
+
+plot(pts,
+     axes = FALSE,
+     main = "Multipoint",
+     pch = 16)
+box()
+plot(lss, axes = FALSE, main = "Multilinestring")
+box()
+plot(polys,
+     axes = FALSE,
+     col = "lightgrey",
+     main = "Multipolygon")
+box()
+plot(polys_hole,
+     axes = FALSE,
+     col = "lightgrey",
+     main = "Multipolygon w/ Hole(s)")
+box()
+```
+
+---
+
+### Spatial data are different
+
+```{r, warning = F, message = F, cache = T}
+library(sf)
+nc <- st_read("https://opendata.arcgis.com/datasets/9728285994804c8b9f20ce58bae45899_0.geojson", 
+              quiet = T)
+nc[,1:3]
+```
+
+Data from [NC OneMap](https://www.nconemap.gov/), a service of the NC Geographic Information Coordinating Council.
+
+---
+
+### Basic plots
+
+```{r, dpi = 300}
+ggplot(nc) + 
+  geom_sf() + 
+  labs(title = "North Carolina county boundaries") +
+  theme_bw()
+```
+
+.question[
+Does anyone notice anything "weird" about this map?
+]
+
+---
+
+### Basic plots
+
+```{r, cache = T}
+nc <- st_read("data/nc.shp", quiet = TRUE)
+nc
+```
+
+
+---
+
+### Basic plots
+
+```{r, dpi = 300}
+ggplot(nc) + 
+  geom_sf() + 
+  labs(title = "North Carolina county boundaries") +
+  theme_bw()
+```
+  
+.question[
+What's different about this map and shapefile?
+]
+
+---
+
+### Basic plots
+
+The geographic CRS and geometry were different (as was the file format).
+
+.vocab[Coordinate Reference System] (CRS): defines how specific places are 
+mapped onto a sptial map. **WGS 84** (used in the first file) is the latest
+revision of the [World Geodetic System](https://en.wikipedia.org/wiki/World_Geodetic_System); **NAD27** (used
+in the second file) is the 1927 [North American Datum](https://en.wikipedia.org/wiki/North_American_Datum).
+
+.vocab[Geometry]: defines how the spatial object is "mapped"; the first file
+used a polygon geometry whereas the second file used a *multipolygon*.
+
+---
+
+### Spatial data plotting needs care
+
+```{r echo=FALSE, out.width="100%", dpi = 300}
+
+lcc <- "+proj=lcc +lat_1=20 +lat_2=60 +lat_0=40 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
+nc_lcc <- nc %>% st_transform(crs = lcc)
+aea <- "+proj=aea +lat_1=20 +lat_2=60 +lat_0=40 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
+nc_aea <- nc %>% st_transform(crs = aea)
+rob <- "+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
+nc_rob <- nc %>% st_transform(crs = rob)
+
+par(mar=c(3,2,2,1),mfrow=c(2,2))
+plot(st_geometry(nc), graticule = T, axes = T)
+plot(st_geometry(nc_lcc), graticule = T, axes = T)
+plot(st_geometry(nc_aea), graticule = T, axes = T)
+plot(st_geometry(nc_rob), graticule = T, axes = T)
+```
+
+---
+
+### Choropleth maps
+
+When working with .vocab[areal] data, a .vocab[choropleth map] is a great
+visualization that colors regions by the value of some *numeric* value (as
+opposed to a simple coloring by category).
+
+Let's create a choropleth map for the number of vaccines given out in NC using 
+data from the [NCDHHS](https://covid19.ncdhhs.gov/) (current as of October 28, 
+2021).
+
+```{r, message = F, warning = F}
+doses <- read_csv("data/nc_doses_102821.csv")
+head(doses)
+```
+
+---
+
+### Choropleth maps
+
+```{r}
+nc <- merge(nc, doses, by = "name")
+nc
+```
+
+---
+
+### Choropleth maps
+
+```{r, dpi = 300}
+ggplot(nc) + 
+  geom_sf(aes(fill = partial)) +
+  scale_fill_gradient(low = "#fee8c8", high = "#7f0000") +
+  labs(title = "Count of at least partially vaccinated residents",
+       fill = "People") +
+  theme_bw()
+```
+
+---
+
+### Choropleth maps
+
+```{r, dpi = 300}
+ggplot(nc) + 
+  geom_sf(aes(fill = partial/pop)) +
+  scale_fill_gradient(low = "#fee8c8", high = "#7f0000") +
+  labs(title = "Proportion at least partially vaccinated",
+       fill = "Proportion") +
+  theme_bw()
+```
+
+---
+
+### Neighbors
+
+Counties that are "close together" spatially might be similar.
+
+One definition of "close" is to consider its .vocab[neighbors]. A neighbor is an 
+observation that is .vocab[contiguous] to another (i.e., that shares a 
+.vocab[border] or .vocab[point] in common). We can think of the .vocab[order] of 
+contiguity as well: neighbors are first-order contiguous; neighbors-of-neighbors 
+are second-order contiguous. Exact adjacency order depends on our 
+definition (e.g., rook vs. queen on a chess board).
+
+We might also consider observations to be "close" if they are within a certain
+distance of another observation. Distance-based adjacency measures are more
+commonly used with point data, while neighbor-based adjacency is more common
+with areal data.
+
+---
+
+### Spatial weight matrix
+
+A .vocab[spatial weight matrix] is a square matrix that identifies whether
+observations are neighbors (or more generally, the adjacency metric between all
+pairwise observations).
+
+In general, it's pretty computationally-intensive to construct such a matrix, 
+although built-in functions from R packages are pretty fast nowadays (and in 
+this case we only have 100 counties).
+
+```{r}
+library(spdep)
+sp_wts <- poly2nb(nc, row.names=nc$name, queen = T)
+sp_wts
+```
+
+---
+
+### Spatial weight matrix
+
+```{r}
+summary(sp_wts)
+```
+
+---
+
+### Spatial weight matrix
+
+```{r}
+nc %>% 
+  slice(c(49, 63))
+```
+
+---
+
+### Spatial weight matrix
+
+```{r}
+sp_mat <- nb2mat(sp_wts, style='B') # Binary 1/0
+sp_mat[1:10,1:10]
+```
+
+---
+
+### Spatial weight matrix
+
+```{r, eval = F}
+nc %>% 
+  slice(which(sp_mat[which(nc$name == "DURHAM"),] == 1)) %>% 
+  select(name) %>% 
+  st_drop_geometry()
+```
+
+.question[
+What does the above code do?
+]
+
+---
+
+### Spatial weight matrix
+
+```{r, eval = F}
+nc %>% 
+  slice(which(sp_mat[which(nc$name == "DURHAM"),] > 0)) %>% 
+  select(name) %>% 
+  st_drop_geometry()
+```
+
+---
+
+### Spatial weight matrix
+
+```{r}
+cbind(nc, neighbors = rowSums(sp_mat))
+```
+
+---
+
+### Spatial weight matrix
+
+```{r}
+sp_mat_std <- nb2mat(sp_wts, style='W') # Row-standardized
+sp_mat_std[1:10,1:10]
+```
+
+---
+
+### Moran's I
+
+```{r}
+sp_mat_list <-  nb2listw(sp_wts, style='B')
+sp_mat_list
+```
+
+---
+
+### Moran's I
+
+\begin{align*}
+I = \frac{n}{\sum_i \sum_j w_{ij}}\frac{\sum_i \sum_j w_{ij}(y_i - \bar{y})(y_j - \bar{y})}{\sum_i (y_i - \bar{y})^2}
+\end{align*}
+
+- $n$ is the number of spatial observations
+- $w_{ij}$ is the spatial weight between spatial observations $i$ and $j$
+
+$I$ thus depends on how we constructed our spatial weight matrix. We've shown a
+binary weight matrix and its row-standardized version, but we can also include
+information regarding how much border they share, or distance between centroids,
+etc.
+
+---
+
+### Moran's I
+
+```{r}
+moran(nc$partial/nc$pop, sp_mat_list, nrow(nc), sum(sp_mat))
+```
+
+Positive $I$ suggests spatial clustering - that higher values are "close" to 
+other higher values, and lower values are "close" to other lower values. 
+Negative $I$ suggests spatial dispersion - that higher values are "close" to 
+lower values, and vice-versa.
+
+---
+
+### Moran's I
+
+```{r}
+set.seed(123)
+moran.mc(nc$partial/nc$pop, sp_mat_list, nsim = 999)
+```
+
+.question[
+What might we conclude regarding proportion of residents receiving at least
+one dose of the vaccine?
+]
+
+---
+
+### Moran's I
+
+```{r, fig.height = 5.5, fig.width=8, dpi = 300}
+sp_mat_list_std <-  nb2listw(sp_wts, style='W')
+moran.plot(nc$partial/nc$pop, sp_mat_list_std,
+           xlab = "Partially vaccinated proportion",
+           ylab = "Spatially lagged proportion")
+```
+
+---
+
+### Moran's I
+
+```{r, fig.height = 5.5, fig.width=8, echo = F, dpi = 300}
+sp_mat_list_std <-  nb2listw(sp_wts, style='W')
+moran.plot(nc$partial/nc$pop, sp_mat_list_std,
+           xlab = "Proportion at least partially vaccinated",
+           ylab = "Spatially lagged values")
+```
+
+.question[
+What counties have a relatively high proportion of at least partially
+vaccinated people, but are surrounded by less-vaccinated counties?
+]
+
+---
+
+### Moran's I
+
+```{r}
+nc %>% 
+  slice(c(63)) %>% 
+  mutate(prop = partial/pop) %>% 
+  dplyr::select(name, prop) %>% 
+  st_drop_geometry
+```
+
+---
+
+### Moran's I
+
+```{r}
+nc %>% 
+  slice(which(sp_mat[63,] > 0)) %>% 
+  mutate(prop = partial/pop) %>% 
+  dplyr::select(name, prop) %>% 
+  st_drop_geometry()
+```
+
+.question[
+How might we further account for population size when determining proportion
+of (at least partially) vaccinated neighbors?
+]
+
+---
+
+### Point-valued data
+
+```{r, message = F, echo = F, fig.height=3.5, fig.align="center", dpi = 300}
+dat <- read.csv("../project/case-03/clean.csv")
+dat <- dat %>%
+  filter(!is.na(lat) & !is.na(long)) %>%
+  st_as_sf(., coords = c("long", "lat"), 
+           crs = 4269, 
+           remove = F, 
+           agr = "constant") %>%
+  mutate(long = -1 * long)
+
+nc <- read_sf("../project/case-03/census_2010_nc_tract.shp")
+nc <- nc %>%
+  filter(STCOFIPS == 37063) %>%
+  select(TRACT, NAME)
+  
+ggplot(nc) +
+  geom_sf() +
+  geom_point(data = dat, 
+             mapping = aes(x = long, y = lat, col = yrs_lived),
+             alpha = 0.4) +
+  scale_color_gradient(low = "#fee8c8", high = "#7f0000") +
+  theme_bw()+
+  labs(x = "Lat.", y = "Long.", color = "Years lived")
+```
+
+.question[
+How might we compute Moran's I for point-valued data? What would a potential 
+weight matrix look like?
+]

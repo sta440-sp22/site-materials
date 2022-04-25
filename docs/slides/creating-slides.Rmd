@@ -1,0 +1,103 @@
+---
+title: "Creating effective slides"
+author: "Yue Jiang"
+date: "Duke University"
+header-includes: \usepackage{bm}
+output:
+  xaringan::moon_reader:
+  mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+css: "sta440-slides.css"
+logo: img/sta199-sticker-icon.png
+lib_dir: libs/font-awesome
+nature:
+  highlightStyle: github
+highlightLines: true
+countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1
+  )
+# Set dpi and height for images
+library(knitr)
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+	fig.align = "center",
+	fig.height = 3.75,
+	fig.width = 6.25,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(knitr)
+```
+
+### Horrible presentations
+
+You know them when you see them
+
+- [https://www.slideshare.net/anilkr123/car-and-technology](Example 1)
+- [https://www.slideshare.net/Kshivets/lung-cancer-surgery-4936542](Example 2)
+
+---
+
+### Software
+
+- PowerPoint / Keynote (easy, WYSIWYG)
+- LaTeX Beamer / R Markdown packages (clean, consistent, eventually straightforward)
+- Random online things like Prezi (don't do this)
+
+---
+
+### Overall to-dos
+
+- Be direct and clear in your messaging
+- Keep things simple and clean - no clutter or walls of text!
+- Be consistent in design and formatting (e.g., font sizes, alignment, etc.)
+- Avoid redundancy (e.g., reading directly from slides)
+- Keep things readable
+- Use visual interest to highlight your message
+
+---
+
+### Activity 3
+
+Activity 3 will essentially be what we are doing in class today and in lab on
+Monday. You will create a ten-slide presentation explaining the results of the
+Reutzler et al. study (provided on Sakai) and provide an accompanying oral
+script for your presentation. Data from the study will also be provided, in 
+case you would like to create visualizations or explore/model the data beyond 
+what was presented in the paper itself.
+
+---
+
+### What to include in a presentation?
+
+In deciding what to include per slide, try to distill your message to one main
+idea (or even sentence!) per slide. So, if your presentation has ten slides, 
+what are the ten most important sentences you want to get across? Are there
+accompanying visuals that might help your point?
+
+.question[
+Design a five-slide presentation (not including title page, references, etc.) 
+for the NEJM paper explaining the DIG trial, and upload the .pdf to Gradescope. 
+On each page, highlight the main message your slide is trying to convey. We will
+discuss the submissions at the end of class.
+]

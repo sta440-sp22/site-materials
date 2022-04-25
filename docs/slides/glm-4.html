@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Linear Models (4)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Yue Jiang" />
+    <script src="glm-4_files/header-attrs/header-attrs.js"></script>
+    <link href="glm-4_files/remark-css/default.css" rel="stylesheet" />
+    <link href="glm-4_files/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="sta440-slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Linear Models (4)
+### Yue Jiang
+### Duke University
+
+---
+
+
+
+
+
+
+### Estimating bike crashes in NC counties
+
+&lt;img src="img/bike_crash.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;!-- .center[Image credit: Petar Milošević, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0), via Wikimedia Commons] --&gt;
+
+
+
+---
+
+### A familiar model
+
+
+```
+## # A tibble: 100 x 6
+##    county       pop med_hh_income traffic_vol pct_rural crashes
+##    &lt;chr&gt;      &lt;dbl&gt;         &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Alamance  166436          50.5         182        29      77
+##  2 Alexander  37353          49.1          13        73       1
+##  3 Alleghany  11161          39.7          28       100       1
+##  4 Anson      24877          38            79        79       7
+##  5 Ashe       27109          41.9          18        85       4
+##  6 Avery      17505          41.7          35        89       5
+##  7 Beaufort   47079          46.4          53        66      37
+##  8 Bertie     19026          35.4          24        83      10
+##  9 Bladen     33190          37            19        91       9
+## 10 Brunswick 136744          60.2          43        43      88
+## # ... with 90 more rows
+```
+
+- `pop`: county population
+- `med_hh_income`: median household income in thousands
+- `traffic_vol`: mean traffic volume per meter of major roadways
+- `pct_rural`: percentage of county population living in rural area
+
+---
+
+### A familiar model
+
+.question[
+How might we formulate an analogous *Bayesian* Poisson model using population 
+rurality (let's ignore any offset for now)?
+]
+
+--
+
+`\begin{align*}
+Y_i | \lambda_i &amp;\stackrel{iid}{\sim} Pois(\lambda_i),\\
+\log(\lambda_i) &amp;= \beta_0 + \beta_1(pop) + \beta_2(rural)\\
+\beta_0 &amp;\sim \cdots\\
+\beta_1 &amp;\sim \cdots\\
+\beta_2 &amp;\sim \cdots\\
+\end{align*}`
+
+.question[
+What sorts of priors might make sense here?
+]
+
+---
+
+### Stan
+
+&lt;img src="img/stan_logo.png" width="10%" style="display: block; margin: auto;" /&gt;
+
+- .vocab[Stan] is a statistical programming language that allows users to 
+perform Bayesian inference using modified .vocab[Hamiltonian Monte Carlo] (HMC) 
+- Whereas Gibbs samplers you have programmed previously require calculation of
+full conditionals, HMC requires calculation of gradients of the log-density
+(which can be done numerically)
+- HMC often produces chains with less correlated samples, resulting in
+larger effective sample sizes for chains of the same length
+- Because HMC relies on gradients, it requires parameters to be continuous 
+(well, there are "ways around this," but that's beyond the scope of STA 440)
+- Tuning certain HMC parameters may be tricky at times, particularly for
+multi-modal situations or log-densities with very steep gradient changes
+(again, you probably won't need to worry about this too much in STA 440!)
+
+---
+
+### RStan
+
+.vocab[RStan] is an interface to call Stan code from within R. There's a bit of 
+a learning curve, but allows for full flexibility using the Stan language
+
+
+```r
+# From RStan vignette - simple normal model
+data {
+  int&lt;lower=0&gt; J;          // number of schools 
+  real y[J];               // estimated treatment effects
+  real&lt;lower=0&gt; sigma[J];  // s.e. of effect estimates 
+}
+parameters {
+  real mu; 
+  real&lt;lower=0&gt; tau;
+  vector[J] eta;
+}
+transformed parameters {
+  vector[J] theta;
+  theta = mu + tau * eta;
+}
+model {
+  target += normal_lpdf(eta | 0, 1);
+  target += normal_lpdf(y | theta, sigma);
+}
+```
+
+---
+
+### rstanarm
+
+.vocab[rstanarm] is an R package that allows users to harness the power of Stan 
+while specifying commonly-seen models using familiar R model syntax
+
+
+```r
+# From rstanarm vignette - logistic model
+test &lt;- stan_glm(cbind(agree, disagree) ~ education + gender,
+                 data = womensrole,
+                 family = binomial(link = "logit"),
+                 prior = student_t(df = 7, 0, 5),
+                 prior_intercept = student_t(df = 7, 0, 5),
+                 cores = 2, seed = 12345)
+```
+
+https://mc-stan.org/rstanarm/articles/rstanarm.html
+
+---
+
+### Back to bike crashes
+
+`\begin{align*}
+Y_i | \lambda_i &amp;\stackrel{iid}{\sim} Pois(\lambda_i),\\
+\log(\lambda_i) &amp;= \beta_0 + \beta_1(pop) + \beta_2(rural)\\
+\beta_0 &amp;\sim \cdots\\
+\beta_1 &amp;\sim \cdots\\
+\beta_2 &amp;\sim \cdots\\
+\end{align*}`
+
+.question[
+What are the dangers of using .vocab[flat priors]? Why might 
+.vocab[weakly informative] priors be preferred?
+]
+
+---
+
+### Back to bike crashes
+
+
+```r
+summary(bike$crashes)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1.00    7.00   24.00   74.46   81.25 1045.00
+```
+
+```r
+summary(bike$pop)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    4131   24573   55800  103836  118373 1093901
+```
+
+```r
+summary(bike$pct_rural)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1.00   42.50   62.50   61.24   85.00  100.00
+```
+
+.question[
+What priors for `\(\beta\)` might make sense? What about .vocab[hyperpriors]?
+]
+
+---
+
+### Back to bike crashes
+
+
+```r
+library(rstanarm)
+m1 &lt;- stan_glm(crashes ~ I(pop/1000000) + pct_rural, 
+                         data = bike, 
+                         family = poisson,
+                         prior_intercept = normal(5, 10),
+                         prior = normal(0, 2.5, autoscale = T), 
+                         chains = 2, iter = 10000, seed = 123, 
+                         prior_PD = F)
+```
+
+
+
+.question[
+What do each of these function arguments mean?
+]
+
+---
+
+### Back to bike crashes
+
+
+```r
+prior_summary(m1)
+```
+
+```
+## Priors for model 'm1' 
+## ------
+## Intercept (after predictors centered)
+##  ~ normal(location = 5, scale = 10)
+## 
+## Coefficients
+##   Specified prior:
+##     ~ normal(location = [0,0], scale = [2.5,2.5])
+##   Adjusted prior:
+##     ~ normal(location = [0,0], scale = [14.928, 0.089])
+## ------
+## See help('prior_summary.stanreg') for more details
+```
+
+---
+
+### Model checks and diagnostics
+
+
+```r
+library(bayesplot)
+color_scheme_set(c("darkblue", "darkred", "darkgray", 
+                   "deepskyblue", "deeppink", "darkgreen"))
+plot(m1, "trace")
+```
+
+&lt;img src="glm-4_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Model checks and diagnostics
+
+
+```r
+plot(m1, "trace", pars = "pct_rural", ylab = "Asdf") +
+  labs(title = "Trace plot: percent rural", 
+       y = "Estimate", x = "Draw")
+```
+
+&lt;img src="glm-4_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Model checks and diagnostics
+
+
+```r
+pp_check(m1, plotfun = "hist", nreps = 5) + 
+  xlab("Crashes")
+```
+
+&lt;img src="glm-4_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Model checks and diagnostics
+
+
+```r
+pp_check(m1) + 
+  xlab("Crashes")
+```
+
+&lt;img src="glm-4_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Model checks and diagnostics
+
+
+```r
+plot(m1, "acf_bar") +         # compare to "acf"
+  labs(title = "ACF plots")
+```
+
+&lt;img src="glm-4_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Model results
+
+
+```r
+plot(m1, "dens_overlay")
+```
+
+&lt;img src="glm-4_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Model results
+
+
+```r
+summary(m1)
+```
+
+```
+## 
+## Model Info:
+## 
+##  function:     stan_glm
+##  family:       poisson [log]
+##  formula:      crashes ~ I(pop/1e+06) + pct_rural
+##  algorithm:    sampling
+##  sample:       10000 (posterior sample size)
+##  priors:       see help('prior_summary')
+##  observations: 100
+##  predictors:   3
+## 
+## Estimates:
+##                mean   sd   10%   50%   90%
+## (Intercept)  5.6    0.0  5.6   5.6   5.7  
+## I(pop/1e+06) 1.3    0.0  1.2   1.3   1.3  
+## pct_rural    0.0    0.0  0.0   0.0   0.0  
+## 
+## Fit Diagnostics:
+##            mean   sd   10%   50%   90%
+## mean_PPD 74.5    1.2 72.9  74.5  76.0 
+## 
+## The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help('summary.stanreg')).
+## 
+## MCMC diagnostics
+##               mcse Rhat n_eff
+## (Intercept)   0.0  1.0  4222 
+## I(pop/1e+06)  0.0  1.0  4142 
+## pct_rural     0.0  1.0  3545 
+## mean_PPD      0.0  1.0  9573 
+## log-posterior 0.0  1.0  3612 
+## 
+## For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).
+```
+
+---
+
+### Model results
+
+
+```r
+round(as.data.frame(summary(m1)), 2)
+```
+
+```
+##                  mean mcse   sd      10%     50%     90% n_eff Rhat
+## (Intercept)      5.63 0.00 0.03     5.59    5.63    5.68  4222    1
+## I(pop/1e+06)     1.25 0.00 0.04     1.20    1.25    1.30  4142    1
+## pct_rural       -0.04 0.00 0.00    -0.04   -0.04   -0.04  3545    1
+## mean_PPD        74.47 0.01 1.22    72.91   74.46   76.03  9573    1
+## log-posterior -999.92 0.02 1.22 -1001.57 -999.58 -998.70  3612    1
+```
+
+.question[
+How might you interpret these results?
+]
+
+---
+
+### Posterior predictions
+
+
+```r
+bike %&gt;% filter(county == "Durham")
+```
+
+```
+## # A tibble: 1 x 6
+##   county    pop med_hh_income traffic_vol pct_rural crashes
+##   &lt;chr&gt;   &lt;dbl&gt;         &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Durham 316739          59.3         395         6     340
+```
+
+```r
+durham &lt;- posterior_predict(m1, 
+                            newdata = data.frame(pop = 316739,
+                                                 pct_rural = 6),
+                            draws = 1000)
+head(durham)
+```
+
+```
+##        1
+## [1,] 333
+## [2,] 347
+## [3,] 352
+## [4,] 316
+## [5,] 331
+## [6,] 332
+```
+
+---
+
+### Posterior predictions
+
+
+```r
+ggplot(as.data.frame(durham), aes(x = durham)) +
+  geom_histogram(color = "darkblue", fill = "skyblue") +
+  labs(x = "Posterior predictions", y = "Count") +
+  geom_vline(xintercept = 340, color = "darkred", lwd = 2)
+```
+
+&lt;img src="glm-4_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Posterior predictions
+
+
+```r
+preds &lt;- posterior_predict(m1, newdata = bike, draws = 1000)
+ppc_intervals(bike$crashes[1:10], preds[,1:10]) +
+  ggplot2::scale_x_continuous(
+   labels = bike$county[1:10],
+   breaks = 1:10
+ ) +
+ xaxis_text(angle = 0, vjust = 0, hjust = 0.5) +
+  labs(x = "County", y = "Crashes")
+```
+
+---
+
+### Posterior predictions
+
+&lt;img src="glm-4_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Other types of models
+
+You've learned about and used many GLMs in your previous courses, such as 
+logistic regression, Poisson regression, Gamma regression, etc. The `stan_glm()`
+function in `rstanarm` is an easy-to-use way to fit Bayesian GLMs using a modified
+HMC algorithm.
+
+http://mc-stan.org/rstanarm/articles/ provides great example vignettes for
+fitting models, thinking about prior distributions, and examples of commonly-
+encountered models.
+
+I also encourage you to use the help functions, e.g. `help(stan_glm)`.
+
+---
+
+### On your own
+
+.question[
+Denote counties with over 60 crashes per 100,000 residents per year to be
+"high-crash" counties. Is there evidence of an association between rurality and
+being a high-crash county, after adjusting for population? Explain, and 
+quantify any variability in your estimates.
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

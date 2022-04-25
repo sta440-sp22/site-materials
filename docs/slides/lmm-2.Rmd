@@ -1,0 +1,384 @@
+---
+title: "Linear Mixed Models (2)"
+author: "Yue Jiang"
+date: "Duke University"
+header-includes: \usepackage{bm}
+output:
+  xaringan::moon_reader:
+  mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+css: "sta440-slides.css"
+logo: img/sta199-sticker-icon.png
+lib_dir: libs/font-awesome
+nature:
+  highlightStyle: github
+highlightLines: true
+countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1
+  )
+# Set dpi and height for images
+library(knitr)
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+	fig.align = "center",
+	fig.height = 3.75,
+	fig.width = 6.25,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+### Review
+
+\begin{align*}
+\mathbf{y} = \mathbf{X\beta} + \mathbf{Zu} + \mathbf{\epsilon}
+\end{align*}
+
+- $\mathbf{y}$, $\mathbf{X}$, and $\mathbf{\beta}$ are just as in "normal" 
+regression (and $\mathbf{\epsilon}$ still represent the individual residuals).
+- $\mathbf{u}$ is a $q * K$ vector of the $q$ random effects for the $K$ 
+groups. 
+- $\mathbf{Z}$ is the $n \times (q * K)$ design matrix corresponding to the 
+random effects.
+
+Commonly, we might assume $\mathbf{u} \sim N_q(\mathbf{0}, \mathbf{G})$, where
+$\mathbf{G}$ represents the covariance matrix of the $q$ different random 
+effects.
+
+We also might impose assumptions on the correlation structure for $\epsilon$. 
+These types of structures come up, for instance, in **longitudinal data analysis**.
+
+---
+
+### Review
+
+A simple random slope + intercept model:
+
+\begin{align*}
+y_{ij} = (\beta_0 + u_{0i}) + (\beta_1 + u_{1i})x_{ij} + \epsilon_{ij}
+\end{align*}
+
+- Random intercept: heterogeneity at $x_{ij} = 0$ (context-specific)
+- Random slope: heterogeneity in relationship between $Y$ and $X$
+
+Assumptions on $F_{\mathbf{u}}$ and $\epsilon$
+
+---
+
+### Longitudinal data
+
+Longitudinal data occur all the time, and are a flexible way of modeling data
+that have multiple measures per observation (regardless of at what time they 
+were measured). For instance:
+
+- Examining participant weight loss in a bariatric surgery study
+- Examining test scores in a cohort of schoolchildren
+- Examining how opinions or attitudes toward climate change shift in a voting bloc
+
+etc. 
+
+.question[
+Why might we want to perform a longitudinal data over a cross-sectional one?
+]
+
+---
+
+### Truck drivers
+
+```{r, eval=TRUE, echo=FALSE, warning = F, message = F, out.width = "80%", fig.align= "center"}
+include_graphics("img/truck.jpg")
+```
+
+Belenky et al. (2003) conducted a study that examined the effects of sleep
+deprivation on reaction time. 
+
+---
+
+### The data
+
+```{r, dpi = 300, echo = F, message = F, warning = F}
+library(tidyverse)
+library(lme4)
+data(sleepstudy)
+ggplot(sleepstudy, aes(y = Reaction, x = as.factor(Days))) + 
+  geom_boxplot() +
+  theme_minimal() +
+  labs(x = "Days of sleep deprivation", y = "Reaction time (ms)")
+```
+
+.question[
+What do you notice? 
+]
+
+---
+
+### The data
+
+```{r, dpi = 300, echo = F, message = F, warning = F}
+library(tidyverse)
+ggplot(sleepstudy, aes(y = Reaction, x = as.factor(Days), group = Subject, color = Subject)) + 
+  geom_line(alpha = 0.4) +
+  geom_point(aes(color = Subject)) + 
+  labs(x = "Days of sleep deprivation", y = "Reaction time (ms)") +
+  theme_minimal() +
+    theme(legend.position = "none")
+```
+
+.question[
+What do you notice?
+]
+
+---
+
+### Driver-specific models
+
+```{r, dpi = 300, echo = F, message = F, warning = F}
+library(tidyverse)
+ggplot(sleepstudy, aes(y = Reaction, x = Days)) + 
+  geom_point(alpha = 0.4) + 
+  facet_wrap(~ Subject) + 
+  labs(x = "Days of sleep deprivation", y = "Reaction time (ms)") +
+  geom_smooth(method = "lm", se = F) +
+  theme_minimal()
+```
+
+.question[
+What do you notice? 
+]
+
+---
+
+### Driver-specific models
+
+```{r, echo = F}
+temp <- matrix(NA, nrow = 18, ncol = 2)
+for (i in 1:length(unique(sleepstudy$Subject))){
+  mod <- lm(Reaction ~ Days, data = sleepstudy[sleepstudy$Subject == unique(sleepstudy$Subject)[i],])
+  temp[i,] <- mod$coefficients
+}
+temp <- as.data.frame(temp)
+names(temp) <- c("b0", "b1")
+```
+
+```{r, echo = F, dpi = 300}
+ggplot(temp, aes(x = b0)) + 
+  geom_histogram(binwidth = 10) + 
+  labs(x = "Driver-specific intercepts", y = "Count")
+```
+
+(we could also examine individual CIs)
+
+---
+
+### Driver-specific models
+
+```{r, echo = F, dpi = 300}
+ggplot(temp, aes(x = b1)) + 
+  geom_histogram(binwidth = 2) + 
+  labs(x = "Driver-specific slopes", y = "Count")
+```
+
+(we could also examine individual CIs)
+
+---
+
+### Driver-specific models
+
+```{r, echo = F, dpi = 300}
+ggplot(temp, aes(x = b1, y = b0)) + 
+  geom_point() + 
+  labs(x = "Driver-specific slopes", y = "Driver-specific intercepts")
+```
+
+.question[
+What correlation structure might be appropriate for random effects?
+]
+
+---
+
+### A linear mixed model
+
+\begin{align*}
+Reaction_{ij} = (\beta_0 + u_{0i}) + (\beta_1 + u_{1i})Day_{ij} + \epsilon_{ij}
+\end{align*}
+
+.question[
+What do the random intercept and random slope represent for this example? 
+]
+
+---
+
+### A linear mixed model
+
+```{r, echo = F}
+library(lme4)
+m1 <- lmer(Reaction ~ 1 + Days + (1 + Days | Subject),
+           data = sleepstudy)
+summary(m1)
+```
+
+---
+
+### A linear mixed model
+
+```{r}
+coef(m1)
+```
+
+---
+
+### GLMMs
+
+How might we "extend" linear mixed models to generalized linear mixed models?
+
+\begin{align*}
+g(E(\mathbf{y})) = \mathbf{X\beta} + \mathbf{Zu}
+\end{align*}
+
+---
+
+### GLMMs
+
+```{r, echo = F}
+m2 <- glmer(I(Reaction > 250) ~ 1 + Days + (1 + Days | Subject),
+            family = "binomial", data = sleepstudy)
+summary(m2)
+```
+
+---
+
+### Conditional vs. marginal models
+
+Interpreting the fixed effects are the *conditional* slopes for someone. Even 
+though we have only a single fixed effect here, we are still performing 
+estimation conditionally on something.
+
+.question[
+What are we "holding constant" in this model?
+]
+
+--
+
+We are conditioning on the random effect - here, each trucker (or at the very
+least, truckers with the same random effects).
+
+---
+
+### Conditional vs. marginal models
+
+If there is large between-group variability (i.e., in reaction times based on
+trucker), then maybe the relative associations due to the fixed effects (how
+many days each trucker was subjected to sleep deprivation) would be small.
+
+We might want to examine the slopes corresponding to fixed effects (of primary
+interest in this case) at different levels of the random effects, or even what
+the average fixed effects are while **marginalizing** out the random effects.
+
+.question[
+How might we do that?
+]
+
+---
+
+### Generalized estimating equations
+
+Generalized estimating equations (**GEE**) are often used for clustered or
+longitudinal data when we are interested in marginal effects of parameter 
+estimates - that is, a population average effect.
+
+This is in contrast to the cluster-specific models being estimated with
+conditional techniques (keep in mind, we could marginalize "by hand" if we
+wanted to from a mixed effects model).
+
+GEE doesn't rely on a likelihood-based approach, which has advantages (easier
+computation) and disadvantages (difficulties with inferential procedures).
+
+---
+
+### Correlation structure
+
+We can specify a correlation structure based on prior knowledge of the way 
+observations are correlated:
+
+- Independent (time points are independent, i.e., all off-diagonals are zero)
+- Exchangeable (pairs of points have identical correlations, i.e., all off-
+diagonals have same estimated correlation)
+- Autoregressive (time points have autoregressive structure, so correlation
+between two observations one unit apart is $\rho$, two units apart is $\rho^2$,
+etc.)
+- Toeplitz (band structure in matrix, with 0s outside of the band)
+- Unstructured (unique correlation estimated for each pair of points)
+
+---
+
+### Fitting a GEE
+
+```{r, message = F, warning = F}
+library(gee)
+m3 <- gee(Reaction ~ Days, data = sleepstudy,
+          id = Subject,
+          family = "gaussian",
+          corstr = "exchangeable")
+```
+
+---
+
+### Fitting a GEE
+
+```{r, echo = F}
+summary(m3)
+```
+
+---
+
+### Fitting a GEE
+
+```{r, message = F, warning = F}
+m4 <- gee(Reaction ~ Days, data = sleepstudy,
+          id = Subject,
+          family = "gaussian",
+          corstr = "AR-M", Mv = 1)
+```
+
+---
+
+### Fitting a GEE
+
+```{r, echo = F}
+summary(m4)
+```
+
+---
+
+### Fitting a GEE
+
+```{r, message = F, warning = F}
+m5 <- gee(I(Reaction > 250) ~ Days, data = sleepstudy,
+          id = Subject,
+          family = "binomial",
+          corstr = "exchangeable")
+```
+
+---
+
+### Fitting a GEE
+
+```{r, echo = F}
+summary(m5)
+```

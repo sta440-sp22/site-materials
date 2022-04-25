@@ -1,0 +1,404 @@
+---
+title: "Spatial data analysis (3)"
+author: "Yue Jiang"
+date: "Duke University"
+header-includes: \usepackage{bm}
+output:
+  xaringan::moon_reader:
+  mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+css: "sta440-slides.css"
+logo: img/sta199-sticker-icon.png
+lib_dir: libs/font-awesome
+nature:
+  highlightStyle: github
+highlightLines: true
+countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1
+  )
+# Set dpi and height for images
+library(knitr)
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+	fig.align = "center",
+	fig.height = 3.75,
+	fig.width = 6.25,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(sf)
+library(spdep)
+library(spatialreg)
+```
+
+
+### Today's data
+
+```{r, echo = F, dpi = 300, fig.height = 4.5, fig.align = "center"}
+nc <- read_sf("data/census_2010_nc_tract.shp")
+nc <- nc %>%
+  filter(STCOFIPS == 37063) %>%
+  select(TRACT, NAME, POP2010)
+durham <- read_csv("data/clean.csv") %>%
+  filter(!is.na(long) & !is.na(lat)) %>%
+  mutate(long = long * -1) %>%
+  st_as_sf(., coords = c("long", "lat"), 
+           crs = 4269, 
+           remove = F, 
+           agr = "constant")
+ggplot(nc) +
+  geom_sf(aes(fill = POP2010)) +
+  geom_point(data = durham, 
+             mapping = aes(x = long, y = lat, col = yrs_lived),
+             alpha = 0.4) +
+  scale_color_gradient(low = "#fee8c8", high = "#7f0000") +
+  theme_bw() +
+  scale_x_continuous(breaks=seq(-79, -78.7, by = 0.1)) +
+  labs(x = "Long.", y = "Lat", col = "Years", fill = "Pop.")
+```
+
+---
+
+### Clustering of time in Durham?
+
+```{r}
+library(ape)
+dists <- as.matrix(dist(cbind(durham$long, durham$lat))) + 0.01
+dists <- 1/dists
+diag(dists) <- 0
+Moran.I(durham$yrs_lived, dists, na.rm = T)
+```
+
+
+
+---
+
+### Today's data
+
+```{r}
+head(durham)
+```
+
+---
+
+### Which census tract are we in?
+
+```{r}
+which_blocks <- st_intersects(durham, nc)
+which_blocks
+```
+
+---
+
+### Which census tract are we in?
+
+```{r}
+tracts <- nc[as.numeric(which_blocks), c("NAME")] %>%
+  st_drop_geometry()
+durham <- cbind(durham, tracts) 
+head(durham)
+```
+
+---
+
+### How many residents did we survey?
+
+```{r}
+resps <- as.data.frame(table(tracts)) %>%
+  rename("NAME" = "tracts",
+         "num_resp" = "Freq")
+nc <- left_join(nc, resps, by = "NAME")
+nc$num_resp[is.na(nc$num_resp)] <- 0
+nc$prop_resp <- nc$num_resp/nc$POP2010*100
+```
+
+---
+
+### How many residents did we survey?
+
+```{r, echo = F, fig.align= "center", fig.height = 4.5, dpi = 300}
+ggplot(nc) +
+  geom_sf(aes(fill = num_resp)) +
+  geom_point(data = durham, 
+             mapping = aes(x = long, y = lat),
+             alpha = 0.4, pch = 4) +
+  scale_fill_gradient(low = "#fee8c8", high = "#7f0000") +
+  theme_bw() +
+  scale_x_continuous(breaks=seq(-79, -78.7, by = 0.1)) +
+  labs(x = "Long.", y = "Lat", col = "Years", fill = "# Residents")
+```
+
+---
+
+### How many residents did we survey?
+
+```{r, echo = F, fig.align= "center", fig.height = 4.5, dpi = 300}
+ggplot(nc) +
+  geom_sf(aes(fill = prop_resp)) +
+  geom_point(data = durham, 
+             mapping = aes(x = long, y = lat),
+             alpha = 0.4, pch = 4) +
+  scale_fill_gradient(low = "#fee8c8", high = "#7f0000") +
+  theme_bw() +
+  scale_x_continuous(breaks=seq(-79, -78.7, by = 0.1)) +
+  labs(x = "Long.", y = "Lat", col = "Years", fill = "% of Tract")
+```
+
+---
+
+### A modeling aside
+
+```{r}
+summary(lm(yrs_lived ~ own + race, 
+           data = durham))
+```
+
+---
+
+### A modeling aside
+
+```{r}
+summary(lm(yrs_lived ~ own + race, 
+           data = durham[durham$zip == 27703,]))
+```
+
+---
+
+### A modeling aside
+
+```{r}
+summary(lm(yrs_lived ~ own + race, 
+           data = durham[durham$zip == 27707,]))
+```
+
+---
+
+### A modeling aside
+
+```{r}
+summary(lm(yrs_lived ~ own + race, 
+           data = durham[durham$NAME == "Census Tract 21",]))
+```
+
+---
+
+### A modeling aside
+
+```{r}
+summary(lm(yrs_lived ~ own + race, 
+           data = durham[durham$NAME == "Census Tract 18.08",]))
+```
+
+---
+
+### A modeling aside
+
+```{r, echo = F, message = F, fig.width = 8, fig.height = 6, dpi = 300}
+regfun <- function(x)  {
+  dat <- durham[durham$NAME == x, ]
+  m <- lm(yrs_lived ~ own + race, data=dat)
+  coefficients(m)[2]
+}
+
+t_names <- unique(durham$NAME[durham$NAME %in% nc$NAME[nc$num_resp > 4]])
+
+beta_own <- sapply(t_names, regfun)
+
+library(stringr)
+names(beta_own) <- str_sub(names(beta_own), end=-5)
+
+dotchart(sort(beta_own), cex = 0.7, xlab = "Est. Coef.")
+```
+
+---
+
+### A modeling aside
+
+```{r}
+summary(lm(yrs_lived ~ own + race, 
+           data = durham))
+```
+
+
+---
+
+### A modeling aside
+
+```{r, eval = F}
+beta_dat <- data.frame(as.data.frame(beta_own), names(beta_own))
+names(beta_dat) <- c("beta", "NAME")
+
+nc <- merge(nc, beta_dat, all.x = T)
+
+ggplot(nc) +
+  geom_sf(aes(fill = beta)) +
+  geom_point(data = durham, 
+             mapping = aes(x = long, y = lat),
+             alpha = 0.4, pch = 4) +
+  scale_fill_gradient2(low = "darkred", mid = "white", high = "darkblue",
+                       midpoint = 0) +
+  theme_bw() +
+  scale_x_continuous(breaks=seq(-79, -78.7, by = 0.1)) +
+  labs(x = "Long.", y = "Lat", fill = "Coef.")
+```
+
+
+
+---
+
+### A modeling aside
+
+```{r, echo = F, fig.align = "center", fig.height = 4.5, dpi = 300}
+beta_dat <- data.frame(as.data.frame(beta_own), names(beta_own))
+names(beta_dat) <- c("beta", "NAME")
+
+nc <- merge(nc, beta_dat, all.x = T)
+
+ggplot(nc) +
+  geom_sf(aes(fill = beta)) +
+  geom_point(data = durham, 
+             mapping = aes(x = long, y = lat),
+             alpha = 0.4, pch = 4) +
+  scale_fill_gradient2(low = "darkred", mid = "white", high = "darkblue",
+                       midpoint = 0) +
+  theme_bw() +
+  scale_x_continuous(breaks=seq(-79, -78.7, by = 0.1)) +
+  labs(x = "Long.", y = "Lat", fill = "Coef.")
+```
+
+---
+
+### A modeling aside
+
+.question[
+Using what we've seen for the tract-level analyses, how might we create a 
+regression model for point-valued data?
+]
+
+---
+
+### Local regression
+
+For global models so far, we've assumed that all observations in the dataset
+are equally important in estimating regression coefficients. However, it might
+be the case that nearer observations are more "important" than ones farther
+away.
+
+In local regression, this is precisely the case, with a weighting scheme based
+on distance from each point. The relative importance of near vs. far points is
+given by the .vocab[bandwidth] used in the .vocab[kernel] - a smaller bandwidth
+is "more local" whereas a larger bandwidth is "more global." 
+
+---
+
+### Local regression
+
+In local regression, we perform many separate regression models estimated at
+reression points. In actuality, instead of a single point estimate of each
+regression parameter $\beta$, we have a *surface* of such estimates (that are
+estimated only at the observed points).
+
+We note that there may be different local estimates of $\beta$ depending on 
+where the point lies - this indicates the changing relationship(s) between
+predictors and outcomes through space, which can be visualized. Note that we
+might also map the SEs associated with each parameter estimate.
+
+---
+
+### Local regression
+
+```{r}
+library(spgwr)
+spdf <- SpatialPointsDataFrame(
+  coords = as.data.frame(st_drop_geometry(durham[,c("long", "lat")])), 
+  data = as.data.frame(st_drop_geometry(durham)),
+  proj4string = CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"))
+
+band <- gwr.sel(yrs_lived ~ own + race, data = spdf, gweight = gwr.Gauss, verbose = TRUE)
+
+m1 <- gwr(yrs_lived ~ own + race, data = spdf, bandwidth = band, gweight = gwr.Gauss, hatmatrix = T)
+```
+
+Also check out `ggwr` and `ggwr.sel` for generalized geographically weighted
+regression.
+
+---
+
+### Local regression
+
+```{r}
+m1
+head(m1$SDF$own)
+```
+
+---
+
+### A modeling aside
+
+```{r}
+summary(lm(yrs_lived ~ own + race, 
+           data = durham))
+```
+
+---
+
+### Local regression
+
+```{r, eval = F}
+durham <- cbind(durham, m1$SDF$own)
+
+ggplot(nc) +
+  geom_sf(fill = "darkgray") +
+  geom_point(data = durham, 
+             mapping = aes(x = long, y = lat, col = m1.SDF.own),
+             alpha = 0.5, pch = 19) +
+  scale_color_gradient2(low = "darkred", mid = "white", high = "darkblue",
+                       midpoint = 0) +
+  scale_fill_gradient2(low = "darkred", mid = "white", high = "darkblue",
+                       midpoint = 0) +
+  theme_bw() +
+  scale_x_continuous(breaks=seq(-79, -78.7, by = 0.1)) +
+  labs(x = "Long.", y = "Lat", col = "Coef.")
+```
+
+
+---
+
+### Local regression
+
+```{r, echo = F, fig.align = "center", fig.height = 4.5, dpi = 300}
+durham <- cbind(durham, m1$SDF$own)
+
+ggplot(nc) +
+  geom_sf(fill = "darkgray") +
+  geom_point(data = durham, 
+             mapping = aes(x = long, y = lat, col = m1.SDF.own),
+             alpha = 0.5, pch = 19) +
+  scale_color_gradient2(low = "darkred", mid = "white", high = "darkblue",
+                       midpoint = 0) +
+  scale_fill_gradient2(low = "darkred", mid = "white", high = "darkblue",
+                       midpoint = 0) +
+  theme_bw() +
+  scale_x_continuous(breaks=seq(-79, -78.7, by = 0.1)) +
+  labs(x = "Long.", y = "Lat", col = "Coef.")
+```

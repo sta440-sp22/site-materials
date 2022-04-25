@@ -1,0 +1,529 @@
+---
+title: "Introduction to survival analysis (2)"
+author: "Yue Jiang"
+date: "Duke University"
+output:
+  xaringan::moon_reader:
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    css: "sta440-slides.css"
+    lib_dir: libs/font-awesome
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r, echo = F, warning = F, message = F}
+library(survival)
+library(tidyverse)
+
+dig <- read.csv("C:/Users/Yue/Courses/STA 440 2021 Spring/docs/datasets/UNUSED_dig_teaching/DIG_csv/DIG_csv/dig.csv")
+```
+
+### The DIG Trial
+
+```{r, echo=FALSE, out.width = '120%'} 
+knitr::include_graphics("img/02/dig_trial.png")
+```
+
+Investigators compared the **primary outcome** of the number of days from the
+start of the study to either death or hospitalization from worsening heart
+failure.
+
+---
+
+### Representing survival data
+
+Underlying data:
+- $T$: Failure time, a non-negative random variable
+- $C$: Censoring time, a non-negative random variable
+Observed data for individual $i$:
+- $Y_i$: $(T_i \wedge C_i)$, the minimum of $T_i$ and $C_i$
+- $\delta_i$: $1_{(T_i \le C_i)}$, whether we observe a failure
+
+If $\delta_i = 0$, then we have .vocab[right-censoring]: the survival time is
+longer than the censoring time.
+
+Commonly, we assume $C_i$ are *i.i.d.* random variables with some distribution
+and that the censoring mechanism is *independent* of the failure mechanism.
+
+---
+
+### Characterizing continuous $T$
+
+- Density function: $f(t) = \lim_{\Delta t \to 0^+} \frac{P(t \le T < t + \Delta t)}{\Delta t}$
+
+- Distribution function: $F(t) = P(T \le t) = \int_0^t f(s)ds$
+
+- Survival function: $S(t) = P(T > t) = 1 - F(t)$
+
+- Hazard function: $\lambda(t) = \lim_{\Delta t \to 0^+} \frac{P(t \le T < t + \Delta t | T \ge t)}{\Delta t}$
+
+- Cumulative hazard function: $\Lambda(t) = \int_0^t \lambda(s)ds$
+
+Knowing one is equivalent to knowing the others.
+
+---
+
+### Hazard distributions
+
+Exponential distribution:
+
+- $f(t) = \lambda e^{-\lambda t}$ (don't get the rate parameter $\lambda$ 
+confused with the hazard)
+- $F(t) = 1 - e^{-\lambda t}$
+- $S(t) = e^{-\lambda t}$
+- $\lambda(t) = \lambda$
+- $\Lambda(t) = \lambda t$
+
+.question[
+What do you notice about the hazard for survival times that have an exponential 
+distribution?
+]
+
+---
+
+### Hazard distributions
+
+Weibull distribution:
+
+- $f(t) = p\lambda^p t^{p - 1}e^{-(\lambda t)^p}$
+- $F(t) = 1 - e^{-(\lambda t)^p}$
+- $S(t) = e^{-(\lambda t)^p}$
+- $\lambda(t) = p\lambda^p t^{p - 1}$
+- $\Lambda(t) = (\lambda t)^p$
+
+When the shape parameter $p$ is 1, then we have the exponential distribution.
+
+The hazard increases monotonically over time if $p > 1$ and decreases 
+monotonically if $p < 1$ (is this reasonable to assume?).
+
+---
+
+### Hazard distributions
+
+Plotting Weibull hazard with $\lambda = 1$ and various shape parameters $p$:
+
+```{r, echo = F, fig.align = 'center'}
+xs <- seq(0, 4, by = 0.002)
+y1 <- rep(1, length(xs))
+y2 <- 0.5*xs^(0.5-1)
+y2 <- 2*xs^(2-1)
+y3 <- 0.25*xs^(0.25-1)
+y4 <- 4*xs^(4-1)
+plot(xs, y1, type = "l", ylim = c(0,4), xlab = "Time", ylab = "Hazard")
+lines(xs, y2, col = "red")
+lines(xs, y3, col = "blue")
+lines(xs, y4, col = "gray")
+```
+
+---
+
+### Hazard distributions
+
+Log-normal distribution:
+
+- $f(t) = \frac{1}{t \sigma}\phi\left(\frac{\log(t) - \mu}{\sigma} \right)$
+- $F(t) = \Phi\left(\frac{\log(t) - \mu}{\sigma} \right)$
+- $S(t) = 1 - F(t)$
+- $\lambda(t) = f(t)/S(t)$
+- $\Lambda(t) = \int_0^t \lambda(s)ds$
+
+---
+
+### Hazard distributions
+
+Plotting log-normal hazard with $\mu = 0$ and $\sigma^2 = 1$:
+
+```{r, echo = F, fig.align = 'center'}
+xs <- seq(0, 4, by = 0.001)
+y1 <- dnorm(log(xs))/((1-pnorm(log(xs)))*xs)
+plot(xs, y1, type = "l", ylim = c(0,1), xlab = "Time", ylab = "Hazard")
+```
+
+---
+
+### Hazard distributions
+
+Log-logistic distribution:
+
+- $f(t) = \frac{(\beta/\alpha)(t/\alpha)^{\beta - 1}}{(1 + (t/\alpha)^\beta)^2}$
+- $F(t) = \frac{(t/\alpha)^\beta}{1 + (t/\alpha)^\beta}$
+- $S(t) = \frac{1}{1 + (t/\alpha)^\beta}$
+- $\lambda(t) = \frac{(\beta/\alpha)(t/\alpha)^{\beta - 1}}{1 + (t/\alpha)^\beta}$
+- $\Lambda(t) = \log(1 + (t/\alpha)^\beta)$
+
+---
+
+### Hazard distributions
+
+Plotting log-logistic hazards with $\alpha = 1$ and various $\beta$:
+
+```{r, echo = F, fig.align = 'center'}
+xs <- seq(0, 4, by = 0.001)
+y1 <- 1*xs^(1 - 1)/(1 + xs)^1
+y2 <- 2*xs^(2 - 1)/(1 + xs)^2
+y3 <- 4*xs^(4 - 1)/(1 + xs)^4
+y4 <- 0.5*xs^(0.5 - 1)/(1 + xs)^0.5 
+plot(xs, y1, type = "l", ylim = c(0,1), xlab = "Time", ylab = "Hazard")
+lines(xs, y2, type = "l", col = "darkred")
+lines(xs, y3, type = "l", col = "blue")
+lines(xs, y4, type = "l", col = "gray")
+```
+
+---
+
+### Estimation
+
+Suppose we had a series of *non-censored* observations $t_1, t_2, \cdots, t_n$, 
+and we thought that these survival times were i.i.d. and came from some
+distribution with density $f(t)$.
+
+.question[
+How might we estimate the parameter(s) $\theta$ of that distribution?
+]
+
+---
+
+### Review: maximum likelihood estimation
+
+\begin{align*}
+\mathcal{L}(\theta | T) &= f(t_1, t_2, \cdots, t_n | \theta)\\
+&= f(t_1 | \theta)f(t_2 | \theta) \cdots f(t_n | \theta)\\
+&= \prod_{i = 1}^n f(t_i|\theta),
+\end{align*}
+
+which we can often maximize in closed form for many familiar distributions (or 
+numerically). 
+
+---
+
+### Review: maximum likelihood estimation
+
+For instance, if we thought $T \stackrel{i.i.d}{\sim} Exp(\lambda)$, then 
+
+\begin{align*}
+\mathcal{L}(\lambda | T) &= \lambda^n \exp \left(-\lambda\sum_{i = 1}^n t_n \right)\\
+\log \mathcal{L}(\lambda | T) &= n\log(\lambda) - \lambda \sum_{i = 1}^n t_i,\\
+\hat{\lambda}_{MLE} &= \frac{n}{\sum_{i = 1}^n t_i}
+\end{align*}
+
+---
+
+### Estimation for censored data
+
+How might we perform maximum likelihood estimation for *censored* data? What
+would the likelihood look like? Suppose we have $n$ i.i.d. observations with the
+same $f(t)$, $S(t)$, and hazard $\lambda(t)$. Consider what might happen at time
+$t_i$:
+
+- Case 1: Individual experiences event at $t_i: \delta_i = 1$. In 
+this case, they contribute the density at $t_i$, which is $f(t_i)$.
+
+.question[
+What would their contribution to the likelihood be if they were censored?
+]
+
+--
+
+- Case 2: Individual is still alive at $t_i: \delta_i = 0$. In this
+case, we know that their survival time is greater than $t_i$, which happens with
+probability $S(t_i)$.
+
+--
+
+So, this individual's contribution to the likelihood is 
+
+\begin{align*}
+f(t_i)^{\delta_i}S(t_i)^{1 - \delta_i}
+\end{align*}
+
+---
+
+### Estimation for censored data
+
+Note that
+
+\begin{align*}
+\lambda(t) &= \lim_{\Delta t \to 0^+} \frac{P(t \le T < t + \Delta t | T \ge t)}{\Delta t}\\
+&= \lim_{\Delta t \to 0^+} \frac{P(t \le T < t + \Delta t \cap T \ge t)/P(T \ge t)}{\Delta t}\\
+&= \lim_{\Delta t \to 0^+} \frac{P(t \le T < t + \Delta t)}{P(T \ge t)\Delta t}\\
+&= \lim_{\Delta t \to 0^+} \frac{f(t)\Delta t}{P(T \ge t)\Delta t}\\
+&= \frac{f(t)}{S(t)}, \\
+f(t) &= \lambda(t)S(t)
+\end{align*}
+
+---
+
+### Estimation for censored data
+
+An individual's contribution to the likelihood is thus
+
+\begin{align*}
+&\mathrel{\phantom{=}} f(t_i)^{\delta_i}S(t_i)^{1 - \delta_i}\\
+&= \lambda(t_i)^{\delta_i}S(t_i)^{\delta_i}S(t_i)^{1 - \delta_i}\\
+&= \lambda(t_i)^{\delta_i}S(t_i)
+\end{align*}
+
+For our exponential example with $T \stackrel{i.i.d.}{\sim} Exp(\lambda)$, since
+the hazard is given by $\lambda$ and the survival function is given by 
+$e^{-\lambda t}$, we would thus have
+
+\begin{align*}
+\mathcal{L}(\lambda | T) &= \prod_{i = 1}^n \lambda^{\delta_i}\exp(-\lambda t_i),
+\end{align*}
+
+which we could then maximize using familiar methods.
+
+---
+
+### Covariates?
+
+.question[
+How might we adjust for potential covariates that might be related to our
+outcome? Is there any way to create a predictive model for survival time?
+]
+
+---
+
+### Some candidate models
+
+Could we use the following model for survival outcomes?
+
+\begin{align*}
+T_i = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \cdots + \beta_px_{pi} + \epsilon_i
+\end{align*}
+
+--
+
+How about this model?
+
+\begin{align*}
+\log(T_i) = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \cdots + \beta_px_{pi} + \epsilon_i
+\end{align*}
+
+---
+
+### An accelerated failure time model
+
+An .vocab[accelerated failure time] (AFT) model assumes
+
+\begin{align*}
+\log(T_i) = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \cdots + \beta_px_{pi} + \epsilon_i
+\end{align*}
+
+where $\epsilon_i$ are commonly assumed to be i.i.d. and follow some specified
+distribution.
+
+.question[
+How might we "know" what distribution $\epsilon$ takes on?
+]
+
+---
+
+### An accelerated failure time model
+
+\begin{align*}
+\log(T_i) = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \cdots + \beta_px_{pi} + \epsilon_i
+\end{align*}
+
+There is a one-to-one relationship between the distribution of $T$ and the
+assumed error distribution in the AFT model. 
+
+For instance, assuming $\epsilon_i$ has a normal distribution implies $T_i$ 
+has a log-normal distribution.
+
+---
+
+### An accelerated failure time model
+
+Note that we can also write the AFT model as
+
+\begin{align*}
+\log(T_i) &= \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \cdots + \beta_px_{pi} + \epsilon_i\\
+T_i &= \exp\left(\beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \cdots + \beta_px_{pi} \right)e^{\epsilon_i}
+\end{align*}
+
+.question[
+How might we interpret coefficients in the AFT model?
+]
+
+---
+
+### An accelerated failure time model
+
+\begin{align*}
+T_i &= \exp\left(\beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \cdots + \beta_px_{pi} \right)e^{\epsilon_i}\\
+&= e^{\beta_0}e^{\beta_1x_{1i}}e^{\beta_2x_{2i}}\cdots e^{\beta_px_{pi}}e^{\epsilon_i}
+\end{align*}
+
+Covariates in an AFT model have a multiplicative effect on *time*. 
+
+For instance,
+if $\beta_k = 0.4$, then $\exp(\beta_k) \approx 1.5$. Holding all else equal,
+an individual with covariate $x_k$ one unit greater than another is expected
+to survive approximately 1.5 times longer than the other. The probability that
+they have survived to time $1.5t$ is the same as the probability that the other
+individual is alive has survived to time $t$.
+
+---
+
+### Estimation in survival models
+
+Remember that an individual's contribution to the likelihood is
+
+\begin{align*}
+\lambda(t)^{\delta_i}S(t),
+\end{align*}
+
+and so the full likelihood function is given by
+
+\begin{align*}
+\mathcal{L}(\theta | Y) = \prod_{i = 1}^n \lambda(t_i)^{\delta_i}S(t_i).
+\end{align*}
+
+This likelihood function holds regardless of what type of model is being
+estimated (for independently right-censored data).
+
+---
+
+### Fitting an AFT model
+
+Recall that our model specifies a functional form between $Y$, $\beta$, and 
+$\mathbf{X}$. For the AFT model,
+
+\begin{align*}
+\log(T_i) = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \cdots + \beta_px_{pi} + \epsilon_i,
+\end{align*}
+
+Suppose we think $T$ follows an exponential distribution such that
+$T \sim Exp(\exp(\mathbf{X}^T\beta))$; that is, $\epsilon$ has a standard 
+extreme value distribution: $f(u) = \exp(u - \exp(u))$.
+
+Then we have:
+
+\begin{align*}
+S(t | \mathbf{X}) &= \exp(-t\exp(\mathbf{X}^T\beta))\\
+\lambda(t | \mathbf{X}) &= \exp(\mathbf{X}^T\beta)
+\end{align*}
+
+---
+
+### Fitting an AFT model
+
+Thus we can maximize the likelihood for this model
+
+\begin{align*}
+&\mathrel{\phantom{=}} \prod_{i = 1}^n \lambda(t_i | \mathbf{X}_i)^{\delta_i}S(t_i | \mathbf{X}_i)\\
+&= \prod_{i = 1}^n \exp(\mathbf{X}_i^T\beta)^{\delta_i}\exp(-t\exp(\mathbf{X}_i^T\beta))
+\end{align*}
+
+with respect to the regression parameters of interest $\beta$. Different 
+assumptions re: error distributions (and thus of $T$) result in different hazard 
+and survival functions being plugged into our generic likelihood.
+
+Note that there is no closed form for this likelihood function with respect to 
+$\beta$; choose your favorite numerical method (we'll see Newton-Raphson once
+again in model output on the following slides).
+
+```{r, echo = F}
+dig <- dig[complete.cases(dig[c("DWHFDAYS", "DWHF", "TRTMT", "EJF_PER", "PREVMI")]),]
+```
+
+---
+
+### Fitting an AFT model
+
+```{r, message = F, warning = F}
+library(survival)
+aft_e <- survreg(Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+                 data = dig, dist = "exponential")
+summary(aft_e)
+```
+
+---
+
+### Fitting an AFT model
+
+```{r, message = F, warning = F}
+library(survival)
+aft_w <- survreg(Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+                 data = dig, dist = "weibull")
+summary(aft_w)
+```
+
+---
+
+### Fitting an AFT model
+
+```{r, message = F, warning = F}
+library(survival)
+aft_n <- survreg(Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+                 data = dig, dist = "lognormal")
+summary(aft_n)
+```
+
+---
+
+### Fitting an AFT model
+
+```{r, message = F, warning = F}
+library(survival)
+aft_l <- survreg(Surv(DWHFDAYS, DWHF) ~ TRTMT + EJF_PER + PREVMI, 
+                 data = dig, dist = "loglogistic")
+summary(aft_l)
+```
+
+---
+
+### How well are we fitting?
+
+In each of these past examples, we've assumed a distribution of survival times.
+How can we check if we've made an appropriate assumption? Suppose we use the
+following residuals:
+
+\begin{align*}
+\widehat{e}_i &= \frac{\log(Y_i) - \mathbf{X}_i^T\widehat{\beta}}{\widehat{\phi}}
+\end{align*}
+
+where $\phi$ is the scale parameter from the model (don't worry about this).
+
+.question[
+What does $\widehat{e}_i$ represent? Is it appropriate to use these in some way?
+]
+
+---
+
+### How well are we fitting?
+
+$\widehat{e}_i$ examine scaled differences from $Y_i$, the *observed* data. 
+Thus, these are *censored* residuals, which we must take into account. 
+
+One way to deal with this issue is to plot a Kaplan-Meier plot of these 
+residuals against the survival function of the assumed distribution.
+
+```{r, eval = F}
+resids <- (log(dig$DWHFDAYS) - aft_ll$linear.predictors) / 
+  (aft_ll$scale)
+m1 <- survfit(Surv(resids, DWHF) ~ 1, data = dig)
+plot(m1, xlab = "AFT Residuals (Logistic model)", 
+     ylab = "Survival Probability")
+exp.x <- seq(min(resids), max(resids), length = 100)
+exp.y <- plogis(exp.x, lower.tail = F) # F(t)
+lines(exp.x, exp.y, col = "red", lwd = 2)
+```
+
+---
+
+### How well are we fitting?
+
+```{r, echo = F, fig.align = 'center'}
+resids <- (log(dig$DWHFDAYS) - aft_l$linear.predictors) / 
+  (aft_l$scale)
+m1 <- survfit(Surv(resids, DWHF) ~ 1, data = dig)
+plot(m1, xlab = "AFT Residuals (Logistic model)", 
+     ylab = "Survival Probability")
+x <- seq(min(resids), max(resids), length = 100)
+y <- plogis(x, lower.tail = F) # F(t) for logistic
+lines(x, y, col = "red", lwd = 2)
+```

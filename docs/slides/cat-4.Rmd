@@ -1,0 +1,384 @@
+---
+title: "Categorical Data (4)"
+author: "Yue Jiang"
+date: "Duke University"
+header-includes: \usepackage{bm}
+output:
+  xaringan::moon_reader:
+  mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+css: "sta440-slides.css"
+logo: img/sta199-sticker-icon.png
+lib_dir: libs/font-awesome
+nature:
+  highlightStyle: github
+highlightLines: true
+countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1
+  )
+# Set dpi and height for images
+library(knitr)
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+	fig.align = "center",
+	fig.height = 3.75,
+	fig.width = 6.25,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+
+### Roadmap for today
+
+It's often the case that in the real world, you may be making predictions about 
+some sort of binary/multinomial outcome, for instance modeled using binary/
+multinomial regression or some other machine learning categorization approach.
+Today we'll be talking about some methods of evaluating "how well we do" in 
+terms of prediction.
+
+---
+
+### Licorice and post-op sore throat
+
+```{r, eval=TRUE, echo=FALSE, warning = F, message = F, out.width = "80%"}
+library(knitr)
+library(tidyverse)
+include_graphics("img/licorice.jpg")
+dat <- read_csv("data/licorice.csv")
+dat <- dat[complete.cases(dat),]
+```
+
+---
+
+### Medical diagnostics
+
+Suppose we're interested in the performance of a diagnostic test. Let $D+$ be the event that someone has a condition of interest, and let $T+$ be the event that a test for that condition is positive
+
+- .copper[Prevalence]: $P(D+)$ The proportion of individuals with the condition
+- .copper[Sensitivity]: $P(T+|D+)$, or the true positive rate
+- .copper[Specificity]: $P(T-|D-)$, or 1 minus the false positive rate 
+- .copper[Positive Predictive Value]: $P(D+|T+)$ 
+- .copper[Negative Predictive Value]: $P(D-|T-)$ 
+
+Of course, we can generalize this to other situations with binary classifiers, but it's often most intuitive to think of a diagnostic test.
+
+---
+
+### Rapid self-administered HIV tests
+		
+.question[
+Suppose I told you I had an HIV test that was >99.98% accurate. Would you think
+this is a very good test? Why or why not?
+]
+
+---
+
+### Rapid self-administered HIV tests
+
+.pull-left[
+From the FDA package insert for the OraQuick ADVANCE Rapid HIV-1/2 Antibody Test:
+
+- Sensitivity, $P(Test+|HIV+)$ 99.3% 
+- Specificity, $P(Test-|HIV-)$ 99.8%
+
+From CDC statistics for 2016, 14.3/100,000 Americans aged 13 or older are HIV+.
+]
+
+.pull-right[
+```{r, eval=TRUE, echo=FALSE, warning = F, message = F, out.width = "20%", fig.align = "center"}
+include_graphics("img/oraquickstick.jpg")
+```
+]
+		
+.question[
+Suppose a randomly selected American aged 13 or older has a positive test on this test. What do you think is the probability that they have HIV?
+]
+
+---
+
+### Rapid self-administered HIV tests
+
+.center[
+.eno[6.6%]
+]
+
+--
+
+- Is this calculation surprising? 
+- What is the explanation?
+- Was this calculation reasonable to perform?
+
+.question[ 
+What if a randomly selected adult in Botswana tested positive (HIV prevalence $\approx$ 25%)?
+]
+
+---
+
+### Licorice and post-op sore throat
+
+```{r, message = F, warning = F, fig.align='center', fig.height=5, fig.width=8, dpi = 300}
+dat$anypain = ifelse(dat$postOp4hour_throatPain == 0, 0, 1)
+table(dat$anypain)
+```
+
+---
+
+### Predicting throat pain
+
+```{r, message = F, warning = F, fig.align='center', fig.height=5, fig.width=8, dpi = 300}
+m1 <- glm(anypain ~ preOp_gender + preOp_asa + intraOp_surgerySize + treat,
+          data = dat)
+round(summary(m1)$coef, 3)
+```
+
+---
+
+### Predicting throat pain
+
+```{r}
+round(predict(m1), 3)
+```
+
+---
+
+### Predicting throat pain
+
+```{r}
+dat$pred50 <- ifelse(predict(m1) > 0.5, "Pain", "No pain")
+table(dat$pred50, dat$anypain == TRUE)
+```
+
+.question[
+What is the accuracy of our procedure here? What are the sensitivity and
+specificity? The positive/negative predictive values?
+]
+
+---
+
+### Predicting throat pain
+
+```{r}
+dat$pred25 <- ifelse(predict(m1) > 0.25, "Pain", "No pain")
+table(dat$pred25, dat$anypain == TRUE)
+```
+
+.question[
+What is the accuracy of our procedure here? What are the sensitivity and
+specificity? The positive/negative predictive values?
+]
+
+---
+
+### Predicting throat pain
+
+```{r}
+dat$pred10 <- ifelse(predict(m1) > 0.1, "Pain", "No pain")
+table(dat$pred10, dat$anypain == TRUE)
+```
+.question[
+What is the accuracy of our procedure here? What are the sensitivity and
+specificity? The positive/negative predictive values? What are you noticing?
+]
+
+---
+
+### Discrimination thresholds
+
+Oral HIV tests give positive or negative results depending on levels of HIV antibodies detected in saliva
+
+- If antibody levels are above a certain threshold, it is classified as a positive test
+- Varying the threshold for a positive vs. negative test will result in a test in different characteristics
+- But what is this threshold of "high" antibody level that classifies them as positive?
+- We are looking for a binary classifier that classifies a patient as being positive or negative based on a threshold value of a continuous variable.
+- At each threshold value, there is a trade-off between sensitivity and specificity
+
+---
+
+### ROC curves
+
+.copper[Receiver Operating Characteristic] curves show how specificity and specificity change as the discrimination threshold changes; that is, for each false positive rate (1 - specificity), what the true positive rate (sensitivity) is corresponding to that threshold value.
+
+```{r, eval=TRUE, echo=FALSE, warning = F, message = F, out.width = "75%", fig.align = "center"}
+include_graphics("img/radar1.jpg")
+```
+
+
+---
+
+### ROC curves
+
+```{r, eval = F, message = F, warning = F, dpi = 300}
+library(PRROC)
+dat$preds <- predict(m1)
+roc1 <- roc.curve(dat$preds[dat$anypain == 1], 
+                  dat$preds[dat$anypain == 0],
+                  curve = TRUE)
+plot(roc1)
+```
+
+---
+
+### ROC curves
+
+```{r, echo = F, message = F, warning = F, dpi = 300}
+library(PRROC)
+dat$preds <- predict(m1)
+roc1 <- roc.curve(dat$preds[dat$anypain == 1], 
+                  dat$preds[dat$anypain == 0],
+                  curve = TRUE)
+plot(roc1)
+```
+
+---
+
+### PR curves
+
+.copper[Precision-Recall] curves are also used to evaluate binary classification models. Instead of modeling the true positive rate (sensitivity) as a function of the false positive rate (1 - specificity), precision-recall curves model the positive predictive value as a function of the true positive rate.
+
+.question[
+Why might we care about a precision-recall curve vs. an ROC curve?
+]
+
+---
+
+### PR curves
+
+Think back to the HIV example: a test that has >99.98% accuracy could simply be a sheet of paper with the word "no" on it given to random Americans aged 13 or older. 
+
+It's often the case that there's an imbalance between the two statuses "in truth," and we are less interested in the more common status. 
+
+---
+
+### PR curves
+
+```{r, eval = F, dpi = 300}
+pr1 <- pr.curve(dat$preds[dat$anypain == 1], 
+                dat$preds[dat$anypain == 0],
+                curve = TRUE)
+plot(pr1)
+```
+
+---
+
+### PR curves
+
+```{r, echo = F, dpi = 300}
+pr1 <- pr.curve(dat$preds[dat$anypain == 1], 
+                dat$preds[dat$anypain == 0],
+                curve = TRUE)
+plot(pr1)
+```
+
+---
+
+### PR curves
+
+```{r, dpi = 300}
+pr.vals <- pr1$curve
+head(pr.vals)
+```
+
+---
+
+### PR curves
+
+```{r, eval = F, dpi = 300}
+ggplot(data.frame(pr1$curve), aes(x = X1, y = X2, color = X3)) + 
+  geom_line() + 
+  labs(x = "Sensitivity",
+       y = "Positive Predictive Value",
+       color = "p-hat") + 
+  scale_color_gradient(low = "darkblue", high = "deeppink") +
+  theme_bw()
+```
+
+---
+
+### PR curves
+
+```{r, echo = F, dpi = 300}
+ggplot(data.frame(pr1$curve), aes(x = X1, y = X2, color = X3)) + 
+  geom_line() + 
+  labs(x = "Sensitivity",
+       y = "Positive Predictive Value",
+       color = "p-hat") + 
+  scale_color_gradient(low = "darkblue", high = "deeppink") +
+  theme_bw()
+```
+---
+
+### Comparing ROC Curves
+
+```{r}
+m2 <- glm(anypain ~ preOp_gender + preOp_asa + intraOp_surgerySize,
+          data = dat)
+round(summary(m2)$coef, 3)
+```
+
+
+---
+
+### Comparing ROC Curves
+
+```{r, warning = F, message = F}
+dat$preds2 <- predict(m2)
+
+library(pROC)
+roc1 <- roc(dat$anypain ~ dat$preds)
+roc2 <- roc(dat$anypain ~ dat$preds2)
+```
+---
+
+### Comparing ROC Curves
+
+```{r, dpi = 300}
+plot(roc1, main = "Using Treatment in Model")
+```
+---
+
+### Comparing ROC Curves
+
+```{r, dpi = 300}
+plot(roc2, main = "No Treatment in Model")
+```
+
+---
+
+### Comparing ROC Curves
+
+```{r}
+roc.test(roc1, roc2, method = "bootstrap")
+```
+
+
+---
+
+### Brier score 
+
+For binary outcomes, the Brier score is simply the MSE of the prediction; a 0
+is perfectly predicted and a 1 corresponds to being "perfectly incorrect." 
+
+\begin{align*}
+B = \frac{1}{n}\sum_{i = 1}^n(\hat{p}_i - Y_i)^2
+\end{align*}
+
+```{r}
+mean( (dat$preds - dat$anypain)^2 )
+```

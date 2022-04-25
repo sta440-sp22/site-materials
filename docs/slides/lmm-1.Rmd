@@ -1,0 +1,529 @@
+---
+title: "Linear Mixed Models (1)"
+author: "Yue Jiang"
+date: "Duke University"
+header-includes: \usepackage{bm}
+output:
+  xaringan::moon_reader:
+  mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+css: "sta440-slides.css"
+logo: img/sta199-sticker-icon.png
+lib_dir: libs/font-awesome
+nature:
+  highlightStyle: github
+highlightLines: true
+countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1
+  )
+# Set dpi and height for images
+library(knitr)
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+	fig.align = "center",
+	fig.height = 3.75,
+	fig.width = 6.25,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(knitr)
+
+raw_arabica <- read_csv("https://raw.githubusercontent.com/jldbc/coffee-quality-database/master/data/arabica_data_cleaned.csv") %>% 
+  janitor::clean_names()
+
+raw_robusta <- read_csv("https://raw.githubusercontent.com/jldbc/coffee-quality-database/master/data/robusta_data_cleaned.csv",
+                        col_types = cols(
+                          X1 = col_double(),
+                          Species = col_character(),
+                          Owner = col_character(),
+                          Country.of.Origin = col_character(),
+                          Farm.Name = col_character(),
+                          Lot.Number = col_character(),
+                          Mill = col_character(),
+                          ICO.Number = col_character(),
+                          Company = col_character(),
+                          Altitude = col_character(),
+                          Region = col_character(),
+                          Producer = col_character(),
+                          Number.of.Bags = col_double(),
+                          Bag.Weight = col_character(),
+                          In.Country.Partner = col_character(),
+                          Harvest.Year = col_character(),
+                          Grading.Date = col_character(),
+                          Owner.1 = col_character(),
+                          Variety = col_character(),
+                          Processing.Method = col_character(),
+                          Fragrance...Aroma = col_double(),
+                          Flavor = col_double(),
+                          Aftertaste = col_double(),
+                          Salt...Acid = col_double(),
+                          Balance = col_double(),
+                          Uniform.Cup = col_double(),
+                          Clean.Cup = col_double(),
+                          Bitter...Sweet = col_double(),
+                          Cupper.Points = col_double(),
+                          Total.Cup.Points = col_double(),
+                          Moisture = col_double(),
+                          Category.One.Defects = col_double(),
+                          Quakers = col_double(),
+                          Color = col_character(),
+                          Category.Two.Defects = col_double(),
+                          Expiration = col_character(),
+                          Certification.Body = col_character(),
+                          Certification.Address = col_character(),
+                          Certification.Contact = col_character(),
+                          unit_of_measurement = col_character(),
+                          altitude_low_meters = col_double(),
+                          altitude_high_meters = col_double(),
+                          altitude_mean_meters = col_double()
+                        )) %>% 
+  janitor::clean_names() %>% 
+  rename(acidity = salt_acid, sweetness = bitter_sweet,
+         aroma = fragrance_aroma, body = mouthfeel,uniformity = uniform_cup)
+
+
+all_ratings <- bind_rows(raw_arabica, raw_robusta) %>% 
+  select(-x1) %>% 
+  select(total_cup_points, species, everything())
+
+all_ratings <- all_ratings %>% 
+  filter(country_of_origin %in% c("Brazil", "Colombia", "Ethiopia", "Guatemala", "Mexico", "Taiwan", "United States (Hawaii)")) %>% 
+  filter(processing_method %in% c("Natural / Dry", "Washed / Wet")) %>% 
+  select(total_cup_points, species, country_of_origin, processing_method, aroma, flavor, aftertaste, acidity, body, balance, uniformity, clean_cup, sweetness, moisture, color)
+
+coffee <- all_ratings %>% 
+  rename(process = processing_method,
+         country = country_of_origin,
+         score = total_cup_points)
+
+coffee$country[coffee$country == "United States (Hawaii)"] <- "US (Hawaii)"
+
+coffee <- coffee %>% 
+  filter(score > 60)
+```
+
+### Coffee
+
+```{r, eval=TRUE, echo=FALSE, warning = F, message = F, out.width = "80%", fig.align = "center"}
+include_graphics("img/coffee.jpg")
+```
+
+---
+
+### Dry vs. wet process
+
+In processing coffee beans, there are two methods prior to roasting that affect
+the flavor profile of the coffee. 
+
+Dry process beans are immediately dried after picking. Since the skin of the
+fruit is attached the entire time, it locks in the sugars, resulting in a
+sweeter, less acidic taste.
+
+Wet process beans have the skin and pulp of the fruit removed after picking, and
+the seeds ferment in a wet mass and then soaked in water before the drying 
+process. This results in a more acidic taste.
+
+We also know that the variety of coffee, the location of harvest, and other 
+factors are also associated with the final product.
+
+---
+
+### Coffee
+
+```{r, echo = F, dpi = 300}
+ggplot(coffee, aes(y = process)) + 
+  geom_bar() + 
+  labs(x = "Count", y = "Processing Method")
+```
+
+---
+
+### Coffee
+
+```{r, echo = F, dpi = 300}
+ggplot(coffee, aes(y = score, x = process)) + 
+  geom_boxplot() + 
+  labs(x = "Count", y = "Processing Method")
+```
+
+---
+
+### Processing vs. rating
+
+```{r, message = F, warning = F, echo = F}
+library(broom)
+tidy(lm(score ~ process, data = coffee))
+```
+
+---
+
+### Processing vs. rating
+
+```{r, message = F, warning = F, echo = F}
+library(broom)
+tidy(lm(score ~ process + aroma + flavor + body, data = coffee))
+```
+
+---
+
+### Coffee
+
+```{r, echo = F, dpi = 300}
+ggplot(coffee, aes(y = country)) + 
+  geom_bar() + 
+  labs(x = "Count", y = "Country of Origin")
+```
+
+---
+
+### Processing vs. rating
+
+```{r, message = F, warning = F, echo = F}
+library(broom)
+tidy(lm(score ~ process + aroma + flavor + body + country, data = coffee))
+```
+
+---
+
+### Independence violations
+
+In this case, coffee-level observations are *not* independent. We might expect
+that beans grown in particular countries might share similar growing conditions, 
+climate, technique, etc., such that this country-specific relationship
+violates independence. 
+
+It is not appropriate to simply "control for" country, as within each country, 
+coffee beans are more similar to each other.
+
+.question[
+What are some consequences of this approach?
+]
+
+---
+
+### Independence violations
+
+We get inaccurate estimates of standard errors, leading to invalid inference.
+
+We do not shed light on actual mechanisms we're interested in - in this case,
+differences between within- and between-group variability of our observations.
+
+---
+
+### Independence violations
+
+How might we deal with a violation of independence due to this clustered 
+structure?
+
+1. Variability in score might be due to within-country variations, or 
+between-country variations. However, at the *country* level, we might be able
+to assume independence (well...let's say that for now). Why not take the
+mean values within each country and fit a model on that scale?
+
+2. If violation of independence is due to nesting within country, why not
+simply fit a different model for each country (and then compare the results)?
+
+.question[
+What are some of the advantages/disadvantages of these two approaches?
+]
+
+---
+
+### Linear mixed models
+
+\begin{align*}
+\mathbf{y} = \mathbf{X\beta} + \mathbf{Zu} + \mathbf{\epsilon}
+\end{align*}
+
+- $\mathbf{y}$, $\mathbf{X}$, and $\mathbf{\beta}$ are just as in "normal" 
+regression (and $\mathbf{\epsilon}$ still represent the individual residuals).
+- $\mathbf{u}$ is a $q * K$ vector of the $q$ random effects for the $K$ 
+groups. 
+- $\mathbf{Z}$ is the $n \times (q * K)$ design matrix corresponding to the 
+random effects.
+
+Commonly, we might assume $\mathbf{u} \sim N_q(\mathbf{0}, \mathbf{G})$, where
+$\mathbf{G}$ represents the covariance matrix of the $q$ different random 
+effects.
+
+We also might impose assumptions on the correlation structure for $\epsilon$. 
+These types of structures come up, for instance, in longitudinal data analysis.
+
+---
+
+### Linear mixed models
+
+Suppose we fit a linear model for score, with predictors process, aroma, flavor,
+and body. Let's also suppose we consider a single random intercept (more on 
+this later) for country. In this case, we have scores for 743 cups of coffee 
+from 7 unique countries. Thus, the dimensions of our linear mixed model are:
+
+\begin{align*}
+\mathbf{y}_{743 \times 1} = \mathbf{X}_{743 \times 5}\mathbf{\beta}_{5 \times 1} + \mathbf{Z}_{743 \times 7}\mathbf{u}_{7 \times 1} + \mathbf{\epsilon}_{743 \times 1}
+\end{align*}
+
+$\mathbf{Z}$ is a block matrix with a special structure. Depending on how many
+random effects (and their levels) we have, this can become very unwieldy, very
+fast, as the number of columns is a multiple of the number of groups.
+
+---
+
+### A different way of thinking
+
+It's often easier to think of a mixed model intuitively in terms of the "levels" 
+at which the observations/variability occur. 
+
+For our coffee example, we might be interested in modeling
+the score for the $i$th cup of coffee in the $j$th country:
+
+\begin{align*}
+Score_{ij} &= \beta_{0j} + \beta_{1j}Process_{ij} + \beta_{2j}Aroma_{ij} + \\
+&\mathrel{\phantom{=}} \beta_{3j}Flavor_{ij} + \beta_{4j}Body_{ij} + \epsilon_{ij}
+\end{align*}
+
+How we think about the various $\beta$ components might depend on our 
+assumptions for the random effects.
+
+---
+
+### A different way of thinking
+
+For now, let's think of a simplified model that looks at associations between
+the score (outcome), the aroma rating (predictor), and random effect due to
+country.
+
+For the $i$th cup of coffee in the $j$th country:
+
+\begin{align*}
+Score_{ij} &= \beta_{0j} + \beta_{1j}Aroma_{ij} + \epsilon_{ij}
+\end{align*}
+
+Note that there is no $\beta$ corresponding to country per se. Importantly,
+we are estimating variability corresponding to the random effects.
+
+---
+
+### A random intercept model
+
+For the $i$th cup of coffee in the $j$th country:
+
+\begin{align*}
+Score_{ij} &= \beta_{0j} + \beta_{1j}Aroma_{ij} + \epsilon_{ij}\\
+\beta_{0j} &= \gamma_{00} + u_{0j}\\
+\beta_{1j} &= \gamma_1
+\end{align*}
+
+--
+
+\begin{align*}
+Score_{ij} &= (\gamma_{00} + u_{0j}) + \gamma_{1}Aroma_{ij} + \epsilon_{ij}\\
+\end{align*}
+
+In this case, we may also specify $\epsilon_{ij} \sim N(0, \sigma^2_{\epsilon})$ 
+and $u_{0j} \sim N(0, \sigma^2_{u})$.
+
+.question[
+What can we answer with this type of model? How is it different than simply 
+adding in country as a predictor? What is the dimension of $\mathbf{Z}$ here?
+]
+
+---
+
+### A random intercept model
+
+\begin{align*}
+Score_{ij} &= (\gamma_{00} + u_{0j}) + \gamma_{1}Aroma_{ij} + \epsilon_{ij},\\
+\epsilon_{ij} &\sim N(0, \sigma^2_{\epsilon})\\
+u_{0j} &\sim N(0, \sigma^2_{u})
+\end{align*}
+
+- *"What is the relationship between aroma and score (while taking into account the country-level clustering)?"*
+- *"How much variability in coffee score occurs at the country-specific level (while knowing that higher aromas are associated with higher score)?"*
+
+Depending on what we're interested in estimating, we might treat certain pieces
+of the model as .vocab[nuisance parameters]. 
+
+---
+
+### A random intercept model
+
+```{r, echo = F, dpi = 300}
+library(moderndive)
+
+ggplot(data = coffee, aes(x = aroma, y = score, color = country)) + 
+  geom_point(alpha = 0.4) + 
+  theme_minimal() + 
+  labs(x = "Aroma Rating", y = "Score Rating", color = "Country") +
+  geom_parallel_slopes(se = FALSE)
+```
+
+---
+
+### Adding in a random slope 
+
+What if we thought that the relationships between aroma and score might vary
+depending on country? Previously, we've considered this question using 
+interaction effects, but for clustered/hierarchical data like these we may get
+invalid standard error estimates.
+
+What if we were interested in the variation in score rating, *due to country*,
+as a function of the aroma rating of the coffee?
+
+---
+
+### Adding in a random slope 
+
+\begin{align*}
+Score_{ij} &= \beta_{0j} + \beta_{1j}Aroma_{ij} + \epsilon_{ij}\\
+\beta_{0j} &= \gamma_{00} + u_{0j}\\
+\beta_{1j} &= \gamma_{10} + u_{1j}
+\end{align*}
+
+--
+
+\begin{align*}
+Score_{ij} &= (\gamma_{00} + u_{0j}) + (\gamma_{10} + u_{1j})Aroma_{ij} + \epsilon_{ij}\\
+\end{align*}
+
+with some correlational structure for the $u_{0j}$s and $u_{1j}$s (perhaps
+jointly) and $\epsilon$s.
+
+.question[
+What can we answer with this type of model? How is it different than simply 
+adding in interactions?
+]
+
+
+---
+
+### Adding in a random slope
+
+```{r, echo = F, dpi = 300}
+ggplot(data = coffee, aes(x = aroma, y = score, color = country)) + 
+  geom_point(alpha = 0.4) + 
+  theme_minimal() + 
+  labs(x = "Aroma Rating", y = "Score Rating", color = "Country") +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+---
+
+### Adding in a random slope
+
+.question[
+This looks very similar to an OLS model with interactions. What's the difference
+here?
+]
+
+--
+
+In our random effects model, the slopes are modeled as variables that have a 
+"combined mean" and associated variance parameters. This results in the ability
+to "borrow information" about the slopes across the groups.
+
+This leads to then phenomenon of "partial pooling" toward the
+group mean slope - the random slopes are shrunk toward the overall mean (and the
+other slopes).
+
+A simple OLS model with interaction doesn't include the parameters corresponding
+to group mean/variance of slopes, and so there is no pooling effect and 
+information about group means is not borrowed. 
+
+---
+
+### More predictors...
+
+Note that you add random effects for more than one variable in your model (even
+on interaction terms!) - the exact form will depend on your assumptions on what 
+is "going on." However, because of the correlation between random effects, it 
+may be the case that "adding too many" terms will make model parameters 
+unestimable. At the very least, the dimension of your $\mathbf{Zu}$ component 
+will grow very large, which may make computation unwieldy.
+
+When in doubt, always think through what might make sense given the data and
+their context. Is what you are doing sensible in the given situation and how
+independence might be violated? Is the way you are thinking of the intercepts
+and slopes meaningful?
+
+You can always make things as complicated as you'd like (well, bound by
+estimability) - always be careful that what you are doing makes sense!
+
+---
+
+### Fitting mixed models in R
+
+```{r, message = F, warning = F}
+library(lme4)
+
+m1 <- lm(score ~ process + aroma + flavor + body + country, 
+         data = coffee)
+m2 <- lmer(score ~ 1 + process + aroma + flavor + body + 
+             (1 | country), data = coffee)
+m3 <- lmer(score ~ 1 + process + flavor + body + 
+             (1 + aroma | country), data = coffee)
+```
+
+---
+
+### Fitting mixed models in R
+
+```{r, warning = F, message = F}
+summary(m1)
+```
+
+---
+
+### Fitting mixed models in R
+
+```{r, warning = F, message = F}
+summary(m2)
+```
+
+---
+
+### Fitting mixed models in R
+
+```{r, warning = F, message = F}
+summary(m2)$coef
+```
+
+---
+
+### Fitting mixed models in R
+
+```{r, warning = F, message = F}
+summary(m3)
+```
+
+---
+
+### Fitting mixed models in R
+
+```{r, warning = F, message = F}
+summary(m3)$coef
+```
+
+.question[
+Why isn't a p-value provided? (Actually, don't answer this question...it's very 
+complicated)
+]

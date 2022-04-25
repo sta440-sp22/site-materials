@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Tables and figures</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Yue Jiang" />
+    <script src="tables-figures_files/header-attrs/header-attrs.js"></script>
+    <link href="tables-figures_files/remark-css/default.css" rel="stylesheet" />
+    <link href="tables-figures_files/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="sta440-slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Tables and figures
+### Yue Jiang
+### Duke University
+
+---
+
+
+
+
+
+
+### Tables and figures
+
+Tables and figures are some of the most important ways to quickly and 
+effectively communicate information. Although there are many different types of
+tables and figures you might make, effective ones all follow the same set of
+guidelines - they are:
+
+- .vocab[clear] in the information they display, such that readers can immediately
+know the story behind the figure
+- .vocab[concise] in providing the information, without any extraneous or otherwise
+distracting components
+- .vocab[correct] in their depiction, with an appropriate type of table or graph
+provided to appropriately tell the story
+
+.question[
+We'll focus on concrete examples, determining what makes some of them strong 
+and how we might fix certain issues in others.
+]
+
+---
+
+### Example 1
+
+&lt;img src="img/issues2.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Example 2
+
+&lt;img src="img/good4.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Example 3
+
+&lt;img src="img/issues7.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Example 4
+
+&lt;img src="img/good6.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Example 5
+
+&lt;img src="img/good1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Example 6
+
+&lt;img src="img/good2.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Example 7
+
+&lt;img src="img/good5.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Example 8
+
+&lt;img src="img/issues1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Example 9
+
+&lt;img src="img/issues3.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Example 10
+
+&lt;img src="img/issues4.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Example 11
+
+&lt;img src="img/issues5.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Example 12
+
+&lt;img src="img/issues6.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Example 13
+
+&lt;img src="img/good3.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Example 14
+
+&lt;img src="img/good7.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Example 15
+
+&lt;img src="img/good8.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
