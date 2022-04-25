@@ -1,0 +1,56 @@
+---
+title: "Lab: Review"
+subtitle: "STA 440 Spring 2022 (Jiang)"
+output:
+  rmarkdown::html_document:
+    css: "sta440-project.css"
+    toc: FALSE
+---
+<br>
+
+**Labs in STA440 are not graded and they do not count for credit or points.** 
+With that said, please do submit your code/attempt to Gradescope at some point 
+before next week's class - I'll provide some brief comments. 
+
+**You may submit this assignment either individually or with your team.**
+
+# Introduction
+
+The dataset `bikecrash.csv` in the GitHub repository contains data from the 
+North Carolina Department of Transportation. Each year, about 1,000 bicyclists 
+are involved in police-reported crashes with motor vehicles in North Carolina, 
+with 60 serious injuries and 20 deaths. This is a tragic yet preventable public 
+health issue. Today’s dataset is contains all police-reported bicycle crashes 
+involving a motor vehicle in North Carolina from 2007 through 2014. 
+
+# Lab objective
+
+You will be reviewing best practices for data visualization, as well as some
+basic data manipulation tasks in R. You will also review fitting (generalized)
+linear models in R.
+
+1. Create a table that depicts the number of bike crashes by county. Does it 
+appear to match what is displayed in the slides?
+
+2. Among crashes that occurred when some form of traffic control was present,
+what was the most common traffic control during urban crashes? Did this differ
+from rural crashes?
+
+3. Create a visualization that depicts the hour at which crashes occur, 
+based on injury status. Make sure your graph is well-labeled, clean, and has
+a meaningful title. What do you notice? 
+
+4. Create a visualization that depicts the relationship between the biker's age,
+the driver's age, and the estimated speed of the driver. What do you notice?
+
+5. Is there evidence of an association between whether an ambulance is required
+at the scene and whether the bike crash was a hit and run? Explain using an
+appropriate statistical model and quantify any variability in your estimates. 
+In your analysis, be sure to account for potential confounding variables, 
+including the speed at which the driver was going.
+
+# References
+
+For more info regarding the data, contact Libby Thomas at the UNC Highway Safety 
+Research Center at `thomas@hsrc.unc.edu` or John Vine-Hodge at the NCDOT Division 
+of Bicycle and Pedestrian Transportation at `javinehodge@ncdot.gov`.

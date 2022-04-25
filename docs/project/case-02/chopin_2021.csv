@@ -1,0 +1,161 @@
+First_Name,Last_Name,Country,Piano,P_1,P_2,P_3,P_4,P_5,P_6,Pass_P,S1_1,S1_2,S1_3,S1_4,Yes_S1,Pts_S1,Pass_S1,S2_1,S2_2,S2_3,S2_4,S2_5,S2_6,S2_7,S2_8,Yes_S2,Pts_S2,Pass_S2,S3_1,S3_2,S3_3,S3_4,Yes_S3,Pts_S3,Pass_S3,F_1,Final
+Leonora,Armellini,Italy,F,op48no2,op41no4,op33no3,op10no12,op25no6,op52,Yes,op48no1,op25no5,op10no4,op54,0.88,21.05,Yes,WN53,op34no1,op47,op52,op53,NA,NA,NA,0.71,20.6,Yes,op61,op41,op35,NA,0.56,20.55,Yes,op11,5
+J J Jun Li,Bui,Canada,K,op10no3,op25no11,op10no11,op24no1,op24no2,op49,Yes,op10no3,op10no4,op25no6,op60,1.00,21.49,Yes,op12,op49,op64no3,op22,NA,NA,NA,NA,1.00,22.91,Yes,op38,op24,op5,op58,0.67,21.31,Yes,op11,6
+Alexander,Gadjiev,Italy,K,op25no7,op56no2,op56no3,op25no5,op25no11,op52,Yes,op25no7,op10no8,op25no10,op52,0.94,22.66,Yes,op45,op60,op44,op42,op38,NA,NA,NA,0.76,21.41,Yes,op61,op56,op35,NA,0.88,21.75,Yes,op21,2
+Martín García,García,Spain,F,op27no1,op23,op30no4,op56no2,op10no1,op25no10,Yes,op25no4,op10no4,op55no2,op23,0.56,19.91,Yes,op34no1,op47,op51,op31,op53,NA,NA,NA,0.76,20.14,Yes,op28,op58,op50,op34no3,0.69,21.09,Yes,op21,3
+Eva,Gevorgyan,Russia,S1,op62no1,op25no5,op10no4,op30no3,op30no4,op49,Yes,op27no1,op25no11,op25no4,op54,1.00,21.66,Yes,op47,op34no1,op34no2,op34no3,op44,NA,NA,NA,0.76,20.04,Yes,op49,op17,op35,NA,0.88,21.4,Yes,op11,F
+Aimi,Kobayashi,Japan,S1,op30no3,op30no4,op10no5,op25no6,op48no2,op38,Yes,op48no2,op25no11,op10no10,op54,0.94,21.43,Yes,op61,op38,op42,op22,NA,NA,NA,NA,0.88,20.47,Yes,op30,op28,NA,NA,0.81,22.36,Yes,op11,4
+Jakub,Kuszlik,Poland,S1,op62no2,op25no4,op25no11,op30no3,op30no4,op49,Yes,op62no2,op25no6,op10no4,op39,1.00,21.67,Yes,op34no1,op34no2,op34no3,op38,op44,NA,NA,NA,0.88,21.2,Yes,op49,op30,op58,NA,0.93,22,Yes,op11,4
+Hyuk,Lee,South Korea,K,op48no1,op17no1,op17no4,op49,op10no10,op10no12,Yes,op48no1,op25no5,op25no11,op49,0.67,19.48,Yes,op39,op42,op35,op53,NA,NA,NA,NA,0.69,19.91,Yes,op2,op17,op58,NA,0.53,20.2,Yes,op21,F
+Bruce (Xiaoyu),Liu,Canada,F,op27no1,op25no10,op10no5,op33no2,op33no4,op47,Yes,op27no1,op10no4,op25no4,op54,1.00,23,Yes,op5,op38,op42,op22,NA,NA,NA,NA,1.00,23.03,Yes,op33,op35,op2,NA,1.00,23.22,Yes,op11,1
+Kamil,Pacholec,Poland,S1,bye,bye,bye,bye,bye,bye,Yes,op27no2,op10no4,op25no10,op60,0.86,19.92,Yes,op44,op36,op34no3,op64no2,op64no1,op31,NA,NA,0.67,20.04,Yes,op16,op30,op58,NA,0.64,20.43,Yes,op11,F
+Hao,Rao,China,S1,op27no2,op10no8,op25no6,op33no1,op33no3,op60,Yes,op27no2,op10no10,op25no11,op31,0.94,21.69,Yes,op47,op34no1,op60,op22,NA,NA,NA,NA,0.65,20.28,Yes,op57,op58,op33,op53,0.56,20.22,Yes,op11,F
+Kyohei,Sorita,Japan,S1,op62no1,op10no8,op25no5,op56no1,op56no2,op38,Yes,op62no1,op10no1,op25no10,op31,0.80,20.4,Yes,op34no3,op57,op38,op22,NA,NA,NA,NA,0.88,21.5,Yes,op56,op35,largo.posth,op53,0.80,21.57,Yes,op11,2
+Piotr,Alexewicz,Poland,S1,bye,bye,bye,bye,bye,bye,Yes,op55no2,op10no8,op10no10,op31,1.00,20.69,Yes,op44,op34no3,op64no3,op5,op52,NA,NA,NA,0.76,20.74,Yes,op24,op28,NA,NA,0.44,20.22,No,NA,NA
+Michelle,Candotti,Italy,S1,op59no2,op59no3,op60,op48no1,op10no8,op25no10,Yes,op60,op48no1,op10no10,op25no11,0.73,19.24,Yes,op49,op55no1,op18,op44,NA,NA,NA,NA,0.94,20.37,Yes,op38,op31,op59,op35,0.20,19.22,No,NA,NA
+Yasuko,Furumi,Japan,S1,op27no1,op10no7,op10no8,op24no3,op24no4,op49,Yes,op27no1,op10no5,op10no2,op49,0.80,19.57,Yes,op44,op61,op34no3,op60,NA,NA,NA,NA,0.56,19.21,Yes,op16,op59,op58,NA,0.07,19.21,No,NA,NA
+Avery,Gagliano,United States,S2,bye,bye,bye,bye,bye,bye,Yes,op27no2,op10no8,op25no5,op23,0.75,19.33,Yes,op47,op62no1,op34no3,op22,NA,NA,NA,NA,0.71,19.6,Yes,op35,op56,op31,NA,0.19,19.06,No,NA,NA
+Nikolay,Khozyainov,Russia,S2,op27no1,op10no7,op10no12,op59no1,op59no2,op52,Yes,op25no7,op25no10,op25no11,op52,0.75,19.34,Yes,op53,WN47,op34no3,op38,fugue.posth,op41no1,WN65,op60,0.76,20.08,Yes,op48no1,op59,op45,op58,0.38,19.57,No,NA,NA
+Su Yeon,Kim,South Korea,S1,op25no5,op10no4,op48no2,op24no2,op24no4,op52,Yes,op48no2,op10no8,op25no6,op39,0.88,20.44,Yes,op47,op29,op34no3,op52,op44,NA,NA,NA,0.47,19.82,Yes,op49,op24,op43,op58,0.50,19.73,No,NA,NA
+Mateusz,Krzyzowski,Poland,S1,op48no2,op10no5,op25no5,op56no2,op56no3,op23,Yes,op48no2,op10no11,op25no11,op31,0.69,19.47,Yes,op48no1,op23,op34no1,op10no6,op53,NA,NA,NA,0.53,19.25,Yes,op56,op28,NA,NA,0.00,18.84,No,NA,NA
+Szymon,Nehring,Poland,S1,bye,bye,bye,bye,bye,bye,Yes,op55no2,op10no10,op10no1,op52,1.00,20.33,Yes,op51,op61,op64no3,op22,NA,NA,NA,NA,0.94,21.47,Yes,op62no2,op54,op56,op58,0.33,20.09,No,NA,NA
+Miyu,Shindo,Japan,S1,op48no1,op17no1,op17no4,op60,op10no7,op10no4,Yes,op48no1,op25no6,op10no1,op47,0.75,19.98,Yes,op23,op22,op42,op60,NA,NA,NA,NA,0.65,19.72,Yes,op17,op5,op58,NA,0.44,20.15,No,NA,NA
+Hayato,Sumino,Japan,S2,op48no1,op24no1,op24no2,op25no4,op25no11,op38,Yes,op48no1,op10no1,op25no10,op20,0.63,19.75,Yes,op5,op38,op18,op53,NA,NA,NA,NA,0.59,20.3,Yes,op24,op61,op35,op39,0.19,19.07,No,NA,NA
+Andrzej,Wiercinski,Poland,S2,op62no1,op24no1,op24no4,op10no7,op10no8,op52,Yes,op62no1,op10no10,op25no11,op20,0.67,19.48,Yes,op52,op12,op18,op53,NA,NA,NA,NA,0.50,19.5,Yes,op24,op54,op58,NA,0.13,19.35,No,NA,NA
+Kai-Min,Chang,Taiwan,S2,op48no1,op59no2,op59no3,op10no4,op10no7,op23,Yes,op48no1,op25no5,op10no5,op23,0.80,19.64,Yes,op49,Dbop36no1,Dbop36no2,Dbop36no3,op34no3,op1,op53,NA,0.31,18.73,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Xuehong,Chen,China,S1,op55no2,op10no2,op10no4,op59no1,op59no2,op23,Yes,op27no2,op10no8,op25no6,op23,0.93,20.87,Yes,op60,op35,op34no3,op53,NA,NA,NA,NA,0.44,18.84,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Hyounglok,Choi,South Korea,S1,op62no1,op10no10,op10no12,op59no1,op59no2,op52,Yes,op62no1,op25no5,op10no5,op52,0.69,18.84,Yes,op45,op54,op34no3,op23,op53,NA,NA,NA,0.18,18.14,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Federico Gad,Crema,Italy,F,op17no1,op17no4,op25no5,op25no11,op25no7,op49,Yes,op25no7,op25no10,op10no12,op49,0.63,18.95,Yes,op61,op26no1,op26no2,op42,NA,NA,NA,NA,0.12,17.58,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Alberto,Ferro,Italy,S2,op55no2,op59no1,op59no3,op60,op10no4,op25no10,Yes,op55no2,op60,op10no11,op10no12,0.63,18.8,Yes,op18,op52,op22,NA,NA,NA,NA,NA,0.41,19,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Wei-Ting,Hsieh,Taiwan,S1,op49,op27no1,op59no1,op59no3,op25no4,op10no8,Yes,op49,op27no1,op25no5,op25no11,0.56,18.78,Yes,op20,op34no1,op22,NA,NA,NA,NA,NA,0.24,18.48,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Adam,Kaldunski,Poland,S1,bye,bye,bye,bye,bye,bye,Yes,op62no1,op10no5,op25no10,op52,0.93,20.13,Yes,op53,op64no1,op64no2,op64no3,op60,op39,NA,NA,0.19,18.27,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Shushi,Kyomasu,Japan,Y,op62no2,op25no11,op10no10,op59no1,op59no3,op60,Yes,op62no2,op10no1,op25no6,op54,0.63,19.63,Yes,op60,op34no1,op27no2,op22,NA,NA,NA,NA,0.35,18.7,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Arsenii,Mun,Russia,Y,op48no2,op10no8,op25no6,op17no2,op17no4,op23,Yes,op48no2,op10no1,op10no2,op23,0.63,18.25,Yes,op5,op18,op20,op22,NA,NA,NA,NA,0.00,16.89,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Viet Trung,Nguyen,Vietnam,S1,op27no2,op10no5,op25no10,op17no1,op17no4,op60,Yes,op27no2,op10no12,op25no4,op52,0.71,19.57,Yes,op28no13,op60,op34no3,op48no1,op53,NA,NA,NA,0.33,18.55,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Georgijs,Osokins,Latvia,Y,op62no1,op30no4,op50no3,op25no10,op10no5,op47,Yes,op62no1,op25no6,op10no12,op47,0.75,19.56,Yes,op61,op71no2,op30no4,op50no3,op34no3,op53,NA,NA,0.29,18.42,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Evren,Ozel,United States,S1,bye,bye,bye,bye,bye,bye,Yes,op62no1,op10no8,op25no4,op49,0.56,18.8,Yes,op29,op44,op34no1,op36,op52,NA,NA,NA,0.41,18.76,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Sohgo,Sawada,Japan,K,op50no1,op50no3,op10no5,op25no10,op27no2,op23,Yes,op23,op27no2,op25no6,op10no4,0.56,18.48,Yes,op22,op34no3,op60,op31,NA,NA,NA,NA,0.18,17.76,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Aristo,Sham,Hong Kong,S2,op62no2,op10no7,op25no11,op30no1,op30no4,op47,Yes,op48no1,op10no8,op25no6,op52,0.56,19.2,Yes,op60,op31,op42,op22,NA,NA,NA,NA,0.06,18.04,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Talon,Smith,United States,S2,op48no1,op10no1,op10no11,op59no1,op59no3,op60,Yes,op48no1,op10no5,op25no6,op52,0.67,19.07,Yes,op60,op57,op64no3,op22,NA,NA,NA,NA,0.31,18.38,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Szu-Yu,Su,Taiwan,S1,op62no1,op25no4,op10no12,op59no1,op59no2,op49,Yes,op62no1,op10no1,op10no2,op49,0.69,19,Yes,op22,op34no1,op63no1,op63no2,op63no3,op52,NA,NA,0.06,17.63,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Yutong,Sun,China,S1,bye,bye,bye,bye,bye,bye,Yes,op23,op48no1,op10no1,op25no5,0.80,19.44,Yes,op47,op42,op44,op39,NA,NA,NA,NA,0.38,19.31,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Tomoharu,Ushida,Japan,Y,bye,bye,bye,bye,bye,bye,Yes,op27no2,op10no10,op10no12,op49,0.56,19.4,Yes,op42,op52,op60,op53,NA,NA,NA,NA,0.35,18.33,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Yuchong,Wu,China,S2,op55no2,op10no11,op10no8,op30no3,op30no4,op52,Yes,op55no2,op10no1,op25no5,op52,0.81,21.06,Yes,op60,op34no1,op34no2,op34no3,op22,NA,NA,NA,0.41,19.66,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Lingfei (Stephan),Xie,China,S2,op62no1,op59no2,op33no4,op10no8,op25no5,op52,Yes,op62no1,op10no10,op25no11,op52,0.87,19.45,Yes,op60,op64no3,op47,WN37,op22,NA,NA,NA,0.18,17.77,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Zi,Xu,China,S1,op27no2,op10no1,op10no2,op56no2,op56no3,op60,Yes,op27no2,op10no10,op25no11,op60,0.79,20.62,Yes,op48no1,op38,op31,op34no1,op53,NA,NA,NA,0.13,17.99,No,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Marcin,Wieczorek,Poland,S1,op23,op10no12,op25no5,op62no2,op56no1,op56no2,Yes,op10no1,op10no10,op62no2,op31,0.60,18.99,Yes,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Jorge González,Buajasan,Cuba,Y,op48no1,op38,op59no1,op59no3,op25no10,op25no11,Yes,op48no1,op38,op25no5,op10no8,0.31,17.8,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Junhui,Chen,China,S2,op24no1,op24no2,op10no6,op10no5,op10no7,op60,Yes,op48no1,op10no10,op10no8,op47,0.13,17.4,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Zixi,Chen,China,S1,op62no1,op10no5,op25no6,op50no2,op50no3,op47,Yes,op62no1,op25no4,op10no1,op47,0.38,18.29,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Aleksandra Hortensja,Dabek,Poland,S2,op27no1,op59no1,op59no2,op10no4,op25no4,op47,Yes,op27no1,op10no7,op10no5,op47,0.00,16.38,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Joanna,Goranko,Poland,S1,op62no2,op59no1,op59no3,op10no8,op10no10,op52,Yes,op62no2,op31,op25no6,op10no12,0.25,17.86,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Chelsea,Guo,United States,F,op10no11,op10no12,op62no2,op33no3,op33no4,op60,Yes,op62no2,op25no5,op10no5,op60,0.44,18.2,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Eric,Guo,Canada,S1,op62no1,op10no1,op25no6,op60,op59no1,op59no3,Yes,op62no1,op10no2,op10no4,op60,0.44,18.67,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Saaya,Hara,Japan,S1,op17no1,op17no3,op27no2,op25no11,op25no5,op52,Yes,op27no2,op10no8,op25no6,op54,0.00,16.5,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Yifan,Hou,China,S1,op27no1,op10no8,op10no10,op59no1,op59no2,op23,Yes,op27no1,op10no4,op25no5,op23,0.38,17.69,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Kaoruko,Igarashi,Japan,S1,op27no1,op10no4,op25no6,op33no1,op33no3,op23,Yes,op27no1,op25no11,op10no10,op39,0.38,17.7,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Riko,Imai,Japan,S2,op27no2,op10no12,op25no5,op33no3,op33no4,op52,Yes,op10no1,op25no10,op27no2,op52,0.50,18.28,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Junichi,Ito,Japan,F,op17no1,op24no1,op37no2,op38,op10no8,op25no5,Yes,op62no1,op10no5,op10no50,op38,0.25,17.47,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Asaki,Iwai,Japan,S2,op9no3,op59no1,op59no3,op25no4,op10no8,op52,Yes,op9no3,op10no2,op10no4,op52,0.31,18.27,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+San,Jittakarn,Thailand,S1,op55no2,op41no4,op50no3,op10no5,op10no2,op47,Yes,op55no2,op10no11,op10no12,op47,0.00,16.63,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Joo-Yeon,Ka,South Korea,Y,op59no1,op59no2,op27no2,op10no10,op25no11,op52,Yes,op62no1,op10no8,op25no4,op52,0.13,17.21,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Jaeyoon,Lee,South Korea,S1,op27no2,op10no4,op10no7,op24no2,op24no4,op49,Yes,op27no2,op25no5,op25no11,op39,0.31,17.81,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Xiaoxuan,Li,China,S2,op48no1,op10no1,op25no6,op33no1,op33no2,op60,Yes,op48no1,op10no10,op25no11,op39,0.50,18.44,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Julia,Lozowska,Poland,S1,op9no3,op25no5,op10no4,op30no1,op30no4,op23,Yes,op9no3,op10no5,op25no10,op23,0.25,18.14,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Xuanyi,Mao,China,S2,op48no1,op10no12,op10no2,op33no3,op33no4,op23,Yes,op48no1,op10no5,op25no6,op49,0.44,18.31,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Tomasz,Marut,Poland,S1,op59no1,op59no2,op10no6,op10no5,op10no7,op38,Yes,op10no6,op10no1,op10no2,op54,0.06,17.13,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Yupeng,Mei,China,Y,op62no1,op25no6,op10no1,op59no1,op59no3,op49,Yes,op62no1,op10no8,op25no10,op49,0.31,18.14,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Jinhyung,Park,South Korea,Y,op48no1,op10no10,op25no11,op56no1,op56no2,op23,Yes,op48no1,op25no5,op10no1,op23,0.25,17.19,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Yeonmin,Park,South Korea,S1,op9no3,op56no2,op56no3,op38,op25no10,op25no11,Yes,op9no3,op25no6,op10no4,op54,0.31,17.8,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Piotr,Pawlak,Poland,S1,bye,bye,bye,bye,bye,bye,Yes,op10no6,op10no2,op10no12,op52,0.44,18.34,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Jiana,Peng,China,S1,op27no1,op30no3,op30no4,op25no6,op10no8,op38,Yes,op9no3,op10no5,op25no10,op23,0.47,18.44,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Leonardo,Pierdomenico,Italy,S1,op62no1,op50no1,op50no3,op25no6,op10no1,op52,Yes,op62no1,op10no10,op10no4,op23,0.13,16.81,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Zuzanna,Pietrzak,Poland,S1,op10no4,op25no6,op27no2,op41no3,op41no4,op49,Yes,op62no2,op10no12,op25no10,op23,0.50,18.06,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Yangyang,Ruan,China,S1,op48no1,op33no2,op33no4,op10no5,op25no10,op49,Yes,op48no1,op10no7,op10no8,op49,0.13,16.87,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Aleksandra,Swigut,Poland,F,op27no1,op60,op30no3,op30no4,op10no10,op10no12,Yes,op27no1,op60,op25no5,op10no8,0.14,17.39,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Rikono,Takeda,Japan,S2,op55no2,op25no11,op10no11,op33no1,op33no3,op38,Yes,op55no2,op10no4,op25no4,op38,0.13,17,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Shunshun,Tie,China,S2,op62no1,op10no8,op10no10,op56no1,op56no2,op23,Yes,op62no1,op10no12,op25no5,op23,0.50,18.53,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Sarah,Tuan,United States,S2,op33no1,op33no3,op10no11,op10no8,op62no1,op49,Yes,op25no6,op10no12,op49,op62no1,0.50,18.08,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Chao,Wang,China,Y,op27no1,op41no1,op41no3,op25no6,op10no5,op23,Yes,op27no1,op23,op10no11,op10no1,0.44,19.04,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Zitong,Wang,China,S1,op27no1,op30no2,op30no4,op10no5,op25no6,op49,Yes,op27no1,op10no4,op10no7,op49,0.33,17.94,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Zijian,Wei,China,S2,op10no5,op10no10,op50no2,op50no3,op62no1,op52,Yes,op10no8,op25no6,op62no1,op52,0.38,17.45,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Victoria,Wong,Canada,S1,op27no1,op25no5,op10no8,op30no1,op30no4,op49,Yes,op27no1,op25no6,op10no12,op49,0.38,18.44,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Yuanfan,Yang,United Kingdom,S2,op10no3,op33no2,op33no4,op10no5,op10no10,op60,Yes,op10no3,op10no11,op10no1,op60,0.27,17.72,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Anastasia,Yasko,Russia,S1,op48no2,op10no1,op10no11,op33no3,op33no4,op52,Yes,op48no2,op10no8,op10no2,op39,0.00,14.16,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Andrey,Zenin,Russia,K,op48no1,op10no5,op25no4,op17no3,op17no4,op52,Yes,op48no1,op10no12,op25no10,op52,0.25,16.88,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Boao,Zhang,China,K,op27no1,op10no1,op10no2,op24no1,op24no4,op52,Yes,op27no1,op10no4,op25no10,op52,0.33,17.67,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Yilan,Zhao,China,S1,op52,op27no1,op17no3,op17no4,op10no2,op25no11,Yes,op27no1,op25no6,op10no1,op52,0.13,17.44,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Ziji Zoé,Zhao,China,F,op55no2,op25no6,op10no8,op24no3,op24no4,op49,Yes,op55no2,op25no11,op25no5,op49,0.00,17.13,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Anfisa,Bobylova,Ukraine,PS,op27no1,op30no2,op30no4,op10no11,op10no12,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Lukasz,Byrdy,Poland,PY,op25no10,op25no11,op25no7,op41no3,op41no4,op38,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Luigi,Carroccia,Italy,PY,op27no2,op60,op50no2,op50no3,op25no5,op25no11,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Han,Chen,Taiwan,PS,op10no1,op25no10,op33no4,op59no1,op27no1,op49,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Martina,Consonni,Italy,PS,op48no1,op23,op17no1,op17no2,op25no5,op10no5,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Diana,Cooper,France,PY,op59no2,op59no3,op25no6,op10no8,op27no2,op47,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Stephanie,Draughon,United States,PS,op17no2,op17no4,op25no7,op60,op25no4,op10no12,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Hsin-Yu,Duan,Taiwan,PS,op10no1,op25no4,op24no1,op24no2,op48no1,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Mateusz,Duda,Poland,PY,op62no1,op10no8,op25no5,op59no2,op59no3,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Xu,Guo,China,PS,op27no2,op24no1,op24no2,op10no8,op25no6,op60,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Katharina,Hack,Germany,PS,op17no1,op17no4,op25no5,op10no12,op25no7,op47,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Chi Ho,Han,South Korea,PS,op27no2,op17no1,op17no4,op10no7,op25no11,op23,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Yukino,Hayashi,Japan,PS,op62no2,op25no10,op10no8,op50no2,op50no3,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Wataru,Hisasue,Japan,PS,op50no1,op50no3,op9no3,op10no10,op10no4,op60,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Yun Chih,Hsu,Taiwan,PS,op60,op62no1,op33no1,op33no4,op10no1,op25no10,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Hana,Igawa,Japan,PS,op62no1,op10no1,op25no5,op33no1,op33no4,op49,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Grigoris,Ioannou,Greece,PS,op25no10,op25no11,op48no1,op33no1,op33no2,op49,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Seika,Ishida,Japan,PY,op48no2,op25no6,op10no8,op17no1,op17no2,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Andrei,Ivanou,Belarus,PS,op62no1,op30no2,op30no4,op25no5,op10no4,op49,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Yukino,Kaihara,Japan,PY,op48no1,op10no8,op25no5,op17no3,op17no4,op60,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Hyelee,Kang (Daegu),South Korea,PS,op27no1,op24no2,op24no4,op10no10,op25no11,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Hyelee,Kang (Junsu),South Korea,PY,op59no2,op24no2,op48no1,op10no8,op10no7,op23,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Elizabeth,Karaulova,Russia,PS,op30no1,op30no4,op49,op27no2,op25no5,op25no11,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Airi,Katada,Japan,PS,op24no1,op24no2,op10no8,op25no4,op9no3,op60,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Eylam,Keshet,Israel,PS,op55no2,op24no4,op33no4,op25no5,op10no8,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Konstantin,Khachikyan,Russia,PS,op48no1,op25no5,op25no11,op17no3,op17no4,op60,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Hyelim,Kim,South Korea,PS,op48no1,op23,op30no1,op30no3,op10no8,op25no5,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Jun Ho,Kim,South Korea,PS,op62no1,op10no2,op10no4,op56no1,op56no3,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Yurika,Kimura,Japan,PY,op56no1,op56no2,op27no1,op60,op10no5,op25no10,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Qi,Kong,China,PS,op55no2,op10no10,op25no11,op33no2,op33no4,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Pavle,Krstic,Bulgaria,PS,op48 no1,op10no10,op25no11,op33no1,op33no3,op23,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Yukine,Kuroki,Japan,PS,op10no8,op25no6,op9no3,op24no1,op24no2,op49,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NingYuen,Li,Hong Kong,PY,op62no1,op24no1,op24no3,op25no10,op60,op25no11,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Xinjie,Li,China,PY,op55no2,op10no1,op10no2,op17no3,op17no4,op38,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Hao Wei,Lin,Taiwan,PS,op10no1,op25no5,op27no2,op24no3,op24no4,op47,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Ziyu,Liu,China,PY,op48no1,op17no1,op17no4,op60,op10no12,op25no10,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Asaka,Miyoshi,Japan,PS,op27no2,op10no5,op10no10,op50no2,op50no3,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Momoko,Mizutani,Japan,PY,op59no1,op59no3,op10no8,op10no10,op10no3,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Mayaka,Nakagawa,Japan,PS,op27no2,op10no8,op25no6,op30no3,op30no4,op60,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Yui,Nakamura,Japan,PS,op41no1,op41no4,op48no1,op10no8,op10no7,op47,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Mariko,Nogami,Japan,PS,op27no2,op10no10,op25no11,op24no2,op24no4,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Arisa,Onoda,Japan,PS,op27no1,op25no5,op10no12,op59no1,op59no3,op60,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Anke,Pan,Germany,PS,op10no4,op10no11,op25no7,op33no3,op33no4,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Eryk,Parchanski,Poland,PY,op27no1,op30no2,op30no4,op10no11,op10no4,op47,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Agne,Radzeviciute,Canada,PS,op56no2,op56no3,op9no3,op10no10,op10no4,op60,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Kazuya,Saito,Japan,PS,op55no2,op30no1,op30no3,op10no5,op25no10,op49,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Cristian,Sandrin,Romania,PY,op30no3,op30no4,op25no10,op25no11,op62no2,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Meng-Sheng,Shen,Taiwan,PS,op48no1,op25no10,op25no11,op59no1,op59no2,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Kotaro,Shigemori,Japan,PS,op62no1,op25no5,op10no8,op50no1,op50no3,op60,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Mana,Shoji,Japan,PY,op62no1,op25no11,op10no10,op56no1,op56no3,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Vitaly,Starikov,Russia,PS,op48no1,op56no1,op25no5,op10no1,op56no3,op23,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Marcel,Tadokoro,France,PS,op23,op41no2,op41no3,op48no1,op10no2,op25no11,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Mateusz,Tomica,Poland,PS,op27no1,op60,op24no2,op24no4,op25no5,op25no11,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Parker,Van Ostrand,United States,PS,op27no1,op38,op59no2,op59no3,op25no10,op10no1,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Monika Ruth,Vida,Hungary,PY,op48no1,op10no4,op10no2,op59no1,op59no2,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Bochun,Wang,United Kingdom,PS,op62no2,op10no8,op25no6,op50no2,op50no3,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Chanel,Wang,United States,PY,op48no1,op24no1,op24no2,op10no1,op10no11,op38,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Liya,Wang,China,PS,op62no1,op10no7,op10no8,op17no3,op17no4,op49,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Yijia,Wang,China,PS,op25no6,op10no4,op62no1,op59no1,op59no2,op23,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Jacek,Wendler,Poland,PS,op27no2,op24no1,op24no2,op10no12,op25no6,op23,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Sze Yuen,Wong,Hong Kong,PS,op55no2,op25no10,op25no11,op24no1,op24no2,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Maciej,Wota,Poland,PY,op49,op27no1,op10no5,op10no10,op30no2,op30no3,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Maiqi,Wu,China,PY,op62no1,op33no1,op33no4,op10no8,op25no4,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Biguo,Xing,China,PY,op33no1,op33no4,op25no11,op10no7,op48no1,op49,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Miki,Yamagata,Japan,PS,op37no2,op24no2,op24no4,op10no8,op25no6,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Suah,Ye,South Korea,PS,op48no1,op52,op33no2,op33no4,op25no6,op25no11,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Shihhsien,Yeh,Taiwan,PS,op55no2,op10no10,op10no8,op33no3,op33no4,op49,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Yi,Yi,China,PY,op27no2,op10no7,op10no8,op59no1,op59no3,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Hao Zi,Yoh,Malaysia,PS,op9no3,op59no1,op59no3,op10no4,op10no7,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Se-Hyeong,Yoo,South Korea,PS,op62no1,op60,op41no4,op50no3,op10no1,op25no5,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Jessica,Yuma,Canada,PS,op9no3,op10no4,op10no11,op17no1,op17no4,op47,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Kaiwen,Zhao,China,PS,op27no2,op10no8,op10no10,op50no1,op50no3,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+Tianyu,Zhou,Canada,PS,op48no1,op59no1,op59no2,op10no2,op10no1,op52,No,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA

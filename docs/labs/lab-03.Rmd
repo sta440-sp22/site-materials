@@ -1,0 +1,33 @@
+---
+title: "Lab: Mixed Models"
+subtitle: "STA 440 Spring 2022 (Jiang)"
+output:
+  rmarkdown::html_document:
+    css: "sta440-project.css"
+    toc: FALSE
+---
+<br>
+
+**Labs in STA440 are not graded and they do not count for credit or points.** 
+
+# Introduction
+
+The dataset `chocolate.csv` in the GitHub repository contains data containing
+ratings of over 2,500 artisan chocolate bars from around the world, as compiled
+at (http://flavorsofcacao.com/chocolate_database.html). There is a perception 
+that American chocolate manufacturers are worse than non-American manufacturers.
+Is there evidence that this is the case in this dataset (based on rating score)?
+
+# Hints
+
+Some general considerations:
+
+- There may be non-independence on a variety of levels - for instance, 
+country of origin of the cacao bean, the manufacturer itself, etc. How will
+you deal with this in your analysis?
+- How will you *answer the question*? Be sure to be clear in your communication.
+
+There may be some data cleaning involved! For the `ingredients` variable 
+specifically, `#` is the number of ingredients in the chocolate: `B` is for
+beans, `S` is for sugar, `S*` is for non-sugar sweetener, `C` is for cocoa
+butter, `V` is for vanilla, `L` is for lecithin, and `Sa` is for salt.

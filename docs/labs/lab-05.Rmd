@@ -1,0 +1,25 @@
+---
+title: "Lab: Categorical Variables (2)"
+subtitle: "STA 440 Spring 2022 (Jiang)"
+output:
+  rmarkdown::html_document:
+    css: "sta440-project.css"
+    toc: FALSE
+---
+<br>
+
+**Labs in STA440 are not graded and they do not count for credit or points.** 
+
+The file `clean.csv` contains the data to be used for this lab 
+These data were originally conducted as part of an annual survey conducted by
+ETC Institute on behalf of the City of Durham. For more details on this
+survey, see associated documents [here](https://www.dconc.gov/county-departments/departments-a-e/county-manager/city-county-resident-survey).
+
+This survey contained quality-of-life results with a number of aspects of 
+Durham's municipal services. Note that this scale ranged from 1 - highly dissatisfied 
+to 5 - highly satisfied. 9 indicates a missing value.
+
+1. Evaluate whether perceived satisfaction with quality of life is associated with whether
+the resident rents or owns their home.
+2. Now, account for the potentially confounding variables of race and sex. What patterns
+do you observe?

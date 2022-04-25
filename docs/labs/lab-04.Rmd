@@ -1,0 +1,26 @@
+---
+title: "Lab: Categorical Variables (1)"
+subtitle: "STA 440 Spring 2022 (Jiang)"
+output:
+  rmarkdown::html_document:
+    css: "sta440-project.css"
+    toc: FALSE
+---
+<br>
+
+**Labs in STA440 are not graded and they do not count for credit or points.** 
+
+This lab will help guide your second case study and contain some helpful hints
+for analysis. Only Exercise 4 asks you to carry out an analysis.
+
+1. Keep in mind that performers are instructed to select certain pieces from a 
+pre-defined lists for each round. Have you accounted for this in your analysis?
+2. Once performer choose pieces, they may order them in any way they choose.
+Are you considering the order in which pieces get selected for their programs?
+3. Performers who select certain pieces in earlier rounds may not choose them
+again in later rounds. How does this factor into your analysis? Are there any
+pieces that show up both "early" and "late"? How might you examinine placement?
+4. Chopin's Scherzos and Ballades are single-movement, large-scale pieces that
+are required for multiple rounds. Examinine associations between selection of 
+these pieces against another categorical variable *of your choice* (not 
+necessarily an "outcome" variable!). What sorts of conclusions might you draw?

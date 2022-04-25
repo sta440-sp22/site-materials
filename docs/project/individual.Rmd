@@ -1,0 +1,70 @@
+---
+title: "Individual project"
+subtitle: "STA 440 Spring 2022 (Jiang)"
+output:
+  rmarkdown::html_document:
+    css: "./sta440-project.css"
+    toc: TRUE
+    toc_float: TRUE
+---
+<br>
+
+```{r, out.width = "350%", eval=TRUE, echo=FALSE, warning = F, message = F}
+library(knitr)
+include_graphics("img/project.png")
+```
+
+<b>Art</b>: From Kawarazaki Shodo, *Take*.
+
+# Project objectives
+
+The purpose of the open-ended individual project is for you to use your
+statistical toolkit to address an outstanding research project in a principled,
+reproducible way. Using a dataset of your choosing, identify an interesting
+hypothesis, identify appropriate statistical methods, carry out your analysis,
+and present your results in a reproducible report and oral presentation in a
+way that is accessible to allied researchers.
+
+<b>Detailed instructions are available in the course 
+[GitHub repository](https://github.com/sta440-sp22)</b>. 
+
+# Learning objectives
+
+**Case-specific goals:**
+
+- Design an appropriate statistical analysis from scratch
+- Write and develop a statistically sound analysis plan
+- Gain independence as a practicing statistician to tackle an open-ended 
+research question of your choice
+
+**Overall class goals:**
+
+- Solidify skills in reproducible research and programming, including 
+version-control and collaboration via GitHub
+- Critically think about reasonable analysis approaches in the context of 
+real-world data
+- Express statistical models clearly and correctly
+- Develop scientific writing skills by providing clear, concise, data-driven 
+conclusions suitable for allied researchers
+
+# Project timeline
+
+- Proposal (optional)
+  - Due Friday, February 18
+- Initial draft (optional)
+  - Due Friday, April 1
+- Final manuscript **no grace period**
+  - Due Wednesday, April 27
+  
+The proposal and initial draft are *optional*. However, I highly encourage you
+to turn in assignments, as you will receive detailed feedback from the 
+instructor. 
+
+Note that there is **no grace period** for the final manuscript - this is because
+the individual project serves as this course's final exam and is on the
+university final exam schedule. Please use your time wisely!
+  
+**Note**: your GitHub report repository and commit history will also be
+evaluated by the instructor. The GitHub repository must contain the reproducible
+R Markdown document corresponding to the submitted reports, and will be checked
+throughout the course of the case study.

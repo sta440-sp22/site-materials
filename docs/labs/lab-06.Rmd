@@ -1,0 +1,47 @@
+---
+title: "Lab: Survival (1)"
+subtitle: "STA 440 Spring 2022 (Jiang)"
+output:
+  rmarkdown::html_document:
+    css: "sta440-project.css"
+    toc: FALSE
+---
+<br>
+
+```{r, out.width = "350%", eval=TRUE, echo=FALSE, warning = F, message = F}
+library(knitr)
+include_graphics("img/got.jpg")
+```
+**Photo credit**: HBO, Game of Thrones S05E06.
+
+**Labs in STA440 are not graded and they do not count for credit or points.** 
+With that said, please do submit your code/attempt to Gradescope at some point 
+before class (don't spend too long on it!).
+
+# Introduction
+
+The dataset `got.csv` contains data as compiled by Rakesh Chintha, inspired by
+[Lystad and Brown, 2018](https://injepijournal.biomedcentral.com/articles/10.1186/s40621-018-0174-7).
+
+The following variables will be used:
+
+- `duration_in_episodes`: the number of episodes the character has made it to 
+"so-far" through the end of Season 7 (we're ignoring Season 8 because it's hot
+trash)
+- `is_dead`: whether the character is dead
+- `character_name`: character name
+- `royal`: whether the character is a royal
+- `house`: which great house of Westeros the character belongs to (if any)
+- `gender`: gender of the character
+
+# Lab objective
+
+Explore the data! Can you create a useful visualization that summarizes some
+aspects of the time-to-death in this dataset? Does there appear to be evidence
+of differential survival depending on certain characteristics (gender, royalty
+status, etc.)? What about potential confounders?
+
+# References
+
+- Lystad RP and Brown BT. "Death is Certain, the time is not": mortality and
+survival in Game of Thrones. 2018. *Injury Epidemiology* **5**(44).

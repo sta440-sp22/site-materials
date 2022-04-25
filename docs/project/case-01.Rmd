@@ -1,0 +1,94 @@
+---
+title: "Case study 01: Lega Serie A"
+subtitle: "STA 440 Spring 2022 (Jiang)"
+output:
+  rmarkdown::html_document:
+    css: "./sta440-project.css"
+    toc: TRUE
+    toc_float: TRUE
+---
+<br>
+
+```{r, out.width = "350%", eval=TRUE, echo=FALSE, warning = F, message = F}
+library(knitr)
+include_graphics("img/case-01.jpg")
+```
+**Image credit:** 2021/2022 Lega Serie A Teams, Tweet July 14, 2021 `@SerieA_EN`.
+
+# Introduction
+
+Serie A is the premier Italian football league, and one of the strongest leagues
+in the world, home to many famous clubs such as AC Milan, Internazionale, and 
+Juventus. Since 2004, 20 clubs have vied for the Serie A championship title, 
+with the winners displaying the coveted *scudetto* on their uniforms the 
+following year. Note that the three lowest-placing teams are demoted to Serie B 
+the following season (and similarly three teams from Serie B are promoted to 
+Serie A), and so the teams comprising Serie A change across seasons.
+
+The tournament itself is a round-robin with 38 total games per season. During 
+the first half, each club plays each of the others exactly once; in the second 
+half, the clubs play once again but with the home/visiting team for each match 
+being reversed. This is intended to address the *home-field advantage*, a 
+perceived benefit that the home team (i.e., the team which hosts the match) has 
+over the visiting team (i.e., the team that must travel to the stadium to play). 
+
+# Project objectives
+
+As a preliminary analysis, investigate and quantify the magnitude of any 
+potential home-field advantage in Serie A football. Is there evidence that some 
+teams appear to have more home-field advantage than others, while accounting 
+for the relative strength of their opponents? Be sure to suitably define 
+"home-field advantage" using the data at hand.
+
+Of particular interest is the following *primary analysis* question. Home-field 
+advantage is often attributed to factors such as crowd involvement (indeed, the 
+"12th man" is often said to be a crucial factor in home wins). The 2019-2020 
+and 2020-2021 Serie A seasons were impacted by the global coronavirus pandemic, 
+with all matches after the March 1, 2020 game between AS Roma and Cagliari being 
+played in completely empty stadiums. 
+
+Is there evidence that any potential home-field advantage was attenuated, or 
+even eliminated, during the COVID-19 pandemic compared to prior years? If so, 
+estimate the degree to which it was reduced, and provide a suitable 
+quantification of variability in your estimate. You must account for potential 
+confounding factors in your analysis (e.g., relative skill disparity between 
+teams, potential size of audience missing, etc.).
+
+Clearly write any model(s) using correct mathematical notation. Care should be 
+made to use readily-interpretable models, with conclusions and interpretations 
+able to be understood by allied researchers and the knowledgeable public.
+
+<b>Detailed instructions, the data, and data descriptions are available in the
+course [GitHub repository](https://github.com/sta440-sp22)</b>.
+
+# Learning objectives
+
+- Solidify skills in reproducible research and programming, including 
+version-control and collaboration via GitHub
+- Critically think about reasonable analysis approaches in the context of 
+real-world data
+- Express statistical models clearly and correctly
+- Develop scientific writing skills by providing clear, concise, data-driven 
+conclusions suitable for allied researchers
+
+# Project timeline
+
+- **Group**: Report and reproducible code
+  - Due Friday, January 21
+- **Group**: Revised report and response to reviewers
+  - Due Friday, February 4
+
+**Note**: each team's GitHub report repository and commit history will also be
+evaluated by the instructor. The GitHub repository must contain the reproducible
+R Markdown document corresponding to the submitted reports, and will be checked
+throughout the course of the case study to ensure all team members are making
+meaningful contributions to the project.
+
+# References
+
+[1] Lega Serie A. [https://www.legaseriea.it/en](https://www.legaseriea.it/en),
+Accessed January 1, 2022.
+
+[2] Eurosport. "Serie A Table." [https://www.eurosport.com/football/serie-a/standing.shtml](https://www.eurosport.com/football/serie-a/standing.shtml), Accessed January 1, 2022.
+
+[3] ESPN. "Italian Serie A Table." [https://global.espn.com/soccer/standings/_/league/ita.1](https://global.espn.com/soccer/standings/_/league/ita.1), Accessed January 1, 2022.

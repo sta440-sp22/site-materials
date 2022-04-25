@@ -1,0 +1,58 @@
+---
+title: "Lab: Bayesian GLMs"
+subtitle: "STA 440 Spring 2022 (Jiang)"
+output:
+  rmarkdown::html_document:
+    css: "sta440-project.css"
+    toc: FALSE
+---
+<br>
+
+**Labs in STA440 are not graded and they do not count for credit or points.** 
+With that said, please do submit your code/attempt to Gradescope at some point 
+before next week's class - I'll provide some brief comments. 
+
+**You may submit this assignment either individually or with your team.**
+
+# Introduction
+
+The dataset `bikecrash_agg.csv` in the GitHub repository contains data from the 
+North Carolina Department of Transportation. Each year, about 1,000 bicyclists 
+are involved in police-reported crashes with motor vehicles in North Carolina, 
+with 60 serious injuries and 20 deaths. This is a tragic yet preventable public 
+health issue. Today’s dataset contains all police-reported bicycle crashes 
+involving a motor vehicle in North Carolina from 2007 through 2014, aggregated
+at a county level, and also contains characteristics of each of these counties.
+
+The following variables will be used:
+
+- `crashes`: number of crashes in the county
+- `pop`: the county population
+- `traffic_vol`: mean traffic volume per meter of major roadways
+- `pct_rural`: percentage of county population living in rural area
+
+# Lab objective
+
+**For this lab, you must use a Bayesian regression approach** (choose your
+favorite!)
+
+Denote counties with over 60 crashes per 100,000 residents per year to be 
+"high-crash" counties. Is there evidence of an association between rurality and 
+being a high-crash county, after adjusting for population? Explain, and 
+quantify any variability in your estimates. Be sure to evaluate model 
+convergence.
+
+# Hints
+
+Some general considerations:
+
+- What model might be an appropriate choice?
+- What priors might make sense for your parameters of interest?
+- How will you evaluate whether your model has converged?
+- How will you *answer the question*? Be sure to be clear in your communication.
+
+# References
+
+For more info regarding the data, contact Libby Thomas at the UNC Highway Safety 
+Research Center at `thomas@hsrc.unc.edu` or John Vine-Hodge at the NCDOT Division 
+of Bicycle and Pedestrian Transportation at `javinehodge@ncdot.gov`.

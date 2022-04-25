@@ -1,0 +1,674 @@
+player,year,pick,team,draft_trades,position,ht_ft,ht_in,wt_lb,age,yos,class,nationality,round,college,games,mins_played,pts,total_rebounds,assists,fg_pct,three_pct,ft_pct,mins_played_pg,pts_pg,total_rebounds_pg,assists_pg,win_shares,win_shares_p48,box_plus_minus,val_over_replace,allstar,conference,currentlyplaying
+A.J. Hammons,2016,46,DAL,,C,7,0,250,23,2,Sr,United States,2,Purdue,22,163,48,36,4,0.405,0.5,0.45,7.4,2.2,1.6,0.2,0,-0.001,-6.6,-0.2,FALSE,Big-10,0
+A.J. Price,2009,52,IND,,G,6,2,195,22,6,Sr,United States,2,UConn,261,3929,1523,377,567,0.38,0.316,0.742,15.1,5.8,1.4,2.2,4.7,0.058,-1.3,0.7,FALSE,Big East,0
+Aaron Brooks,2007,26,HOU,,G,6,0,161,22,10,Sr,United States,1,Oregon,645,13439,6259,1079,1925,0.413,0.37,0.837,20.8,9.7,1.7,3,19.2,0.069,-1.2,2.7,FALSE,Pac-12,0
+Aaron Gordon,2014,4,ORL,,F,6,9,235,18,6,Fr,United States,1,Arizona,426,12183,5481,2743,1060,0.448,0.325,0.695,28.6,12.9,6.4,2.5,22.5,0.089,0,6.2,FALSE,Pac-12,1
+Aaron Gray,2007,49,CHI,,C,7,0,270,22,7,Sr,United States,2,Pitt,318,3851,1066,1190,207,0.509,0,0.562,12.1,3.4,3.7,0.7,6.2,0.077,-3.6,-1.5,FALSE,ACC,0
+Aaron Holiday,2018,23,IND,,PG,6,1,185,21,2,Jr,United States,1,UCLA,156,2985,1205,271,383,0.402,0.366,0.819,19.1,7.7,1.7,2.5,3,0.049,-2.4,-0.3,FALSE,Pac-12,1
+Aaron White,2015,49,WAS,WAS to BRK,F,6,9,220,22,0,Sr,United States,2,Iowa,,,,,,,,,,,,,,,,,FALSE,Big-10,0
+Abdel Nader,2016,58,BOS,,SF,6,6,225,22,3,Sr,United States / Egypt,2,Iowa State,188,2438,892,349,103,0.432,0.36,0.725,13,4.7,1.9,0.5,2.9,0.056,-2.5,-0.3,FALSE,Big-12,1
+Acie Law,2007,11,ATL,,SG,6,3,202,22,4,Sr,United States,1,Texas A&M,188,2385,725,195,309,0.413,0.235,0.778,12.7,3.9,1,1.6,1.6,0.032,-3.9,-1.1,FALSE,SEC,0
+Adam Haluska,2007,43,NOP,,G,6,5,210,23,1,Sr,United States,2,Iowa,,,,,,,,,,,,,,,,,FALSE,Big-10,0
+Adam Morrison,2006,3,CHA,,SF,6,8,198,21,4,Jr,United States,1,Gonzaga,161,3278,1200,342,222,0.373,0.331,0.71,20.4,7.5,2.1,1.4,-1.4,-0.021,-5,-2.4,FALSE,Other,0
+Admiral Schofield,2019,42,PHL,PHL to WAS,SF,6,5,241,22,1,Sr,United States,2,Tennessee,33,368,99,47,15,0.38,0.311,0.667,11.2,3,1.4,0.5,0.1,0.017,-5.5,-0.3,FALSE,SEC,0
+Adreian Payne,2014,15,ATL,,C,6,10,237,23,4,Sr,United States,1,Michigan State,107,1403,429,315,66,0.406,0.254,0.68,13.1,4,2.9,0.6,-0.6,-0.019,-5.9,-1.4,FALSE,Big-10,0
+Ahmad Nivins,2009,56,DAL,DAL to NYK,F,6,9,207,22,0,Sr,United States,2,Saint Joseph's,,,,,,,,,,,,,,,,,FALSE,Other,0
+Al Horford,2007,3,ATL,,FC,6,10,245,21,13,Jr,Dominican Republic / United States,1,Florida,880,28566,12275,7233,2906,0.517,0.365,0.755,32.5,13.9,8.2,3.3,92.7,0.156,2.8,34.6,TRUE,SEC,1
+Al Thornton,2007,14,LAC,,F,6,8,203,23,4,Sr,United States,1,Florida State,296,8274,3527,1233,353,0.452,0.293,0.747,28,11.9,4.2,1.2,6.1,0.035,-3.5,-3.2,FALSE,ACC,0
+Alando Tucker,2007,29,PHX,,F,6,6,205,23,3,Sr,United States,1,Wisconsin,51,426,211,49,16,0.423,0.294,0.783,8.4,4.1,1,0.3,0.4,0.045,-4.5,-0.3,FALSE,Big-10,0
+Alec Brown,2014,50,PHX,,C,7,1,235,21,0,Sr,United States,2,Green Bay,,,,,,,,,,,,,,,,,FALSE,Other,0
+Alec Burks,2011,12,UTH,,SG,6,6,214,19,9,So,United States,1,Colorado,526,11600,5464,1722,985,0.421,0.367,0.794,22.1,10.4,3.3,1.9,18.5,0.076,-1,3,FALSE,Pac-12,1
+Alec Peters,2017,54,PHX,,F,6,9,225,22,1,Sr,United States,2,Valparaiso,20,225,82,37,12,0.378,0.31,0.8,11.3,4.1,1.9,0.6,0.3,0.055,-2.8,0,FALSE,Other,0
+Alex Len,2013,5,PHX,,C,7,0,250,20,7,So,Ukraine,1,Maryland,500,9652,3915,3038,427,0.501,0.331,0.686,19.3,7.8,6.1,0.9,19.2,0.096,-1.9,0.2,FALSE,Big-10,1
+Alex Oriakhi,2013,57,PHX,PHX to SAC,PF,6,9,255,23,0,Sr,United States,2,Missouri,,,,,,,,,,,,,,,,,FALSE,SEC,0
+Alexander Johnson,2006,45,IND,IND to PORPOR to MEM,F,6,9,240,23,3,Jr,United States,2,Florida State,102,1302,439,275,30,0.517,,0.672,12.8,4.3,2.7,0.3,1.5,0.056,-4.6,-0.9,FALSE,ACC,0
+Al-Farouq Aminu,2010,8,LAC,,F,6,9,220,19,10,So,United States / Nigeria,1,Wake Forest,703,17574,5318,4241,870,0.42,0.334,0.746,25,7.6,6,1.2,27.6,0.075,-0.5,6.5,FALSE,ACC,1
+Alize Johnson,2018,50,IND,,SF,6,9,212,22,2,Sr,United States,2,Missouri State,31,182,47,67,8,0.356,0.4,0.611,5.9,1.5,2.2,0.3,0.3,0.081,-3.7,-0.1,FALSE,Other,0
+Allen Crabbe,2013,31,CLE,CLE to POR,SG,6,6,212,21,7,Jr,United States,2,California,381,9125,3453,1073,434,0.425,0.387,0.831,24,9.1,2.8,1.1,13.7,0.072,-1.6,0.9,FALSE,Pac-12,0
+Andre Drummond,2012,9,DET,,C,6,11,279,18,8,Fr,United States,1,UConn,624,19312,9108,8625,842,0.538,0.135,0.467,30.9,14.6,13.8,1.3,61.4,0.153,1.4,16.6,TRUE,Big East,1
+Andre Roberson,2013,26,MIN,MIN to GOSGOS to OKC,SG,6,7,210,21,7,Jr,United States,1,Colorado,307,6801,1382,1230,265,0.473,0.253,0.468,22.2,4.5,4,0.9,12.6,0.089,-0.6,2.3,FALSE,Pac-12,1
+Andrew Goudelock,2011,46,LAL,,G,6,3,200,22,3,Sr,United States,2,College of Charleston,49,475,197,34,24,0.393,0.345,0.875,9.7,4,0.7,0.5,0,0.003,-5,-0.3,FALSE,Other,0
+Andrew Harrison,2015,44,PHX,PHX to MEM,G,6,4,210,20,3,So,United States,2,Kentucky,145,2987,1012,287,399,0.373,0.294,0.779,20.6,7,2,2.8,3.2,0.051,-2.8,-0.6,FALSE,SEC,0
+Andrew Nicholson,2012,19,ORL,,F,6,9,250,22,5,Sr,Canada,1,St. Bonaventure,285,4080,1700,857,126,0.467,0.321,0.773,14.3,6,3,0.4,3.8,0.045,-3.6,-1.6,FALSE,Other,0
+Andrew Wiggins,2014,1,CLE,,F,6,8,194,19,6,Fr,Canada,1,Kansas,497,17626,9707,2178,1157,0.443,0.338,0.73,35.5,19.5,4.4,2.3,16.9,0.046,-1.9,0.5,FALSE,Big-12,1
+Andy Rautins,2010,38,NYK,,G,6,4,190,23,1,Sr,United States / Canada,2,Syracuse,5,24,8,1,3,0.429,0.25,0.5,4.8,1.6,0.2,0.6,-0.2,-0.314,-13.2,-0.1,FALSE,ACC,0
+Anthony Bennett,2013,1,CLE,,PF,6,8,245,20,4,Fr,Canada,1,UNLV,151,1905,658,472,77,0.392,0.261,0.67,12.6,4.4,3.1,0.5,0.5,0.013,-4.8,-1.3,FALSE,Other,0
+Anthony Brown,2015,34,LAL,,GF,6,7,225,22,3,Sr,United States,2,Stanford,41,762,161,103,28,0.328,0.286,0.85,18.6,3.9,2.5,0.7,-0.2,-0.016,-5.1,-0.6,FALSE,Pac-12,0
+Anthony Davis,2012,1,NOP,,PF,6,10,253,19,8,Fr,United States,1,Kentucky,551,18994,13195,5676,1252,0.516,0.317,0.799,34.5,23.9,10.3,2.3,86.3,0.218,6.3,39.7,TRUE,SEC,1
+Anthony Randolph,2008,14,GOS,,PF,6,11,225,18,6,Fr,United States / Slovenia,1,LSU,252,3841,1789,1078,187,0.453,0.241,0.74,15.2,7.1,4.3,0.7,5.8,0.072,-1.6,0.4,FALSE,SEC,0
+Archie Goodwin,2013,29,OKC,OKC to GOSGOS to PHX,G,6,5,205,18,4,Fr,United States,1,Kentucky,165,2396,1040,331,206,0.429,0.236,0.7,14.5,6.3,2,1.2,1.1,0.022,-3,-0.6,FALSE,SEC,0
+Armon Johnson,2010,34,POR,,G,6,2,195,21,2,Jr,United States,2,Nevada,47,401,157,49,56,0.458,0.4,0.679,8.5,3.3,1,1.2,-0.1,-0.015,-4.1,-0.2,FALSE,Other,0
+Arnett Moultrie,2012,27,MIA,MIA to PHL,PF,6,11,250,21,2,Jr,United States,1,Mississippi State,59,729,210,180,12,0.547,,0.667,12.4,3.6,3.1,0.2,1.7,0.113,-2.8,-0.1,FALSE,SEC,0
+Arron Afflalo,2007,27,DET,,SG,6,5,210,21,11,Jr,United States,1,UCLA,762,20829,8198,2176,1386,0.45,0.386,0.825,27.3,10.8,2.9,1.8,33.5,0.077,-1.5,2.4,FALSE,Pac-12,0
+Arsalan Kazemi,2013,54,WAS,WAS to PHL,F,6,7,226,23,0,Sr,Iran,2,Oregon,,,,,,,,,,,,,,,,,FALSE,Pac-12,0
+Austin Daye,2009,15,DET,,F,6,11,220,21,6,So,United States,1,Gonzaga,293,4132,1522,764,212,0.402,0.351,0.778,14.1,5.2,2.6,0.7,4.5,0.053,-2,0,FALSE,Other,0
+Austin Rivers,2012,10,NOP,,SG,6,4,200,19,8,Fr,United States,1,Duke,573,13959,5207,1210,1309,0.418,0.349,0.645,24.4,9.1,2.1,2.3,12,0.041,-3.1,-3.7,FALSE,ACC,1
+Avery Bradley,2010,19,BOS,,PG,6,2,180,19,10,Fr,United States,1,Texas,581,16354,6797,1688,1026,0.437,0.365,0.78,28.1,11.7,2.9,1.8,16.5,0.048,-2.2,-0.8,FALSE,Big-12,1
+Bam Adebayo,2017,14,MIA,,C,6,10,255,19,3,Fr,United States,1,Kentucky,260,6945,3064,2065,851,0.554,0.163,0.738,26.7,11.8,7.9,3.3,24.6,0.17,2.5,7.8,TRUE,SEC,1
+Ben Bentil,2016,51,BOS,,F,6,9,235,21,1,So,Ghana / United States,2,Providence,3,10,0,2,0,0,0,,3.3,0,0.7,0,-0.1,-0.473,-25.9,-0.1,FALSE,Big East,0
+Ben McLemore,2013,7,SAC,,SG,6,5,195,20,7,Fr,United States,1,Kansas,466,10779,4132,1127,490,0.417,0.362,0.776,23.1,8.9,2.4,1.1,7.7,0.034,-3.1,-2.9,FALSE,Big-12,1
+Ben Simmons,2016,1,PHL,,PF,6,10,230,19,4,Fr,Australia,1,LSU,252,8642,4110,2080,1994,0.561,0.156,0.601,34.3,16.3,8.3,7.9,28.3,0.157,3.8,12.7,TRUE,SEC,1
+Bernard James,2012,33,CLE,CLE to DAL,PF,6,10,230,27,3,Sr,United States,2,Florida State,92,761,203,212,13,0.497,0,0.68,8.3,2.2,2.3,0.1,1.9,0.117,-1.8,0,FALSE,ACC,0
+Blake Griffin,2009,1,LAC,,PF,6,10,250,20,11,So,United States,1,Oklahoma,643,22312,13726,5607,2826,0.495,0.331,0.695,34.7,21.3,8.7,4.4,75.6,0.163,3.6,31.7,TRUE,Big-12,1
+Bobby Jones,2006,37,MIN,MIN to PHL,F,6,7,215,22,2,Sr,United States,2,Washington,91,867,288,149,44,0.442,0.306,0.685,9.5,3.2,1.6,0.5,1.1,0.06,-4.1,-0.5,TRUE,Pac-12,0
+Bobby Portis,2015,22,CHI,,PF,6,11,250,20,5,So,United States,1,Arkansas,356,7297,3651,2152,421,0.464,0.372,0.751,20.5,10.3,6,1.2,13.8,0.091,-1,1.8,FALSE,SEC,1
+Bol Bol,2019,44,MIA,MIA to DEN,C,7,2,209,19,1,Fr,United States,2,Oregon,25,180,76,32,11,0.491,0.478,0.75,7.2,3,1.3,0.4,0.2,0.04,-2.8,0,FALSE,Pac-12,1
+Bradley Beal,2012,3,WAS,,SG,6,3,207,19,8,Fr,United States,1,Florida,583,20194,12644,2364,2348,0.455,0.377,0.817,34.6,21.7,4.1,4,45.4,0.108,1.8,19.2,TRUE,SEC,1
+Brandan Wright,2007,8,CHA,CHA to GOS,F,6,10,210,19,11,Fr,United States,1,UNC,428,6949,2976,1560,199,0.607,0,0.674,16.2,7,3.6,0.5,26.2,0.181,2.3,7.5,FALSE,ACC,0
+Branden Dawson,2015,56,NOP,NOP to LAC,F,6,6,230,22,1,Sr,United States,2,Michigan State,6,29,5,4,0,0.4,,1,4.8,0.8,0.7,0,0,0.069,-5.7,0,FALSE,Big-10,0
+Brandon Clarke,2019,21,OKC,OKC to MEM,PF,6,8,210,22,1,Jr,Canada,1,Gonzaga,92,2195,1105,535,133,0.579,0.342,0.733,23.9,12,5.8,1.4,7.7,0.168,2.3,2.4,FALSE,Other,1
+Brandon Ingram,2016,2,LAL,,SF,6,9,190,18,4,Fr,United States,1,Duke,294,9559,5120,1492,1008,0.462,0.364,0.747,32.5,17.4,5.1,3.4,13.5,0.068,-0.8,2.8,TRUE,ACC,1
+Brandon Knight,2011,8,DET,,G,6,3,195,19,9,Fr,United States,1,Kentucky,446,13137,6269,1377,1769,0.411,0.353,0.806,29.5,14.1,3.1,4,11.5,0.042,-1.6,1.5,FALSE,SEC,0
+Brandon Roy,2006,6,MIN,MIN to POR,G,6,6,211,21,6,Sr,United States,1,Washington,326,11561,6136,1388,1517,0.459,0.348,0.8,35.5,18.8,4.3,4.7,37.4,0.155,3.6,16.3,TRUE,Pac-12,0
+Brandon Rush,2008,13,POR,POR to IND,SG,6,6,220,22,10,Jr,United States,1,Kansas,481,10564,3250,1413,468,0.426,0.402,0.706,22,6.8,2.9,1,11.2,0.051,-1.4,1.6,FALSE,Big-12,0
+Brice Johnson,2016,25,LAC,,PF,6,10,230,21,2,Sr,United States,1,UNC,21,107,47,34,3,0.449,0,0.6,5.1,2.2,1.6,0.1,0.1,0.062,-0.6,0,FALSE,ACC,0
+Brook Lopez,2008,10,NJN,,C,7,0,270,20,12,So,United States,1,Stanford,826,25116,13686,5216,1220,0.493,0.341,0.794,30.4,16.6,6.3,1.5,68.4,0.131,1.3,21.2,TRUE,Pac-12,1
+"Bruce Brown, Jr.",2018,42,DET,,SG,6,4,202,21,2,So,United States,2,Miami (FL),171,3888,1158,634,377,0.457,0.295,0.736,22.7,6.8,3.7,2.2,5.8,0.072,-2,0,FALSE,ACC,0
+Bruno Fernando,2019,34,PHL,PHL to ATL,C,6,9,240,20,1,So,Angola,2,Maryland,77,876,271,261,58,0.504,0.128,0.576,11.4,3.5,3.4,0.8,0.8,0.043,-4.5,-0.5,FALSE,Big-10,1
+Buddy Hield,2016,6,NOP,,G,6,4,220,23,4,Sr,Bahamas,1,Oklahoma,358,10211,5728,1509,832,0.436,0.406,0.866,28.5,16,4.2,2.3,13.9,0.065,0.4,6.1,FALSE,Big-12,1
+Byron Mullens,2009,24,DAL,DAL to OKC,C,7,0,270,20,5,Fr,United States,1,Ohio State,189,3446,1398,790,153,0.408,0.319,0.706,18.2,7.4,4.2,0.8,0.6,0.008,-4,-1.8,FALSE,Big-10,0
+C.J. McCollum,2013,10,POR,,G,6,3,190,21,7,Sr,United States,1,Lehigh,498,15417,9297,1650,1580,0.454,0.399,0.829,31,18.7,3.3,3.2,34,0.106,1.1,12.1,FALSE,Other,0
+C.J. Wilcox,2014,28,LAC,,SG,6,5,201,23,3,Sr,United States,1,Washington,66,376,132,31,30,0.37,0.333,0.813,5.7,2,0.5,0.5,0.1,0.007,-4.3,-0.2,FALSE,Pac-12,0
+Cady Lalanne,2015,55,SAN,,FC,6,9,242,23,0,Sr,Haiti,2,UMass,,,,,,,,,,,,,,,,,FALSE,Other,0
+Caleb Swanigan,2017,26,POR,,C,6,9,260,20,3,So,United States,1,Purdue,75,655,169,218,56,0.438,0.118,0.614,8.7,2.3,2.9,0.7,-0.2,-0.015,-6.2,-0.7,FALSE,Big-10,0
+Cam Reddish,2019,10,ATL,,G,6,8,218,19,1,Fr,United States,1,Duke,84,2301,902,320,122,0.378,0.309,0.808,27.4,10.7,3.8,1.5,0.1,0.003,-4,-1.2,FALSE,ACC,1
+Cameron Bairstow,2014,49,CHI,,F,6,9,250,23,2,Sr,Australia,2,New Mexico,36,167,44,36,7,0.296,0.2,0.846,4.6,1.2,1,0.2,-0.1,-0.021,-8.1,-0.3,FALSE,Other,0
+Cameron Johnson,2019,11,MIN,MIN to PHX,G,6,9,210,23,1,Sr,United States,1,UNC,92,2093,867,305,115,0.437,0.388,0.83,22.8,9.4,3.3,1.3,4.5,0.104,0.4,1.3,FALSE,ACC,1
+Cameron Payne,2015,14,OKC,,G,6,3,190,20,5,So,United States,1,Murray State,191,3145,1214,367,516,0.416,0.362,0.808,16.5,6.4,1.9,2.7,4.4,0.067,-1.4,0.5,FALSE,Other,1
+Caris LeVert,2016,20,IND,IND to BRK,G,6,6,205,21,4,Sr,United States,1,Michigan,230,5985,3007,859,855,0.432,0.339,0.715,26,13.1,3.7,3.7,7.9,0.063,-0.6,2.1,FALSE,Big-10,1
+Carl Landry,2007,31,SEA,SEA to HOU,F,6,9,248,23,9,Sr,United States,2,Purdue,513,11524,5541,2533,355,0.535,0.3,0.785,22.5,10.8,4.9,0.7,35.9,0.149,-0.3,5,FALSE,Big-10,0
+Carrick Felix,2013,33,CLE,,SF,6,6,200,22,2,Sr,United States,2,Arizona State,7,38,19,6,4,0.5,0.4,0.75,5.4,2.7,0.9,0.6,0,0.057,-3.4,0,FALSE,Pac-12,0
+Carsen Edwards,2019,33,PHL,PHL to BOS,PG,5,11,200,21,1,Jr,United States,2,Purdue,53,514,203,65,33,0.376,0.313,0.714,9.7,3.8,1.2,0.6,0.5,0.044,-4.1,-0.3,FALSE,Big-10,1
+Cedric Simmons,2006,15,NOP,,FC,6,9,235,20,3,So,United States / Bulgaria,1,NC State,75,705,163,141,14,0.409,,0.39,9.4,2.2,1.9,0.2,0.1,0.005,-5,-0.5,FALSE,ACC,0
+Chandler Hutchison,2018,22,CHI,,SG,6,7,210,22,2,Sr,United States,1,Boise State,79,1486,460,313,64,0.45,0.297,0.602,18.8,5.8,4,0.8,1.1,0.035,-3.7,-0.7,FALSE,Other,1
+Chandler Parsons,2011,38,HOU,HOU to MINMIN to HOU,SF,6,10,230,22,9,Sr,United States,2,Florida,440,13246,5571,1972,1201,0.462,0.373,0.713,30.1,12.7,4.5,2.7,28.9,0.105,1.1,10.2,FALSE,SEC,0
+Charles Jenkins,2011,44,GOS,,G,6,3,215,22,2,Sr,United States,2,Hofstra,110,1334,408,100,214,0.434,0.182,0.754,12.1,3.7,0.9,1.9,0.5,0.017,-4.5,-0.8,FALSE,Other,0
+Chase Budinger,2009,44,DET,DET to HOU,GF,6,7,215,21,7,Jr,United States,2,Arizona,407,7998,3198,1240,473,0.43,0.352,0.797,19.7,7.9,3,1.2,13.9,0.083,-0.5,2.9,FALSE,Pac-12,0
+Cheick Diallo,2016,33,LAC,LAC to NOP,PF,6,9,220,19,4,Fr,Mali,2,Kansas,180,2155,947,747,78,0.598,0.286,0.772,12,5.3,4.2,0.4,6.3,0.14,-1.3,0.4,FALSE,Big-12,0
+Chimezie Metu,2018,49,SAN,,PF,6,10,225,21,2,Jr,United States / Nigeria,2,USC,58,321,146,92,28,0.446,0.143,0.744,5.5,2.5,1.6,0.5,0.1,0.017,-3.6,-0.1,FALSE,Pac-12,1
+Chinanu Onuaku,2016,37,HOU,,C,6,9,250,19,2,So,United States,2,Louisville,6,74,18,14,4,0.583,,1,12.3,3,2.3,0.7,0.1,0.043,-5.4,-0.1,FALSE,ACC,0
+Chinemelu Elonu,2009,59,LAL,,C,6,10,235,22,0,Jr,Nigeria / United States,2,Texas A&M,,,,,,,,,,,,,,,,,FALSE,SEC,0
+Chris Douglas-Roberts,2008,40,NJN,,SF,6,7,210,21,6,Jr,United States,2,Memphis,222,4381,1571,472,254,0.439,0.329,0.831,19.7,7.1,2.1,1.1,5.4,0.059,-2.2,-0.2,FALSE,Other,0
+Chris McCullough,2015,29,BRK,,PF,6,11,200,20,3,Fr,United States,1,Syracuse,59,532,194,112,15,0.426,0.306,0.548,9,3.3,1.9,0.3,0.6,0.054,-2.5,-0.1,FALSE,ACC,0
+Chris Richard,2007,41,MIN,,F,6,9,255,22,2,Sr,United States,2,Florida,70,780,135,194,25,0.483,,0.605,11.1,1.9,2.8,0.4,0.7,0.045,-5.7,-0.7,FALSE,SEC,0
+Chris Singleton,2011,18,WAS,,FC,6,8,228,21,3,Jr,United States,1,Florida State,148,2605,612,472,92,0.376,0.319,0.633,17.6,4.1,3.2,0.6,2.3,0.042,-3.2,-0.8,FALSE,ACC,0
+Chuma Okeke,2019,16,ORL,,PF,6,8,230,20,0,So,United States,1,Auburn,26,572,119,93,50,0.367,0.349,0.643,22,4.6,3.6,1.9,0.6,0.05,-2.7,-0.1,FALSE,SEC,1
+Cleanthony Early,2014,34,NYK,,F,6,8,210,23,2,Sr,United States,2,Wichita State,56,801,241,123,42,0.346,0.263,0.75,14.3,4.3,2.2,0.8,-0.6,-0.039,-5.9,-0.8,FALSE,Other,0
+Coby White,2019,7,CHI,,PG,6,5,195,19,1,Fr,United States,1,UNC,106,2986,1487,422,369,0.401,0.353,0.83,28.2,14,4,3.5,2.2,0.035,-3.1,-0.8,FALSE,ACC,1
+Cody Martin,2019,36,CHA,,F,6,7,205,23,1,Sr,United States,2,Nevada,77,1266,347,228,130,0.457,0.238,0.659,16.4,4.5,3,1.7,1.7,0.065,-1.8,0.1,FALSE,Other,1
+Cody Zeller,2013,4,CHA,,F,7,0,240,20,7,So,United States,1,Indiana,442,10131,3823,2660,637,0.513,0.233,0.73,22.9,8.6,6,1.4,29.1,0.138,-0.5,3.9,FALSE,Big-10,1
+Cole Aldrich,2010,11,NOP,NOP to OKC,C,6,11,253,21,8,Jr,United States,1,Kansas,339,3389,1050,1131,183,0.527,,0.738,10,3.1,3.3,0.5,9.6,0.135,0.1,1.8,FALSE,Big-12,0
+Collin Sexton,2018,8,CLE,,PG,6,1,192,19,2,Fr,United States,1,Alabama,184,6083,3616,541,590,0.457,0.393,0.832,33.1,19.7,2.9,3.2,4.2,0.033,-2.7,-1.1,FALSE,SEC,1
+Colton Iverson,2013,53,IND,IND to BOS,FC,7,0,255,23,0,Sr,United States,2,Colorado State,,,,,,,,,,,,,,,,,FALSE,Other,0
+Corey Brewer,2007,7,MIN,,GF,6,9,186,21,13,Jr,United States,1,Florida,819,18771,7097,2287,1250,0.425,0.284,0.713,22.9,8.7,2.8,1.5,22.5,0.058,-1.6,2,FALSE,SEC,0
+Cory Jefferson,2014,60,SAN,SAN to PHLPHL to BRK,PF,6,9,215,23,2,Sr,United States,2,Baylor,58,581,205,161,16,0.444,0.125,0.583,10,3.5,2.8,0.3,0.9,0.071,-3.3,-0.2,FALSE,Big-12,0
+Cory Joseph,2011,29,SAN,,PG,6,3,200,19,9,Fr,Canada,1,Texas,642,14012,4403,1646,1838,0.441,0.332,0.768,21.8,6.9,2.6,2.9,24.7,0.085,-1,3.4,FALSE,Big-12,1
+Courtney Lee,2008,22,ORL,,SG,6,5,215,22,12,Sr,United States,1,Western Kentucky,811,21938,7765,2127,1353,0.451,0.388,0.853,27.1,9.6,2.6,1.7,39.3,0.086,-0.6,7.9,FALSE,Other,0
+Craig Brackins,2010,21,OKC,OKC to NOP,F,6,10,230,22,2,Jr,United States,1,Iowa State,17,121,30,19,9,0.265,0.214,0.5,7.1,1.8,1.1,0.5,-0.2,-0.089,-9.9,-0.2,FALSE,Big-12,0
+Craig Smith,2006,36,MIN,,PF,6,7,250,22,6,Sr,United States,2,Boston College,403,6826,3080,1567,322,0.553,0.037,0.661,16.9,7.6,3.9,0.8,16,0.113,-1.2,1.4,FALSE,ACC,0
+D.J. Augustin,2008,9,CHA,,G,6,0,183,20,12,So,United States,1,Texas,902,21572,8761,1696,3579,0.411,0.379,0.866,23.9,9.7,1.9,4,46.2,0.103,-0.5,8,FALSE,Big-12,1
+D.J. Strawberry,2007,59,PHX,,G,6,5,205,22,1,Sr,United States / Cameroon,2,Maryland,33,270,73,28,30,0.315,0.24,0.474,8.2,2.2,0.8,0.9,-0.2,-0.031,-5.6,-0.2,FALSE,Big-10,0
+D.J. White,2008,29,DET,DET to SEA,PF,6,9,250,21,6,Sr,United States,1,Indiana,138,2111,810,437,80,0.507,0.333,0.72,15.3,5.9,3.2,0.6,3.8,0.087,-2.1,0,FALSE,Big-10,0
+D.J. Wilson,2017,17,MIL,,F,6,10,231,21,3,So,United States,1,Michigan,121,1437,485,353,83,0.41,0.329,0.565,11.9,4,2.9,0.7,2.2,0.074,-2.9,-0.3,FALSE,Big-10,1
+Daequan Cook,2007,21,PHL,PHL to MIA,G,6,5,205,20,6,Fr,United States,1,Ohio State,328,5993,2114,703,243,0.369,0.359,0.813,18.3,6.4,2.1,0.7,4.9,0.039,-2.7,-1.1,FALSE,Big-10,0
+DaJuan Summers,2009,35,DET,,PF,6,8,230,21,4,Jr,United States,2,Georgetown,83,820,278,82,29,0.384,0.367,0.642,9.9,3.3,1,0.3,-0.1,-0.008,-5.8,-0.8,FALSE,Other,0
+Dakari Johnson,2015,48,OKC,,C,7,0,255,19,1,So,United States,2,Kentucky,31,161,55,34,8,0.564,,0.55,5.2,1.8,1.1,0.3,0.6,0.178,-0.3,0.1,FALSE,SEC,0
+Damian Jones,2016,30,GOS,,PF,7,0,245,20,4,Jr,United States,1,Vanderbilt,126,1677,545,362,70,0.672,0.2,0.686,13.3,4.3,2.9,0.6,5,0.144,-1.7,0.1,FALSE,SEC,1
+Damian Lillard,2012,6,POR,,G,6,3,195,21,8,Jr,United States,1,Weber State,656,23857,16131,2753,4322,0.438,0.374,0.893,36.4,24.6,4.2,6.6,88.5,0.178,4.8,40.9,TRUE,Other,1
+Damion James,2010,24,ATL,ATL to NJN,SF,6,7,225,22,4,Sr,United States,1,Texas,39,623,150,131,26,0.415,0,0.667,16,3.8,3.4,0.7,0,-0.001,-3.7,-0.3,FALSE,Big-12,0
+Damyean Dotson,2017,44,NYK,,SG,6,5,205,23,3,Sr,United States,2,Oregon,196,3895,1489,495,291,0.416,0.348,0.72,19.9,7.6,2.5,1.5,3.2,0.04,-2.5,-0.5,FALSE,Other,1
+D'Angelo Russell,2015,2,LAL,,SG,6,4,193,19,5,Fr,United States,1,Ohio State,337,9787,5917,1228,1767,0.42,0.359,0.771,29,17.6,3.6,5.2,8.8,0.043,0.4,5.8,TRUE,Big-10,1
+Daniel Gafford,2019,38,CHI,,C,6,11,233,20,1,So,United States,2,Arkansas,72,978,360,203,38,0.696,,0.586,13.6,5,2.8,0.5,3.2,0.159,-0.7,0.3,FALSE,SEC,1
+Daniel Gibson,2006,42,CLE,,G,6,2,200,20,7,So,United States,2,Texas,397,9316,3115,792,775,0.402,0.407,0.78,23.5,7.8,2,2,16,0.082,-1,2.4,FALSE,Big-12,0
+Daniel Hamilton,2016,56,DEN,DEN to OKC,SG,6,7,195,20,2,So,United States,2,UConn,25,232,69,52,30,0.394,0.357,0.5,9.3,2.8,2.1,1.2,0,0,-3.3,-0.1,FALSE,Big East,0
+Daniel Orton,2010,29,ORL,,PF,6,10,255,19,4,Fr,United States,1,Kentucky,51,542,143,126,24,0.485,0,0.597,10.6,2.8,2.5,0.5,1,0.093,-3.5,-0.2,FALSE,SEC,0
+Danny Green,2009,46,CLE,,SF,6,6,215,22,11,Sr,United States,2,UNC,731,18683,6515,2552,1162,0.422,0.4,0.802,25.6,8.9,3.5,1.6,44.9,0.115,2,18.6,FALSE,ACC,1
+Dante Cunningham,2009,33,POR,,F,6,8,230,22,10,Sr,United States,2,Villanova,715,14875,4133,2676,506,0.469,0.345,0.649,20.8,5.8,3.7,0.7,24.9,0.08,-1.7,1.1,FALSE,Big East,0
+Darington Hobson,2010,37,MIL,,GF,6,7,210,22,2,Jr,United States,2,New Mexico,5,39,4,3,6,0.154,0,,7.8,0.8,0.6,1.2,-0.2,-0.225,-13,-0.1,FALSE,Other,0
+Darius Bazley,2019,23,UTH,UTH to MEMMEM to OKC,PF,6,8,208,19,1,Fr,United States,1,,97,2234,769,516,95,0.393,0.315,0.699,23,7.9,5.3,1,0.8,0.017,-2.8,-0.4,FALSE,Other,1
+Darius Garland,2019,5,CLE,,G,6,1,192,19,1,Fr,United States,1,Vanderbilt,92,2919,1270,185,423,0.419,0.367,0.855,31.7,13.8,2,4.6,-0.7,-0.012,-4.4,-1.8,FALSE,SEC,1
+Darius Johnson-Odom,2012,55,DAL,DAL to LAL,SG,6,2,220,22,2,Sr,United States,2,Marquette,7,21,0,6,2,0,0,0,3,0,0.9,0.3,-0.3,-0.597,-25.5,-0.1,FALSE,Big East,0
+Darius Miller,2012,46,NOP,,GF,6,8,225,22,6,Sr,United States,2,Kentucky,267,5306,1572,442,362,0.419,0.383,0.838,19.9,5.9,1.7,1.4,6.4,0.058,-2.4,-0.5,FALSE,SEC,1
+Darius Morris,2011,41,LAL,,G,6,4,195,20,4,So,United States,2,Michigan,132,1464,430,126,189,0.384,0.322,0.63,11.1,3.3,1,1.4,-0.3,-0.01,-5.1,-1.2,FALSE,Big-10,0
+Darnell Jackson,2008,52,MIA,MIA to CLE,F,6,8,241,22,3,Sr,United States,2,Kansas,138,1039,308,203,26,0.449,0.235,0.644,7.5,2.2,1.5,0.2,1.3,0.059,-5.2,-0.8,FALSE,Big-12,0
+Darrell Arthur,2008,27,NOP,NOP to PORPOR to MEM,PF,6,9,235,20,10,So,United States,1,Kansas,503,8945,3282,1768,409,0.444,0.352,0.765,17.8,6.5,3.5,0.8,12.3,0.066,-2.2,-0.4,FALSE,Big-12,0
+Darren Collison,2009,21,NOP,,PG,6,0,175,21,10,Sr,United States,1,UCLA,708,20796,8857,1885,3543,0.471,0.394,0.853,29.4,12.5,2.7,5,49.9,0.115,0.6,13.5,FALSE,Pac-12,0
+Darrun Hilliard,2015,38,DET,,SG,6,6,220,22,3,Sr,United States,2,Villanova,91,859,295,85,71,0.377,0.304,0.747,9.4,3.2,0.9,0.8,0.3,0.016,-4.7,-0.6,FALSE,Big East,0
+Da'Sean Butler,2010,42,MIA,,F,6,7,230,22,1,Sr,United States,2,West Virginia,,,,,,,,,,,,,,,,,FALSE,Big-12,0
+David Noel,2006,39,MIL,,SF,6,6,230,22,2,Sr,United States,2,UNC,68,792,184,123,65,0.367,0.321,0.86,11.6,2.7,1.8,1,0.4,0.024,-3.1,-0.2,FALSE,ACC,0
+Davon Reed,2017,32,PHX,,SF,6,5,206,22,2,Sr,United States,2,Miami (FL),31,289,75,45,16,0.307,0.31,0.667,9.3,2.4,1.5,0.5,-0.2,-0.039,-6.3,-0.3,FALSE,ACC,0
+De'Aaron Fox,2017,5,SAC,,PG,6,3,185,19,3,Fr,United States,1,Kentucky,246,7621,4290,842,1564,0.455,0.328,0.712,31,17.4,3.4,6.4,11.2,0.071,-0.1,3.7,FALSE,SEC,1
+Deandre Ayton,2018,1,PHX,,C,7,1,250,19,2,Fr,Bahamas,1,Arizona,150,4663,2443,1611,260,0.577,0.206,0.748,31.1,16.3,10.7,1.7,13.6,0.14,0.2,2.6,FALSE,Pac-12,1
+DeAndre' Bembry,2016,21,ATL,,GF,6,5,210,21,4,Jr,United States,1,Saint Joseph's,219,4193,1313,709,418,0.455,0.275,0.6,19.1,6,3.2,1.9,1.7,0.019,-2.8,-0.8,FALSE,Other,1
+DeAndre Daniels,2014,37,TOR,,SF,6,9,196,22,0,Jr,United States,2,UConn,,,,,,,,,,,,,,,,,FALSE,Big East,0
+De'Andre Hunter,2019,4,LAL,LAL to NOPNOP to ATL,PF,6,7,225,21,1,So,United States,1,Virginia,81,2597,1088,383,152,0.434,0.358,0.802,32.1,13.4,4.7,1.9,2,0.037,-3.1,-0.7,FALSE,ACC,1
+DeAndre Jordan,2008,35,LAC,,C,6,11,265,19,12,Fr,United States,2,Texas A&M,916,25272,8616,9756,891,0.673,0.083,0.474,27.6,9.4,10.7,1,91.5,0.174,1.4,21.6,TRUE,SEC,1
+DeAndre Liggins,2011,53,ORL,,G,6,6,210,23,5,Jr,United States,2,Kentucky,177,1907,346,252,122,0.402,0.352,0.549,10.8,2,1.4,0.7,1.6,0.04,-2.2,-0.1,FALSE,SEC,0
+De'Anthony Melton,2018,46,HOU,HOU to PHX,SG,6,3,200,20,2,So,United States,2,USC,137,2694,966,446,412,0.415,0.326,0.766,19.7,7.1,3.3,3,3.4,0.06,-0.3,1.2,FALSE,Pac-12,1
+Dee Brown,2006,46,UTH,,G,6,0,185,21,2,Sr,United States,2,Illinois,68,711,140,69,119,0.34,0.25,0.643,10.5,2.1,1,1.8,0.1,0.008,-3,-0.2,FALSE,Big-10,0
+Dejounte Murray,2016,29,SAN,,SG,6,5,180,19,4,Fr,United States,1,Washington,223,4942,2105,1149,746,0.452,0.337,0.761,22.2,9.4,5.2,3.3,8,0.078,0.1,2.6,FALSE,Pac-12,1
+DeJuan Blair,2009,37,SAN,,F,6,8,270,20,7,So,United States,2,Pitt,424,7054,2865,2153,349,0.524,0,0.608,16.6,6.8,5.1,0.8,19,0.129,-1.2,1.4,FALSE,ACC,0
+Delon Wright,2015,20,TOR,,G,6,5,185,23,5,Sr,United States,1,Utah,306,6402,2333,989,958,0.452,0.344,0.79,20.9,7.6,3.2,3.1,17.8,0.134,2.2,6.8,FALSE,Pac-12,1
+DeMar DeRozan,2009,9,TOR,,GF,6,7,220,19,11,Fr,United States,1,USC,852,29083,17086,3722,3173,0.459,0.284,0.831,34.1,20.1,4.4,3.7,72.1,0.119,0.5,18.6,TRUE,Pac-12,1
+DeMarcus Cousins,2010,5,SAC,,C,6,11,270,19,10,Fr,United States,1,Kentucky,590,18584,12247,6322,1892,0.459,0.332,0.737,31.5,20.8,10.7,3.2,44.9,0.116,2.6,21.4,TRUE,SEC,1
+DeMarre Carroll,2009,27,MEM,,F,6,8,215,22,11,Sr,United States,1,Missouri,578,13675,5150,2454,726,0.43,0.358,0.741,23.7,8.9,4.2,1.3,29.5,0.104,0,6.7,FALSE,SEC,0
+Demetris Nichols,2007,53,POR,POR to NYK,SF,6,8,216,22,2,Sr,United States,2,Syracuse,18,58,22,7,2,0.281,0.2,0.5,3.2,1.2,0.4,0.1,-0.2,-0.203,-10.3,-0.1,FALSE,ACC,0
+Demetrius Jackson,2016,45,BOS,,G,6,1,200,21,3,Jr,United States,2,Notre Dame,26,136,48,19,17,0.486,0.286,0.667,5.2,1.8,0.7,0.7,0.2,0.087,-0.5,0.1,FALSE,ACC,0
+Denham Brown,2006,40,SEA,,GF,6,5,218,23,0,Sr,Canada,2,UConn,,,,,,,,,,,,,,,,,FALSE,Big East,0
+Dennis Smith,2017,9,DAL,,PG,6,3,196,19,3,Fr,United States,1,NC State,174,4428,2084,540,769,0.4,0.316,0.651,25.4,12,3.1,4.4,-1.1,-0.011,-2.4,-0.5,FALSE,ACC,0
+Denzel Valentine,2016,14,CHI,,F,6,6,220,22,4,Sr,United States,1,Michigan State,207,4249,1600,764,413,0.398,0.363,0.774,20.5,7.7,3.7,2,4.4,0.05,-1.6,0.4,FALSE,Big-10,1
+Deron Washington,2008,59,DET,,GF,6,7,210,22,0,Sr,United States,2,Virginia Tech,,,,,,,,,,,,,,,,,FALSE,ACC,0
+Derrick Brown,2009,40,CHA,,F,6,7,225,21,3,Jr,United States,2,Xavier,171,2554,895,413,119,0.515,0.317,0.637,14.9,5.2,2.4,0.7,4.5,0.085,-1.3,0.4,FALSE,Big East,0
+Derrick Byars,2007,42,POR,POR to PHL,SF,6,7,220,23,2,Sr,United States,2,Vanderbilt,2,37,10,11,1,0.273,0,1,18.5,5,5.5,0.5,0.1,0.147,-4.7,0,FALSE,SEC,0
+Derrick Caracter,2010,58,LAL,,F,6,9,276,22,2,Jr,United States,2,Texas-El Paso,41,215,81,43,7,0.485,,0.739,5.2,2,1,0.2,0.3,0.057,-7.1,-0.3,FALSE,Other,0
+Derrick Favors,2010,3,NJN,,FC,6,10,265,18,10,Fr,United States,1,Georgia Tech,722,18133,8014,5253,814,0.533,0.206,0.664,25.1,11.1,7.3,1.1,56.7,0.15,0.9,13.4,FALSE,ACC,1
+Derrick Rose,2008,1,CHI,,PG,6,3,200,19,12,Fr,United States,1,Memphis,621,19990,11523,2086,3446,0.455,0.307,0.827,32.2,18.6,3.4,5.5,40.6,0.097,1.3,16.9,TRUE,Other,1
+Derrick White,2017,29,SAN,,G,6,4,195,22,3,Sr,United States,1,Colorado,167,3936,1665,532,566,0.456,0.352,0.821,23.6,10,3.2,3.4,8.6,0.105,0.9,2.9,FALSE,Pac-12,1
+Derrick Williams,2011,2,MIN,,F,6,8,240,20,7,So,United States,1,Arizona,428,8864,3809,1693,293,0.434,0.3,0.71,20.7,8.9,4,0.7,14.1,0.076,-1.6,0.8,FALSE,Pac-12,0
+Deshaun Thomas,2013,58,SAN,,F,6,7,220,21,0,Jr,United States,2,Ohio State,,,,,,,,,,,,,,,,,FALSE,Big-10,0
+Devin Booker,2015,13,PHX,,SG,6,6,206,18,5,Fr,United States,1,Kentucky,379,12714,8614,1388,1782,0.453,0.354,0.867,33.5,22.7,3.7,4.7,20,0.076,-0.1,5.9,TRUE,SEC,1
+Devin Ebanks,2010,43,LAL,,F,6,9,215,20,3,So,United States,2,West Virginia,63,711,224,122,24,0.385,0.222,0.722,11.3,3.6,1.9,0.4,0.5,0.035,-4.8,-0.5,FALSE,Big-12,0
+Devon Hall,2018,53,OKC,,SG,6,5,215,22,1,Sr,United States,2,Virginia,11,81,20,7,13,0.2,0.235,0.5,7.4,1.8,0.6,1.2,-0.2,-0.116,-6.4,-0.1,FALSE,ACC,0
+DeVon Hardin,2008,50,SEA,,C,6,11,235,21,0,Sr,United States,2,California,,,,,,,,,,,,,,,,,FALSE,Pac-12,0
+Devonte' Graham,2018,34,ATL,ATL to CHA,PG,6,2,185,23,2,Sr,United States,2,Kansas,140,3823,1772,358,754,0.372,0.358,0.806,27.3,12.7,2.6,5.4,5.3,0.067,-0.7,1.2,FALSE,Big-12,1
+Devyn Marble,2014,56,DEN,DEN to ORL,GF,6,6,192,21,2,Sr,United States,2,Iowa,44,457,97,69,29,0.304,0.222,0.375,10.4,2.2,1.6,0.7,-0.3,-0.028,-5.5,-0.4,FALSE,Big-10,0
+Dewan Hernandez,2019,59,TOR,,FC,6,11,235,22,1,Jr,United States,2,Miami (FL),6,28,14,14,3,0.357,0.5,0.6,4.7,2.3,2.3,0.5,0,0.043,-9.6,-0.1,FALSE,ACC,0
+Dexter Pittman,2010,32,MIA,,C,6,11,285,22,4,Sr,United States,2,Texas,50,347,116,89,9,0.45,,0.545,6.9,2.3,1.8,0.2,0.5,0.068,-7.7,-0.5,FALSE,Big-12,0
+Deyonta Davis,2016,31,BOS,BOS to MEM,PF,6,9,237,19,3,Fr,United States,2,Michigan State,107,1299,454,346,47,0.599,0,0.635,12.1,4.2,3.2,0.4,3.6,0.131,-2.1,0,FALSE,Big-10,0
+Diamond Stone,2016,40,NOP,NOP to LAC,C,6,11,255,19,1,Fr,United States,2,Maryland,7,24,10,6,0,0.231,,1,3.4,1.4,0.9,0,-0.1,-0.211,-20.8,-0.1,FALSE,Big-10,0
+Dillon Brooks,2017,45,HOU,HOU to MEM,F,6,6,220,21,3,Jr,Canada,2,Oregon,209,5837,2774,635,391,0.413,0.35,0.79,27.9,13.3,3,1.9,2.4,0.02,-4.3,-3.4,FALSE,Pac-12,1
+Dion Waiters,2012,4,CLE,,SG,6,4,215,20,8,So,United States,1,Syracuse,419,11835,5505,1108,1163,0.412,0.346,0.694,28.2,13.1,2.6,2.8,8.8,0.036,-2.1,-0.4,FALSE,ACC,0
+Dom Pointer,2015,53,CLE,,SF,6,5,200,23,1,Sr,United States,2,St. John's,,,,,,,,,,,,,,,,,FALSE,Big East,0
+Domantas Sabonis,2016,11,ORL,ORL to OKC,PF,6,11,240,20,4,So,United States / Lithuania,1,Gonzaga,332,8927,4357,2783,1010,0.522,0.321,0.721,26.9,13.1,8.4,3,25,0.134,0.9,6.6,TRUE,Other,1
+Dominic McGuire,2007,47,WAS,,F,6,9,235,21,6,Jr,United States,2,Fresno State,342,5348,939,1169,422,0.419,0.188,0.658,15.6,2.7,3.4,1.2,4.1,0.037,-2.1,-0.1,FALSE,Other,0
+Dominique Jones,2010,25,MEM,MEM to DAL,G,6,4,215,21,3,Jr,United States,1,South Florida,80,741,246,114,144,0.366,0.095,0.729,9.3,3.1,1.4,1.8,0.3,0.017,-2.4,-0.1,FALSE,Other,0
+Donovan Mitchell,2017,13,DEN,DEN to UTH,SG,6,3,215,20,3,So,United States,1,Louisville,264,8932,6085,1093,1119,0.436,0.358,0.825,33.8,23,4.1,4.2,19.4,0.104,1.5,7.9,TRUE,ACC,1
+Donte DiVincenzo,2018,17,MIL,,SG,6,4,203,21,2,So,United States,1,Villanova,134,3043,1175,601,311,0.436,0.34,0.711,22.7,8.8,4.5,2.3,7.2,0.113,0.4,1.8,FALSE,Big East,1
+Donte Greene,2008,28,MEM,MEM to HOU,F,6,11,226,20,5,Fr,United States / Germany,1,Syracuse,253,4259,1541,600,183,0.406,0.304,0.701,16.8,6.1,2.4,0.7,1.5,0.017,-2.8,-0.9,FALSE,ACC,0
+Doron Lamb,2012,42,MIL,,SG,6,4,210,20,2,So,United States,2,Kentucky,100,1272,345,95,75,0.381,0.394,0.7,12.7,3.5,1,0.8,0.1,0.005,-5.8,-1.2,FALSE,SEC,0
+Doug McDermott,2014,11,DEN,DEN to CHI,F,6,8,225,22,6,Sr,United States,1,Creighton,450,9185,3908,1057,403,0.471,0.407,0.826,20.4,8.7,2.3,0.9,16.2,0.085,-1.9,0.3,FALSE,Big East,1
+Draymond Green,2012,35,GOS,,F,6,6,230,22,8,Sr,United States,2,Michigan State,613,17307,5397,4206,3168,0.434,0.316,0.712,28.2,8.8,6.9,5.2,46.5,0.129,2.6,20.1,TRUE,Big-10,1
+Dwayne Bacon,2017,40,NOP,NOP to CHA,SF,6,6,221,21,3,So,United States,2,Florida State,177,3214,1140,434,183,0.401,0.341,0.773,18.2,6.4,2.5,1,0.8,0.011,-5.1,-2.5,FALSE,ACC,1
+Dwayne Collins,2010,60,PHX,,F,6,8,241,22,0,Sr,United States,2,Miami (FL),,,,,,,,,,,,,,,,,FALSE,ACC,0
+Dwight Powell,2014,45,CHA,CHA to CLE,PF,6,10,240,22,6,Sr,Canada,2,Stanford,399,7362,2991,1802,386,0.56,0.29,0.741,18.5,7.5,4.5,1,27,0.176,1.2,6,FALSE,Pac-12,1
+Dylan Windler,2019,26,CLE,,SF,6,6,199,22,1,Sr,United States,1,Belmont,28,486,155,104,32,0.439,0.351,0.808,17.4,5.5,3.7,1.1,0.7,0.067,-1,0.1,FALSE,Other,1
+Earl Clark,2009,14,PHX,,F,6,10,234,21,6,Jr,United States,1,Louisville,261,3630,1138,778,134,0.403,0.328,0.664,13.9,4.4,3,0.5,2.9,0.038,-2.8,-0.8,FALSE,ACC,0
+Ed Davis,2010,13,TOR,,PF,6,9,218,21,10,So,United States,1,UNC,687,13520,4258,4534,530,0.566,0,0.585,19.7,6.2,6.6,0.8,42.6,0.151,-0.2,6.1,FALSE,ACC,1
+Edmond Sumner,2017,52,NOP,NOP to IND,G,6,6,176,21,3,So,United States,2,Xavier,83,986,360,109,76,0.437,0.287,0.663,11.9,4.3,1.3,0.9,0.8,0.041,-3.8,-0.4,FALSE,Big East,1
+Ekpe Udoh,2010,6,GOS,,PF,6,10,245,23,7,Jr,United States / Nigeria,1,Baylor,384,5694,1353,1100,260,0.453,0,0.718,14.8,3.5,2.9,0.7,10.4,0.088,-1.4,0.8,FALSE,Big-12,0
+Elfrid Payton,2014,10,PHL,PHL to ORL,G,6,4,185,20,6,Jr,United States,1,Louisiana,421,12306,4675,1833,2691,0.451,0.285,0.633,29.2,11.1,4.4,6.4,15.7,0.061,-0.7,4,FALSE,Other,1
+Elliot Williams,2010,22,POR,,G,6,5,190,21,6,So,United States,1,Memphis,109,1470,537,161,94,0.421,0.31,0.669,13.5,4.9,1.5,0.9,0.7,0.024,-4.9,-1.1,FALSE,Other,0
+Enes Kanter,2011,3,UTH,,F,6,11,250,19,9,Fr,Switzerland / Turkey,1,,683,15038,7916,5348,595,0.546,0.285,0.775,22,11.6,7.8,0.9,48.2,0.154,-0.2,6.7,FALSE,SEC,1
+Eric Bledsoe,2010,18,OKC,OKC to LAC,PG,6,1,205,20,10,Fr,United States,1,Kentucky,672,18741,9418,2649,3207,0.455,0.339,0.788,27.9,14,3.9,4.8,43.5,0.111,1.9,18.2,FALSE,SEC,1
+Eric Gordon,2008,7,LAC,,G,6,4,215,19,12,Fr,United States,1,Indiana,692,22588,11498,1698,1967,0.425,0.368,0.812,32.6,16.6,2.5,2.8,35.2,0.075,-0.4,8.9,FALSE,Big-10,1
+Eric Maynor,2009,20,UTH,,G,6,3,175,22,5,Sr,United States,1,VCU,267,3896,1141,348,760,0.392,0.35,0.721,14.6,4.3,1.3,2.8,3.3,0.041,-2.9,-0.8,FALSE,Other,0
+Eric Paschall,2019,41,GOS,,F,6,6,255,22,1,Sr,United States,2,Villanova,97,2299,1189,392,176,0.496,0.292,0.758,23.7,12.3,4,1.8,2.9,0.061,-2.9,-0.5,FALSE,Big East,1
+Erick Green,2013,46,UTH,UTH to DEN,G,6,3,178,22,2,Sr,United States,2,Virginia Tech,52,452,159,37,42,0.377,0.288,0.857,8.7,3.1,0.7,0.8,0.1,0.011,-4,-0.2,FALSE,ACC,0
+Erik Murphy,2013,49,CHI,,FC,6,10,240,22,1,Sr,United States / Finland,2,Florida,24,62,6,8,2,0.231,0,,2.6,0.3,0.3,0.1,-0.1,-0.055,-8.6,-0.1,FALSE,SEC,0
+E'Twaun Moore,2011,55,BOS,,SG,6,4,191,22,9,Sr,United States,2,Purdue,595,12523,4712,1205,1050,0.454,0.388,0.739,21,7.9,2,1.8,14.7,0.056,-2,0.2,FALSE,Big-10,1
+Evan Turner,2010,2,PHL,,GF,6,7,220,21,10,Jr,United States,1,Ohio State,705,18938,6824,3278,2462,0.434,0.294,0.782,26.9,9.7,4.6,3.5,20.2,0.051,-1.9,0.5,FALSE,Big-10,0
+Fab Melo,2012,22,BOS,,C,7,0,255,22,1,So,Brazil,1,Syracuse,6,36,7,3,0,0.5,,0.25,6,1.2,0.5,0,0,0.021,-7.6,-0.1,FALSE,ACC,0
+Festus Ezeli,2012,30,GOS,,C,6,11,265,22,5,Sr,Nigeria,1,Vanderbilt,170,2394,712,725,63,0.513,,0.557,14.1,4.2,4.3,0.4,5.9,0.119,-2,0,FALSE,SEC,0
+Frank Jackson,2017,31,CHA,CHA to NOP,SG,6,3,205,19,3,Fr,United States,2,Duke,133,2126,934,235,141,0.422,0.327,0.744,16,7,1.8,1.1,0.7,0.016,-4.9,-1.5,FALSE,ACC,1
+Frank Kaminsky,2015,9,CHA,,F,7,0,242,22,5,Sr,United States,1,Wisconsin,353,7512,3346,1416,579,0.425,0.35,0.743,21.3,9.5,4,1.6,13.8,0.088,-0.4,3,FALSE,Big-10,1
+Frank Mason,2017,34,SAC,,G,5,11,190,23,3,Sr,United States,2,Kansas,103,1616,695,204,272,0.396,0.301,0.755,15.7,6.7,2,2.6,1.2,0.036,-2.7,-0.3,FALSE,Big-12,0
+Gabe Pruitt,2007,32,BOS,,G,6,4,185,21,2,Jr,United States,2,USC,62,461,125,51,52,0.321,0.283,0.783,7.4,2,0.8,0.8,0.4,0.043,-2.8,-0.1,FALSE,Pac-12,0
+Gani Lawal,2010,46,PHX,,F,6,9,234,21,1,Jr,United States / Nigeria,2,Georgia Tech,1,2,0,0,0,,,,2,0,0,0,0,-0.009,-15,0,FALSE,ACC,0
+Gary Harris,2014,19,CHI,CHI to DEN,SG,6,4,205,19,6,So,United States,1,Michigan State,387,11244,4643,1008,811,0.454,0.359,0.801,29.1,12,2.6,2.1,18.6,0.08,-1.1,2.7,FALSE,Big-10,1
+"Gary Trent, Jr.",2018,37,SAC,SAC to POR,SG,6,6,205,19,2,Fr,United States,2,Duke,116,2680,1183,201,124,0.423,0.399,0.768,23.1,10.2,1.7,1.1,3.5,0.063,-1.7,0.2,FALSE,ACC,0
+George Hill,2008,26,SAN,,G,6,3,188,22,12,Jr,United States,1,IUPUI,799,22111,8883,2459,2547,0.458,0.384,0.804,27.7,11.1,3.1,3.2,66.5,0.144,1.4,19.2,FALSE,Other,1
+George King,2018,59,PHX,,SF,6,6,220,24,1,Sr,United States,2,Colorado,1,6,0,1,0,,,,6,0,1,0,0,-0.001,-7.9,0,FALSE,Pac-12,0
+Georges Niang,2016,50,IND,,F,6,8,230,23,4,Sr,United States,2,Iowa State,198,2118,866,330,115,0.431,0.382,0.842,10.7,4.4,1.7,0.6,3.5,0.08,-1.2,0.4,FALSE,Big-12,1
+Gerald Henderson,2009,12,CHA,,SG,6,5,215,21,8,Jr,United States,1,Duke,535,13854,5987,1716,1009,0.44,0.327,0.793,25.9,11.2,3.2,1.9,18.3,0.063,-1.8,0.6,FALSE,ACC,0
+Glen Davis,2007,35,SEA,SEA to BOS,PF,6,9,289,21,8,Jr,United States,2,LSU,514,10865,4111,2236,457,0.447,0.182,0.7,21.1,8,4.4,0.9,18.6,0.082,-2.6,-1.7,FALSE,SEC,0
+Glenn Robinson,2014,40,MIN,,SF,6,6,222,20,6,So,United States,2,Michigan,304,5299,1804,776,238,0.457,0.373,0.779,17.4,5.9,2.6,0.8,7.8,0.071,-1.7,0.3,FALSE,Big-10,0
+Goran Suton,2009,50,UTH,,C,6,8,245,23,0,Sr,Bosnia and Herzegovina / United States,2,Michigan State,,,,,,,,,,,,,,,,,FALSE,Big-10,0
+Gordon Hayward,2010,9,UTH,,GF,6,7,225,20,10,So,United States,1,Butler,678,21046,10563,3026,2371,0.453,0.368,0.825,31,15.6,4.5,3.5,56.9,0.13,2.2,22.2,TRUE,Big East,1
+Gorgui Dieng,2013,21,UTH,UTH to MIN,FC,6,10,252,23,7,Jr,Senegal,1,Louisville,537,11715,4231,3264,731,0.5,0.359,0.792,21.8,7.9,6.1,1.4,28.9,0.118,0.2,6.6,FALSE,ACC,1
+Grant Jerrett,2013,40,POR,POR to OKC,PF,6,10,232,19,2,Fr,United States,2,Arizona,8,51,16,9,3,0.269,0.067,1,6.4,2,1.1,0.4,-0.1,-0.128,-10.8,-0.1,FALSE,Pac-12,0
+Grant Williams,2019,22,BOS,,SF,6,6,236,20,1,Jr,United States,1,Tennessee,103,1661,402,279,98,0.423,0.317,0.652,16.1,3.9,2.7,1,2.2,0.065,-3.2,-0.5,FALSE,SEC,1
+Grayson Allen,2018,21,UTH,,SG,6,4,198,22,2,Sr,United States,1,Duke,103,1790,799,192,137,0.422,0.38,0.829,17.4,7.8,1.9,1.3,2.7,0.071,-2,0,FALSE,ACC,1
+Greg Monroe,2010,7,DET,,FC,6,11,265,20,9,So,United States,1,Georgetown,632,17475,8326,5229,1354,0.514,0.059,0.704,27.7,13.2,8.3,2.1,49.7,0.136,1.4,15.2,FALSE,Other,0
+Greg Oden,2007,1,POR,,C,7,0,273,19,6,Fr,United States,1,Ohio State,105,2028,840,656,51,0.574,,0.658,19.3,8,6.2,0.5,7.3,0.174,-0.4,0.8,FALSE,Big-10,0
+Greivis Vasquez,2010,28,MEM,,G,6,6,217,23,7,Sr,Venezuela,1,Maryland,401,9520,3591,1021,1935,0.418,0.349,0.817,23.7,9,2.5,4.8,12.6,0.064,-1.2,1.9,FALSE,Big-10,0
+Guillermo Diaz,2006,52,LAC,,G,6,2,192,21,1,Jr,Puerto Rico / United States,2,Miami (FL),6,18,5,2,1,0.25,0,0.6,3,0.8,0.3,0.2,0,0.033,-2.9,0,FALSE,ACC,0
+Hamady Ndiaye,2010,56,MIN,MIN to WAS,C,7,0,235,23,3,Sr,Senegal,2,Rutgers University,33,157,20,25,3,0.467,,0.462,4.8,0.6,0.8,0.1,0,0.013,-7.3,-0.2,FALSE,Big-10,0
+Hamidou Diallo,2018,45,BRK,BRK to CHACHA to OKC,SG,6,5,202,19,2,Fr,United States / Guinea,2,Kentucky,129,2183,889,429,130,0.462,0.262,0.618,16.9,6.9,3.3,1,2.4,0.053,-3.2,-0.7,FALSE,SEC,1
+Harrison Barnes,2012,7,GOS,,SF,6,8,225,20,8,So,United States,1,UNC,651,20467,9009,3251,1128,0.451,0.375,0.799,31.4,13.8,5,1.7,37.4,0.088,-1,5.3,FALSE,ACC,1
+Harry Giles,2017,20,POR,POR to SAC,PF,6,10,240,19,3,Fr,United States,1,Duke,127,1759,792,522,166,0.513,0.176,0.69,13.9,6.2,4.1,1.3,2.8,0.076,-2.7,-0.3,FALSE,ACC,1
+Hasheem Thabeet,2009,2,MEM,,C,7,3,267,22,5,Jr,Tanzania,1,UConn,224,2357,483,595,27,0.567,,0.578,10.5,2.2,2.7,0.1,4.8,0.099,-2.7,-0.4,FALSE,Big East,0
+Hassan Adams,2006,54,NJN,,G,6,4,220,22,2,Sr,United States,2,Arizona,73,547,185,84,14,0.534,0,0.643,7.5,2.5,1.2,0.2,0.8,0.072,-2.3,0,FALSE,Pac-12,0
+Hassan Whiteside,2010,33,SAC,,C,7,1,265,21,8,Fr,United States,2,Marshall,436,11322,5834,4964,294,0.581,0.308,0.604,26,13.4,11.4,0.7,45.9,0.194,2.6,13.3,FALSE,Other,1
+Henry Ellenson,2016,18,DET,,PF,6,10,240,19,4,Fr,United States,1,Marquette,83,787,342,206,49,0.371,0.336,0.773,9.5,4.1,2.5,0.6,0.4,0.023,-3.7,-0.3,FALSE,Big East,1
+Henry Walker,2008,47,WAS,WAS to BOS,GF,6,6,235,20,5,Fr,United States,2,Kansas State,181,3016,1079,401,153,0.446,0.369,0.76,16.7,6,2.2,0.8,5,0.079,-1.8,0.2,FALSE,Big-12,0
+Herbert Hill,2007,55,UTH,UTH to PHL,FC,6,10,240,22,1,Sr,United States,2,Providence,,,,,,,,,,,,,,,,,FALSE,Big East,0
+Hilton Armstrong,2006,12,NOP,,C,6,11,235,21,6,Sr,United States,1,UConn,292,3378,880,766,102,0.501,0.286,0.582,11.6,3,2.6,0.3,3.9,0.055,-4.1,-1.8,FALSE,Big East,0
+Ignas Brazdeikis,2019,47,SAC,SAC to NYK,SF,6,7,221,20,1,Fr,Lithuania / Canada,2,Michigan,13,60,19,7,5,0.261,0.111,0.857,4.6,1.5,0.5,0.4,-0.1,-0.092,-8.5,-0.1,FALSE,Big-10,1
+Ike Anigbogu,2017,47,IND,,C,6,9,252,18,2,Fr,United States,2,UCLA,14,36,13,12,1,0.333,,0.833,2.6,0.9,0.9,0.1,0,0.057,-1.1,0,FALSE,Pac-12,0
+Iman Shumpert,2011,17,NYK,,G,6,5,220,20,9,Jr,United States,1,Georgia Tech,461,11470,3320,1534,845,0.391,0.337,0.764,24.9,7.2,3.3,1.8,12.9,0.054,-1.7,0.9,FALSE,ACC,1
+Isaiah Canaan,2013,34,HOU,,G,6,0,200,22,6,Sr,United States,2,Murray State,235,4799,1913,438,454,0.371,0.351,0.836,20.4,8.1,1.9,1.9,4.3,0.043,-2.4,-0.5,FALSE,Other,0
+Isaiah Cousins,2016,59,SAC,,G,6,4,191,22,0,Sr,United States,2,Oklahoma,,,,,,,,,,,,,,,,,FALSE,Big-12,0
+Isaiah Roby,2019,45,DET,DET to DAL,SF,6,8,230,21,1,Jr,United States,2,Nebraska,39,820,324,201,63,0.528,0.333,0.747,21,8.3,5.2,1.6,1.8,0.104,-1.3,0.1,FALSE,Big-10,1
+Isaiah Thomas,2011,60,SAC,,PG,5,9,185,22,9,Jr,United States,2,Washington,525,15182,9508,1288,2599,0.436,0.364,0.872,28.9,18.1,2.5,5,45.3,0.143,2.3,16.5,TRUE,Pac-12,0
+Isaiah Whitehead,2016,42,UTH,UTH to BRK,SG,6,4,213,21,3,So,United States,2,Seton Hall,89,1823,643,210,212,0.411,0.305,0.788,20.5,7.2,2.4,2.4,-0.9,-0.025,-5,-1.4,FALSE,Big East,0
+Ivan Rabb,2017,35,ORL,ORL to MEM,PF,6,10,220,20,3,So,United States,2,California,85,1237,485,364,86,0.555,0.2,0.743,14.6,5.7,4.3,1,3.2,0.125,-1.7,0.1,FALSE,Pac-12,0
+J.J. Hickson,2008,19,CLE,,PF,6,9,242,19,8,Fr,United States,1,NC State,534,11925,5081,3639,449,0.505,0,0.617,22.3,9.5,6.8,0.8,21.9,0.088,-1.8,0.5,FALSE,ACC,0
+J.J. Redick,2006,11,ORL,,G,6,4,200,22,14,Sr,United States,1,Duke,927,23817,11971,1891,1851,0.447,0.415,0.892,25.7,12.9,2,2,63.7,0.128,0.7,16.2,FALSE,ACC,1
+J.P. Tokoto,2015,58,PHL,,GF,6,6,200,21,0,Jr,United States,2,UNC,,,,,,,,,,,,,,,,,FALSE,ACC,0
+J.R. Giddens,2008,30,BOS,,GF,6,5,210,23,2,Sr,United States,1,New Mexico,38,247,73,54,13,0.476,0,0.565,6.5,1.9,1.4,0.3,0.1,0.027,-4.3,-0.1,FALSE,Other,0
+J.R. Pinnock,2006,58,DAL,DAL to LAL,SG,6,5,207,22,0,Jr,United States / Panama,2,George Washington,,,,,,,,,,,,,,,,,FALSE,Other,0
+Ja Morant,2019,2,MEM,,G,6,3,175,19,1,So,United States,1,Murray State,98,3043,1783,361,718,0.463,0.295,0.775,31.1,18.2,3.7,7.3,5.4,0.084,0,1.5,FALSE,Other,1
+Jabari Bird,2017,56,BOS,,SG,6,6,198,22,2,Sr,United States,2,California,13,115,39,19,8,0.577,0.429,0.462,8.8,3,1.5,0.6,0.2,0.098,-3.1,0,FALSE,Pac-12,0
+Jabari Parker,2014,2,MIL,,F,6,8,245,19,6,Fr,United States,1,Duke,288,8285,4263,1639,594,0.493,0.323,0.74,28.8,14.8,5.7,2.1,13.2,0.076,-0.9,2.4,FALSE,ACC,1
+Jack McClinton,2009,51,SAN,,G,6,1,185,24,0,Sr,United States,2,Miami (FL),,,,,,,,,,,,,,,,,FALSE,ACC,0
+Jacob Evans,2018,28,GOS,,SG,6,6,210,21,2,Jr,United States,1,Cincinnati,59,622,168,66,54,0.337,0.315,0.833,10.5,2.8,1.1,0.9,-0.6,-0.047,-7.4,-0.8,FALSE,Other,0
+Jae Crowder,2012,34,CLE,CLE to DAL,SF,6,6,235,21,8,Sr,United States,2,Marquette,646,16079,6202,2696,1009,0.419,0.343,0.78,24.9,9.6,4.2,1.6,34.6,0.103,0.1,8.7,FALSE,Big East,1
+Jahlil Okafor,2015,3,PHL,,C,6,11,275,19,5,Fr,United States,1,Duke,232,4600,2472,1130,215,0.539,0.19,0.674,19.8,10.7,4.9,0.9,6.8,0.071,-2,0,FALSE,ACC,1
+JaJuan Johnson,2011,27,NJN,NJN to BOS,FC,6,10,220,22,1,Sr,United States,1,Purdue,36,298,114,58,6,0.446,,0.667,8.3,3.2,1.6,0.2,0.2,0.032,-3.9,-0.1,FALSE,Big-10,0
+Jake Layman,2016,47,ORL,ORL to POR,SF,6,8,209,22,4,Sr,United States,2,Maryland,194,2736,1045,367,112,0.461,0.307,0.732,14.1,5.4,1.9,0.6,3.6,0.063,-2.2,-0.1,FALSE,Big-10,1
+Jakob Poeltl,2016,9,TOR,,C,7,0,240,20,4,So,Austria,1,Utah,318,5540,1805,1642,349,0.634,0.5,0.511,17.4,5.7,5.2,1.1,19.1,0.165,0.7,3.8,FALSE,Pac-12,1
+Jalen Brunson,2018,33,DAL,,PG,6,1,190,21,2,Jr,United States,2,Villanova,167,3515,1597,427,537,0.482,0.367,0.78,21,9.6,2.6,3.2,7.3,0.099,-1,0.9,FALSE,Big East,1
+Jalen McDaniels,2019,52,CHA,,PF,6,10,205,21,1,So,United States,2,San Diego State,36,523,178,112,22,0.458,0.333,0.763,14.5,4.9,3.1,0.6,0.4,0.041,-4.9,-0.4,FALSE,Other,1
+Jamaal Franklin,2013,41,MEM,,G,6,5,190,21,2,Jr,United States,2,San Diego State,24,174,42,25,9,0.415,0.462,1,7.3,1.8,1,0.4,0,-0.006,-5.9,-0.2,FALSE,Other,0
+Jamal Murray,2016,7,DEN,,SG,6,4,215,19,4,Fr,Canada,1,Kentucky,337,10094,5466,1224,1282,0.445,0.366,0.876,30,16.2,3.6,3.8,20.1,0.096,0.2,5.5,FALSE,SEC,1
+James Anderson,2010,20,SAN,,GF,6,6,210,21,5,Jr,United States,1,Oklahoma State,247,4320,1422,560,291,0.411,0.321,0.755,17.5,5.8,2.3,1.2,3.3,0.037,-2.7,-0.8,FALSE,Big-12,0
+James Augustine,2006,41,ORL,,FC,6,10,235,22,2,Sr,United States,2,Illinois,27,156,42,33,4,0.514,,0.5,5.8,1.6,1.2,0.1,0.3,0.101,-2.7,0,FALSE,Big-10,0
+James Ennis,2013,50,ATL,ATL to MIA,GF,6,6,215,22,6,Sr,United States,2,Cal State Long Beach,372,7515,2447,1226,341,0.459,0.358,0.794,20.2,6.6,3.3,0.9,15.5,0.099,-1.4,1.1,FALSE,Other,1
+James Gist,2008,57,SAN,,PF,6,9,235,21,0,Sr,United States,2,Maryland,,,,,,,,,,,,,,,,,FALSE,Big-10,0
+James Harden,2009,3,OKC,,SG,6,5,220,19,11,So,United States,1,Arizona State,870,29993,21898,4741,5665,0.444,0.364,0.859,34.5,25.2,5.4,6.5,141.2,0.226,6.9,67.5,TRUE,Pac-12,1
+James Johnson,2009,16,CHI,,F,6,7,240,22,11,So,United States,1,Wake Forest,663,13585,5221,2370,1405,0.476,0.307,0.69,20.5,7.9,3.6,2.1,25.3,0.089,0.8,9.6,FALSE,ACC,1
+James White,2006,31,POR,POR to IND,SF,6,7,215,23,3,Sr,United States,2,Cincinnati,67,583,182,68,35,0.438,0.34,0.676,8.7,2.7,1,0.5,0.8,0.062,-3.2,-0.2,FALSE,Other,0
+James Young,2014,17,BOS,,SG,6,6,215,18,4,Fr,United States,1,Kentucky,95,812,219,96,28,0.367,0.277,0.563,8.5,2.3,1,0.3,0.8,0.046,-3.4,-0.3,FALSE,SEC,0
+JamesOn Curry,2007,51,CHI,,G,6,4,200,21,2,Jr,United States,2,Oklahoma State,1,0,0,0,0,,,,0,0,0,0,0,,,0,FALSE,Big-12,0
+Jared Cunningham,2012,24,CLE,CLE to DAL,SG,6,4,194,21,4,Jr,United States,1,Oregon State,84,605,197,56,39,0.347,0.306,0.674,7.2,2.3,0.7,0.5,0.2,0.017,-5.7,-0.6,FALSE,Pac-12,0
+Jared Dudley,2007,22,CHA,,PF,6,7,237,21,13,Sr,United States,1,Boston College,903,20112,6633,2847,1394,0.464,0.393,0.732,22.3,7.3,3.2,1.5,43,0.103,0.2,11,FALSE,ACC,1
+Jared Jordan,2007,45,LAC,LAC to NYK,G,6,2,187,22,0,Sr,United States,2,Marist College,,,,,,,,,,,,,,,,,FALSE,Other,0
+Jared Sullinger,2012,21,BOS,,C,6,9,260,20,5,So,United States,1,Ohio State,269,6532,2893,2006,477,0.436,0.272,0.723,24.3,10.8,7.5,1.8,15.3,0.113,-0.4,2.7,FALSE,Big-10,0
+Jarell Martin,2015,25,MEM,,F,6,10,239,21,4,So,United States,1,LSU,184,2927,998,639,114,0.434,0.346,0.766,15.9,5.4,3.5,0.6,3.2,0.053,-4.3,-1.7,FALSE,SEC,0
+"Jaren Jackson, Jr.",2018,4,MEM,,PF,6,11,242,18,2,Fr,United States,1,Michigan State,115,3137,1788,534,142,0.485,0.384,0.757,27.3,15.5,4.6,1.2,6.8,0.104,0.1,1.7,FALSE,Big-10,0
+Jarnell Stokes,2014,35,UTH,UTH to MEM,FC,6,9,260,20,4,Jr,United States,2,Tennessee,28,151,67,40,7,0.581,,0.531,5.4,2.4,1.4,0.3,0.6,0.202,0.1,0.1,FALSE,SEC,0
+Jaron Blossomgame,2017,59,SAN,,F,6,8,220,23,1,Sr,United States,2,Clemson,27,439,114,98,13,0.443,0.256,0.769,16.3,4.2,3.6,0.5,0.3,0.03,-3.8,-0.2,FALSE,ACC,0
+Jarred Vanderbilt,2018,41,ORL,ORL to DEN,PF,6,9,214,19,2,Fr,United States,2,Kentucky,68,851,267,258,62,0.597,0.25,0.595,12.5,3.9,3.8,0.9,1.9,0.106,-1.3,0.2,FALSE,SEC,1
+Jarrell Brantley,2019,50,IND,IND to UTH,SF,6,7,250,23,1,Sr,United States,2,College of Charleston,20,125,35,27,11,0.368,0.3,0.5,6.3,1.8,1.4,0.6,0,0.018,-3.9,-0.1,FALSE,Other,1
+Jarrett Allen,2017,22,BRK,,C,6,11,243,19,3,Fr,United States,1,Texas,263,6553,2767,2138,337,0.616,0.197,0.699,24.9,10.5,8.1,1.3,24.9,0.182,1.4,5.7,FALSE,Big-12,1
+Jarrett Culver,2019,6,PHX,PHX to MIN,SG,6,6,195,20,1,So,United States,1,Texas Tech,83,1892,722,302,127,0.408,0.288,0.494,22.8,8.7,3.6,1.5,-0.2,-0.005,-4.5,-1.2,FALSE,Big-12,1
+Jarvis Varnado,2010,41,MIA,,FC,6,9,230,22,2,Sr,United States,2,Mississippi State,37,397,107,72,16,0.582,,0.518,10.7,2.9,1.9,0.4,0.7,0.089,-3.3,-0.1,FALSE,SEC,0
+Jason Smith,2007,20,MIA,MIA to PHL,PF,7,0,240,21,12,Jr,United States,1,Colorado State,616,10029,3777,2075,453,0.468,0.333,0.783,16.3,6.1,3.4,0.7,14.1,0.067,-2.9,-2.4,FALSE,Other,0
+Jason Thompson,2008,12,SAC,,PF,6,11,250,21,8,Sr,United States,1,Rider University,588,14819,5210,3880,635,0.496,0.143,0.657,25.2,8.9,6.6,1.1,23.8,0.077,-2.6,-2.4,FALSE,Other,0
+JaVale McGee,2008,18,WAS,,C,7,0,270,20,12,So,United States,1,Nevada,733,12616,5766,3770,307,0.572,0.192,0.593,17.2,7.9,5.1,0.4,37.3,0.142,0.1,6.7,FALSE,Other,1
+Javaris Crittenton,2007,19,LAL,,G,6,5,200,19,3,Fr,United States,1,Georgia Tech,113,1853,595,276,201,0.442,0.231,0.638,16.4,5.3,2.4,1.8,0.1,0.002,-4.2,-1,FALSE,ACC,0
+Jawun Evans,2017,39,PHL,PHL to LAC,PG,6,0,190,20,2,So,United States,2,Oklahoma State,56,843,237,96,110,0.345,0.263,0.776,15.1,4.2,1.7,2,-0.4,-0.022,-5.4,-0.7,FALSE,Big-12,0
+Jaxson Hayes,2019,8,ATL,ATL to NOP,PF,6,11,220,19,1,Fr,United States,1,Texas,95,1490,634,365,70,0.686,0.25,0.659,15.7,6.7,3.8,0.7,5.2,0.167,-0.3,0.6,FALSE,Big-12,1
+Jaylen Brown,2016,3,BOS,,SF,6,6,223,19,4,Fr,United States,1,California,318,8668,4616,1457,548,0.472,0.375,0.693,27.3,14.5,4.6,1.7,17.3,0.096,-0.5,3.3,TRUE,Pac-12,1
+Jaylen Hands,2019,56,LAC,LAC to BRKBRK to DET,G,6,3,190,20,0,So,United States,2,UCLA,,,,,,,,,,,,,,,,,FALSE,Pac-12,0
+Jaylen Nowell,2019,43,MIN,,SG,6,4,196,19,1,So,United States,2,Washington,43,669,347,76,56,0.444,0.336,0.86,15.6,8.1,1.8,1.3,1.1,0.075,-2,0,FALSE,Pac-12,1
+Jayson Tatum,2017,3,BOS,,SF,6,8,210,19,3,Fr,United States,1,Duke,262,8476,4825,1591,656,0.455,0.397,0.833,32.4,18.4,6.1,2.5,22.1,0.125,1.8,8.2,TRUE,ACC,1
+Jeff Ayres,2009,31,SAC,SAC to POR,FC,6,10,240,22,6,Sr,United States,2,Arizona State,237,2322,690,632,99,0.553,0.4,0.776,9.8,2.9,2.7,0.4,6.3,0.131,-2.3,-0.2,FALSE,Pac-12,0
+Jeff Green,2007,5,BOS,BOS to SEA,F,6,8,235,20,12,Jr,United States,1,Georgetown,947,27826,12144,4155,1478,0.443,0.338,0.804,29.4,12.8,4.4,1.6,44.5,0.077,-1.3,4.6,FALSE,Other,1
+Jeff Teague,2009,19,ATL,,PG,6,3,195,21,11,So,United States,1,Wake Forest,803,21774,9882,1955,4518,0.443,0.358,0.845,27.1,12.3,2.4,5.6,51.2,0.113,0.6,14.2,TRUE,ACC,1
+Jeff Withey,2013,39,POR,POR to NOP,C,7,0,230,23,5,Sr,United States,2,Kansas,206,2072,666,518,64,0.525,0.143,0.716,10.1,3.2,2.5,0.3,6.8,0.157,0.5,1.3,FALSE,Big-12,0
+Jeffery Taylor,2012,31,CHA,,SF,6,7,225,23,3,Sr,Sweden,2,Vanderbilt,132,2566,807,263,107,0.409,0.319,0.665,19.4,6.1,2,0.8,1.3,0.024,-4.2,-1.5,FALSE,SEC,0
+Jerami Grant,2014,39,PHL,,F,6,8,210,20,6,So,United States,2,Syracuse,493,12516,5128,1944,594,0.458,0.348,0.702,25.4,10.4,3.9,1.2,25.5,0.098,-0.6,4.3,FALSE,ACC,1
+Jeremy Evans,2010,55,UTH,,F,6,9,200,22,7,Sr,United States,2,Western Kentucky,250,2626,879,641,107,0.569,0.231,0.687,10.5,3.5,2.6,0.4,8.2,0.15,0.9,1.9,FALSE,Other,0
+Jeremy Lamb,2012,12,HOU,,SG,6,5,185,20,8,So,United States,1,UConn,505,10726,5288,1873,806,0.445,0.344,0.857,21.2,10.5,3.7,1.6,25.1,0.112,0.8,7.5,FALSE,Big East,1
+Jerian Grant,2015,19,WAS,WAS to ATLATL to NYK,SG,6,4,198,22,4,Sr,United States,1,Notre Dame,279,4998,1692,530,805,0.411,0.323,0.77,17.9,6.1,1.9,2.9,8.3,0.08,-1.6,0.5,FALSE,ACC,0
+Jermaine Taylor,2009,32,WAS,WAS to HOU,G,6,5,205,22,2,Sr,United States,2,Central Florida,65,786,351,108,48,0.441,0.284,0.73,12.1,5.4,1.7,0.7,0.2,0.014,-3.7,-0.3,FALSE,Other,0
+Jermareo Davidson,2007,36,GOS,GOS to CHA,PF,6,10,230,22,2,Sr,United States,2,Alabama,52,433,162,96,14,0.425,,0.578,8.3,3.1,1.8,0.3,0,0,-5.2,-0.3,FALSE,SEC,0
+Jerome Jordan,2010,44,MIL,MIL to NYK,C,7,0,253,23,2,Sr,Jamaica,2,Tulsa,65,491,180,132,17,0.528,,0.852,7.6,2.8,2,0.3,1.7,0.168,-1,0.1,FALSE,Other,0
+Jerome Robinson,2018,13,LAC,,SG,6,4,190,21,2,Jr,United States,1,Boston College,109,1520,499,203,124,0.372,0.315,0.735,13.9,4.6,1.9,1.1,0.2,0.005,-4.5,-1,FALSE,ACC,1
+Jerryd Bayless,2008,11,IND,IND to POR,G,6,3,210,19,11,Fr,United States,1,Arizona,586,12486,4909,1235,1674,0.411,0.361,0.818,21.3,8.4,2.1,2.9,18.6,0.072,-1.6,1.1,FALSE,Pac-12,0
+Jevon Carter,2018,32,MEM,,PG,6,2,200,22,2,Sr,United States,2,West Virginia,130,1843,552,223,191,0.368,0.375,0.836,14.2,4.2,1.7,1.5,2.4,0.063,-0.9,0.5,FALSE,Big-12,1
+Jimmer Fredette,2011,10,MIL,MIL to SAC,G,6,2,195,22,6,Sr,United States,1,BYU,241,3213,1438,243,331,0.409,0.372,0.879,13.3,6,1,1.4,2.2,0.033,-2.5,-0.4,FALSE,Other,0
+Jimmy Butler,2011,30,CHI,,GF,6,8,232,21,9,Sr,United States,1,Marquette,610,20163,10513,3189,2372,0.455,0.329,0.836,33.1,17.2,5.2,3.9,80.2,0.191,4.4,32.4,TRUE,Big East,1
+Joakim Noah,2007,9,CHI,,FC,6,11,230,22,13,Jr,France / United States,1,Florida,672,18646,5881,6058,1907,0.491,0,0.7,27.7,8.8,9,2.8,61.9,0.159,2.5,20.9,TRUE,SEC,0
+Jodie Meeks,2009,41,MIL,,G,6,4,210,21,10,Jr,United States,2,Kentucky,539,12110,4988,1120,583,0.42,0.373,0.879,22.5,9.3,2.1,1.1,24.3,0.096,-0.6,4.2,FALSE,SEC,0
+Joe Alexander,2008,8,MIL,,SF,6,8,230,21,3,Jr,United States / Israel,1,West Virginia,67,745,282,120,44,0.41,0.34,0.698,11.1,4.2,1.8,0.7,0.5,0.03,-3.6,-0.3,FALSE,Big-12,0
+Joe Crawford,2008,58,LAL,,G,6,5,207,22,1,Sr,United States,2,Kentucky,2,23,9,4,1,0.3,0.25,1,11.5,4.5,2,0.5,0,0.037,-2.7,0,FALSE,SEC,0
+Joe Harris,2014,33,CLE,,SG,6,6,220,22,6,Sr,United States,2,Virginia,374,9383,4081,1193,611,0.484,0.437,0.773,25.1,10.9,3.2,1.6,18.3,0.094,-0.5,3.5,FALSE,ACC,1
+Joe Young,2015,43,IND,,G,6,2,185,22,3,Sr,United States,2,Oregon,127,1077,429,130,119,0.393,0.296,0.768,8.5,3.4,1,0.9,0.4,0.016,-4.1,-0.6,FALSE,Pac-12,0
+Joel Bolomboy,2016,52,UTH,,FC,6,9,235,22,2,Sr,United States / Russia,2,Weber State,18,91,31,27,2,0.545,0.2,0.5,5.1,1.7,1.5,0.1,0.3,0.132,-0.1,0,FALSE,Other,0
+Joel Embiid,2014,3,PHL,,C,7,0,250,20,6,Fr,Cameroon,1,Kansas,240,7368,5933,2752,752,0.486,0.33,0.804,30.7,24.7,11.5,3.1,29,0.189,4.9,12.8,TRUE,Big-12,1
+Joey Dorsey,2008,33,POR,POR to HOU,FC,6,9,275,24,4,Sr,United States,2,Memphis,130,1488,344,513,55,0.534,0,0.375,11.4,2.6,3.9,0.4,2.9,0.092,-2.7,-0.3,FALSE,Other,0
+John Collins,2017,19,ATL,,PF,6,9,235,19,3,So,United States,1,Wake Forest,218,6263,3614,1881,336,0.564,0.371,0.774,28.7,16.6,8.6,1.5,21,0.161,1.3,5.1,FALSE,ACC,1
+John Henson,2012,14,MIL,,PF,6,11,219,21,8,Jr,United States,1,UNC,445,8752,3383,2368,496,0.54,0.25,0.568,19.7,7.6,5.3,1.1,20.7,0.113,-0.4,3.4,FALSE,ACC,0
+John Jenkins,2012,23,ATL,,SG,6,4,215,21,6,Jr,United States,1,Vanderbilt,171,2183,855,250,138,0.441,0.367,0.847,12.8,5,1.5,0.8,3,0.065,-1.9,0.1,FALSE,SEC,0
+John Wall,2010,1,WAS,,PG,6,4,210,19,10,Fr,United States,1,Kentucky,600,21402,11450,2569,5447,0.432,0.325,0.779,35.7,19.1,4.3,9.1,44.7,0.1,2.4,24,FALSE,SEC,1
+Johnny O'Bryant,2014,36,MIL,,FC,6,9,257,21,4,Jr,United States,2,LSU,147,1684,509,352,69,0.402,0.36,0.663,11.5,3.5,2.4,0.5,0.2,0.006,-6.2,-1.8,FALSE,SEC,0
+Jon Brockman,2009,38,POR,POR to SAC,PF,6,7,255,22,3,Sr,United States,2,Washington,150,1570,320,472,49,0.488,0,0.618,10.5,2.1,3.1,0.3,3.7,0.113,-3.9,-0.8,FALSE,Pac-12,0
+Jon Diebler,2011,51,POR,POR to HOUHOU to CHI,SF,6,6,205,23,0,Sr,United States,2,Ohio State,,,,,,,,,,,,,,,,,FALSE,Big-10,0
+Jon Leuer,2011,40,MIL,,PF,6,10,228,22,8,Sr,United States,2,Wisconsin,377,5945,2395,1426,301,0.484,0.328,0.767,15.8,6.4,3.8,0.8,13.2,0.107,-0.7,2,FALSE,Big-10,0
+Jonathan Isaac,2017,6,ORL,,SF,6,10,230,19,3,Fr,United States,1,Florida State,136,3512,1269,741,146,0.435,0.33,0.797,25.8,9.3,5.4,1.1,6.7,0.091,0.2,2,FALSE,ACC,0
+Jonny Flynn,2009,6,MIN,,PG,5,10,196,20,3,So,United States,1,Syracuse,163,3738,1504,307,634,0.4,0.338,0.809,22.9,9.2,1.9,3.9,-1.1,-0.015,-4,-1.9,FALSE,ACC,0
+Jordan Adams,2014,22,MEM,,SG,6,5,209,19,2,So,United States,1,UCLA,32,263,101,30,19,0.402,0.385,0.607,8.2,3.2,0.9,0.6,0.4,0.07,1.7,0.2,FALSE,Pac-12,0
+Jordan Bell,2017,38,CHI,CHI to GOS,PF,6,9,224,22,3,Jr,United States,2,Oregon,157,1903,588,488,199,0.556,0.2,0.638,12.1,3.7,3.1,1.3,4.8,0.122,0.3,1.1,FALSE,Pac-12,1
+Jordan Bone,2019,57,NOP,NOP to ATLATL to PHLPHL to DET,SG,6,3,185,21,1,Jr,United States,2,Tennessee,24,249,68,28,26,0.378,0.286,,10.4,2.8,1.2,1.1,0.1,0.019,-5.9,-0.2,FALSE,SEC,1
+Jordan Clarkson,2014,46,WAS,WAS to LAL,G,6,5,192,22,6,Jr,United States,2,Missouri,494,13292,7419,1584,1256,0.445,0.346,0.826,26.9,15,3.2,2.5,16.5,0.059,-0.5,4.9,FALSE,SEC,1
+Jordan Crawford,2010,27,NJN,NJN to ATL,G,6,5,195,21,6,So,United States,1,Xavier,281,6843,3432,703,883,0.411,0.317,0.826,24.4,12.2,2.5,3.1,6.3,0.044,-1.3,1.3,FALSE,Big East,0
+Jordan Farmar,2006,26,LAL,,PG,6,2,180,19,10,So,United States,1,UCLA,504,9840,3888,958,1453,0.423,0.374,0.739,19.5,7.7,1.9,2.9,13.9,0.068,-0.5,3.7,FALSE,Pac-12,0
+Jordan Hamilton,2011,26,DAL,DAL to DEN,SF,6,7,220,20,5,So,United States,1,Texas,151,2100,890,429,127,0.408,0.357,0.67,13.9,5.9,2.8,0.8,3,0.069,-0.1,1,FALSE,Big-12,0
+Jordan Hill,2009,8,NYK,,PF,6,10,240,21,8,Jr,United States,1,Arizona,409,7692,3232,2389,322,0.497,0.136,0.699,18.8,7.9,5.8,0.8,16.4,0.102,-2,0,FALSE,Pac-12,0
+Jordan McRae,2014,58,SAN,SAN to PHL,G,6,5,179,23,4,Sr,United States,2,Tennessee,123,1696,846,225,167,0.417,0.355,0.772,13.8,6.9,1.8,1.4,1.7,0.048,-2.1,0,FALSE,SEC,0
+Jordan Mickey,2015,33,BOS,,PF,6,8,235,20,3,So,United States,2,LSU,64,482,152,128,17,0.449,0.118,0.605,7.5,2.4,2,0.3,0.5,0.05,-4.8,-0.3,FALSE,SEC,0
+Jordan Poole,2019,28,GOS,,SG,6,4,195,20,1,So,United States,1,Michigan,79,1602,732,151,165,0.373,0.309,0.826,20.3,9.3,1.9,2.1,-0.1,-0.002,-4.4,-1,FALSE,Big-10,1
+Jordan Williams,2011,36,NJN,,PF,6,10,260,20,1,So,United States,2,Maryland,43,635,197,156,11,0.507,,0.652,14.8,4.6,3.6,0.3,1.3,0.101,-2.1,0,FALSE,Big-10,0
+Josh Boone,2006,23,NJN,,C,6,10,237,21,4,Jr,United States,1,UConn,256,4482,1340,1258,125,0.544,,0.445,17.5,5.2,4.9,0.5,9.1,0.097,-2,0,FALSE,Big East,0
+Josh Harrellson,2011,45,NOP,NOP to NYK,F,6,10,275,22,3,Sr,United States,2,Kentucky,75,888,265,227,26,0.438,0.347,0.629,11.8,3.5,3,0.3,2.1,0.116,-0.4,0.4,FALSE,SEC,0
+Josh Hart,2017,30,UTH,UTH to LAL,SG,6,5,215,22,3,Sr,United States,1,Villanova,237,6121,2068,1248,372,0.435,0.35,0.721,25.8,8.7,5.3,1.6,10.9,0.086,-0.8,1.9,FALSE,Big East,1
+Josh Huestis,2014,29,OKC,,SF,6,7,230,22,3,Sr,United States,1,Stanford,76,1068,187,180,23,0.346,0.312,0.24,14.1,2.5,2.4,0.3,0.7,0.03,-3.5,-0.4,FALSE,Pac-12,0
+Josh Jackson,2017,4,PHX,,SF,6,8,207,20,3,Fr,United States,1,Kansas,216,5271,2620,924,415,0.418,0.293,0.667,24.4,12.1,4.3,1.9,-1.7,-0.015,-3.8,-2.4,FALSE,Big-12,1
+Josh McRoberts,2007,37,POR,,PF,6,10,240,20,11,So,United States,2,Duke,433,8271,2333,1686,901,0.463,0.34,0.705,19.1,5.4,3.9,2.1,18.5,0.107,0.3,4.7,FALSE,ACC,0
+Josh Okogie,2018,20,MIN,,SG,6,4,212,19,2,So,Nigeria / United States,1,Georgia Tech,171,3996,1269,575,233,0.395,0.266,0.772,23.4,7.4,3.4,1.4,3.8,0.045,-3.1,-1.1,FALSE,ACC,1
+Josh Richardson,2015,40,MIA,,G,6,5,200,21,5,Sr,United States,2,Tennessee,346,10667,4314,1103,990,0.428,0.359,0.83,30.8,12.5,3.2,2.9,19.5,0.088,-0.4,4.3,FALSE,SEC,1
+Josh Selby,2011,49,MEM,,G,6,2,195,20,2,Fr,United States,2,Kansas,38,296,83,20,34,0.33,0.143,0.72,7.8,2.2,0.5,0.9,-0.7,-0.113,-9.5,-0.6,FALSE,Big-12,0
+Jrue Holiday,2009,17,PHL,,G,6,4,205,19,11,Fr,United States,1,UCLA,744,24673,11797,2933,4711,0.454,0.355,0.778,33.2,15.9,3.9,6.3,46,0.09,1.2,20.2,TRUE,Pac-12,1
+Julian Wright,2007,13,NOP,,F,6,8,225,20,4,So,United States,1,Kansas,231,3049,907,531,182,0.499,0.262,0.584,13.2,3.9,2.3,0.8,3.9,0.061,-0.5,1.2,FALSE,Big-12,0
+Julius Randle,2014,7,LAL,,PF,6,9,250,19,6,Fr,United States,1,Kentucky,418,12527,7019,3848,1302,0.49,0.326,0.732,30,16.8,9.2,3.1,25.4,0.097,0.1,6.7,TRUE,SEC,1
+Justin Anderson,2015,21,DAL,,F,6,6,230,21,5,Jr,United States,1,Virginia,226,2964,1182,575,151,0.413,0.296,0.774,13.1,5.2,2.5,0.7,4.6,0.074,-1.4,0.5,FALSE,ACC,0
+Justin Hamilton,2012,45,PHL,PHL to MIA,C,7,0,255,22,3,Jr,United States / Croatia,2,LSU,113,1961,687,403,91,0.464,0.309,0.798,17.4,6.1,3.6,0.8,3.7,0.091,-0.9,0.5,FALSE,SEC,0
+Justin Harper,2011,32,CLE,CLE to ORL,PF,6,10,225,21,3,Sr,United States,2,Richmond,22,150,45,18,4,0.34,0.276,0.333,6.8,2,0.8,0.2,-0.3,-0.093,-8.7,-0.2,FALSE,Other,0
+Justin Jackson,2017,15,POR,POR to SAC,F,6,8,210,22,3,Jr,United States,1,UNC,243,4643,1596,618,264,0.43,0.321,0.794,19.1,6.6,2.5,1.1,5.3,0.055,-2.8,-0.9,FALSE,ACC,1
+Justin Jackson,2018,43,DEN,DEN to ORL,SF,6,7,225,21,0,So,Canada,2,Maryland,,,,,,,,,,,,,,,,,FALSE,Big-10,1
+Justin James,2019,40,SAC,,SG,6,7,190,22,1,Sr,United States,2,Wyoming,55,353,130,42,28,0.429,0.317,0.455,6.4,2.4,0.8,0.5,0.1,0.019,-2.5,0,FALSE,Other,1
+Justin Patton,2017,16,CHI,CHI to MIN,C,7,0,241,20,3,Fr,United States,1,Creighton,20,284,82,56,18,0.405,0.27,0.667,14.2,4.1,2.8,0.9,0.5,0.079,-2.4,0,FALSE,Big East,1
+Justin Wright-Foreman,2019,53,UTH,,SG,6,2,190,21,1,Sr,United States,2,Hofstra,4,45,19,5,7,0.35,0.2,0.75,11.3,4.8,1.3,1.8,0,-0.008,-9,-0.1,FALSE,Other,0
+Justise Winslow,2015,10,MIA,,SF,6,6,225,19,5,Fr,United States,1,Duke,253,7104,2274,1355,676,0.413,0.327,0.643,28.1,9,5.4,2.7,7.3,0.049,-2,-0.1,FALSE,ACC,1
+K.J. McDaniels,2014,32,PHL,,GF,6,6,205,21,4,Jr,United States,2,Clemson,148,2092,782,324,95,0.412,0.29,0.776,14.1,5.3,2.2,0.6,1.3,0.03,-2.8,-0.4,FALSE,ACC,0
+Kadeem Allen,2017,53,BOS,,G,6,3,200,24,3,Sr,United States,2,Arizona,47,640,258,71,109,0.435,0.349,0.757,13.6,5.5,1.5,2.3,1,0.075,-1,0.2,FALSE,Pac-12,0
+Karl-Anthony Towns,2015,1,MIN,,C,7,0,248,19,5,Fr,United States / Dominican Republic,1,Kentucky,380,13041,8622,4434,1084,0.532,0.395,0.833,34.3,22.7,11.7,2.9,52.6,0.193,4.8,22.2,TRUE,SEC,1
+Kawhi Leonard,2011,15,IND,IND to SAN,F,6,7,230,19,9,So,United States,1,San Diego State,559,17460,10702,3572,1573,0.493,0.383,0.856,31.2,19.1,6.4,2.8,80.3,0.221,6.8,38.8,TRUE,Other,1
+Kay Felder,2016,54,ATL,ATL to CLE,PG,5,9,176,21,2,Jr,United States,2,Oakland,58,526,223,59,78,0.364,0.268,0.754,9.1,3.8,1,1.3,-0.4,-0.041,-4.7,-0.4,FALSE,Other,0
+Keita Bates-Diop,2018,48,MIN,,SF,6,8,230,22,2,Jr,United States,2,Ohio State,90,1365,473,230,54,0.419,0.306,0.699,15.2,5.3,2.6,0.6,1.7,0.061,-2.2,-0.1,FALSE,Big-10,1
+Keith Benson,2011,48,ATL,,C,6,11,240,22,1,Sr,United States,2,Oakland,3,9,0,3,0,0,,,3,0,1,0,0,-0.005,-7.7,0,FALSE,Other,0
+Keldon Johnson,2019,29,SAN,,SF,6,6,210,19,1,Fr,United States,1,Kentucky,53,1350,659,296,89,0.501,0.38,0.774,25.5,12.4,5.6,1.7,3.5,0.124,-0.3,0.6,FALSE,SEC,1
+Kelly Olynyk,2013,13,DAL,DAL to BOS,C,7,0,240,22,7,Jr,Canada,1,Gonzaga,542,11789,5268,2675,1024,0.473,0.366,0.775,21.8,9.7,4.9,1.9,30.7,0.125,0.7,7.9,FALSE,Other,1
+"Kelly Oubre, Jr.",2015,15,ATL,ATL to WAS,SF,6,7,205,19,5,Fr,United States,1,Kansas,389,9621,4393,1680,382,0.432,0.325,0.769,24.7,11.3,4.3,1,13.5,0.067,-2,0.1,FALSE,Big-12,0
+Kemba Walker,2011,9,CHA,,G,6,0,184,21,9,Jr,United States,1,UConn,686,23112,13596,2624,3690,0.418,0.36,0.84,33.7,19.8,3.8,5.4,55.6,0.116,2.9,28.3,TRUE,Big East,1
+Kendall Marshall,2012,13,PHX,,PG,6,4,195,20,4,So,United States,1,UNC,160,3083,802,253,779,0.399,0.37,0.611,19.3,5,1.6,4.9,1,0.015,-3.5,-1.1,FALSE,ACC,0
+Kenneth Faried,2011,22,DEN,,F,6,8,220,21,8,Sr,United States,1,Morehead State University,478,11728,5430,3884,470,0.546,0.222,0.654,24.5,11.4,8.1,1,38.8,0.159,0.5,7.5,FALSE,Other,0
+Kentavious Caldwell-Pope,2013,8,DET,,SG,6,5,205,20,7,So,United States,1,Georgia,578,16762,6569,1803,933,0.418,0.352,0.799,29,11.4,3.1,1.6,29.6,0.085,-0.8,5,FALSE,SEC,1
+Kevin Durant,2007,2,SEA,,SF,6,10,240,18,13,Fr,United States,1,Texas,868,31984,23491,6131,3586,0.493,0.382,0.882,36.8,27.1,7.1,4.1,144.4,0.217,6.7,70.3,TRUE,Big-12,1
+Kevin Hervey,2018,57,OKC,,PF,6,9,230,21,1,Sr,United States,2,UT Arlington,10,52,17,12,5,0.259,0.15,,5.2,1.7,1.2,0.5,-0.1,-0.085,-5.1,0,FALSE,Other,0
+Kevin Huerter,2018,19,ATL,,SF,6,7,190,19,2,So,United States,1,Maryland,173,5138,1919,630,576,0.418,0.379,0.796,29.7,11.1,3.6,3.3,5.4,0.051,-1.6,0.6,FALSE,Big-10,1
+Kevin Knox,2018,9,NYK,,SF,6,9,215,18,2,Fr,United States,1,Kentucky,169,3732,1521,570,160,0.369,0.345,0.701,22.1,9,3.4,0.9,-0.7,-0.009,-4.8,-2.7,FALSE,SEC,1
+Kevin Love,2008,5,MEM,MEM to MIN,FC,6,8,247,19,12,Fr,United States,1,UCLA,717,22861,13016,7957,1702,0.442,0.37,0.828,31.9,18.2,11.1,2.4,82,0.172,3.4,31,TRUE,Pac-12,1
+Kevin Murphy,2012,47,UTH,,GF,6,5,185,22,1,Sr,United States,2,Tennessee Technological University,17,52,15,4,2,0.25,0.2,,3.1,0.9,0.2,0.1,-0.3,-0.272,-16.8,-0.2,FALSE,Other,0
+"Kevin Porter, Jr.",2019,30,MIL,MIL to DETDET to CLE,SF,6,4,203,19,1,Fr,United States,1,USC,57,1366,602,181,154,0.437,0.308,0.711,24,10.6,3.2,2.7,0.2,0.008,-3.5,-0.5,FALSE,Pac-12,0
+Kevon Looney,2015,30,GOS,,PF,6,9,220,19,5,Fr,United States,1,UCLA,256,3601,1107,964,266,0.573,0.204,0.621,14.1,4.3,3.8,1,12,0.16,-0.5,1.4,FALSE,Pac-12,1
+Khris Middleton,2012,39,DET,,SF,6,8,222,20,8,Jr,United States,2,Texas A&M,558,17655,9258,2649,1957,0.461,0.395,0.878,31.6,16.6,4.7,3.5,43.1,0.117,0.6,11.8,TRUE,SEC,1
+Khyri Thomas,2018,38,PHL,PHL to DET,SG,6,3,210,22,2,Jr,United States,2,Creighton,34,256,78,21,11,0.314,0.306,0.6,7.5,2.3,0.6,0.3,0,-0.005,-5.7,-0.2,FALSE,Big East,0
+Kim English,2012,44,DET,,SG,6,6,200,23,1,Sr,United States,2,Missouri,41,407,119,37,26,0.375,0.28,0.724,9.9,2.9,0.9,0.6,0.2,0.021,-4.2,-0.2,FALSE,SEC,0
+Klay Thompson,2011,11,GOS,,G,6,6,215,21,9,Jr,United States,1,Washington State,615,20340,11995,2130,1416,0.459,0.419,0.848,33.1,19.5,3.5,2.3,46.8,0.11,0.7,14.2,TRUE,Pac-12,0
+Kosta Koufos,2008,23,UTH,,C,7,0,265,19,11,Fr,United States / Greece,1,Ohio State,686,11271,3913,3452,359,0.534,0,0.582,16.4,5.7,5,0.5,28.3,0.12,-1.3,2,FALSE,Big-10,0
+Kostas Antetokounmpo,2018,60,PHL,PHL to DAL,PF,6,10,200,20,2,Fr,Greece / United States,2,Dayton,11,52,13,13,2,0.444,,0.5,4.7,1.2,1.2,0.2,0,-0.044,-7.3,-0.1,FALSE,Other,1
+Kris Dunn,2016,5,MIN,,SG,6,3,205,22,4,Jr,United States,1,Providence,227,5516,1884,760,948,0.422,0.306,0.726,24.3,8.3,3.3,4.2,3.9,0.034,-1.8,0.2,FALSE,Big East,0
+Kris Joseph,2012,51,BOS,,SF,6,7,210,23,1,Sr,Canada,2,Syracuse,10,54,9,7,1,0.143,0,0.625,5.4,0.9,0.7,0.1,-0.1,-0.127,-9.9,-0.1,FALSE,ACC,0
+Kyle Anderson,2014,30,SAN,,PF,6,8,230,20,6,So,United States,1,UCLA,404,8216,2463,1672,855,0.487,0.331,0.712,20.3,6.1,4.1,2.1,20.7,0.121,1.6,7.4,FALSE,Pac-12,1
+Kyle Guy,2019,55,NYK,NYK to SAC,SG,6,1,170,21,1,Jr,United States,2,Virginia,20,130,45,16,16,0.32,0.214,0.875,6.5,2.3,0.8,0.8,0,-0.017,-6.1,-0.1,FALSE,ACC,1
+Kyle Kuzma,2017,27,BRK,BRK to LAL,F,6,9,220,21,3,Jr,United States,1,Utah,250,7362,3835,1415,456,0.448,0.337,0.724,29.4,15.3,5.7,1.8,11.1,0.072,-1.3,1.2,FALSE,Pac-12,1
+Kyle Lowry,2006,24,MEM,,PG,6,1,196,20,14,So,United States,1,Villanova,949,30098,14099,4143,5916,0.424,0.367,0.812,31.7,14.9,4.4,6.2,97.2,0.155,3.2,39.2,TRUE,Big East,1
+Kyle O'Quinn,2012,49,ORL,,F,6,10,250,22,8,Sr,United States,2,Norfolk State,472,6714,2568,2166,643,0.517,0.218,0.74,14.2,5.4,4.6,1.4,17.8,0.128,0.9,5,FALSE,Other,0
+Kyle Singler,2011,33,DET,,F,6,8,228,23,6,Sr,United States,2,Duke,356,7794,2326,1026,272,0.418,0.362,0.786,21.9,6.5,2.9,0.8,10,0.062,-2.5,-0.9,FALSE,ACC,0
+Kyle Weaver,2008,38,CHA,CHA to OKC,SG,6,6,200,22,3,Sr,United States,2,Washington State,73,1379,363,158,119,0.441,0.353,0.736,18.9,5,2.2,1.6,1.5,0.051,-1.1,0.3,FALSE,Pac-12,0
+Kyrie Irving,2011,1,CLE,,G,6,2,195,19,9,Fr,United States / Australia,1,Duke,559,18931,12713,2105,3189,0.469,0.391,0.878,33.9,22.7,3.8,5.7,65.7,0.167,4.6,31.2,TRUE,ACC,1
+KZ Okpala,2019,32,PHX,PHX to MIA,SG,6,9,210,20,1,So,United States,2,Stanford,30,348,74,55,12,0.423,0.289,0.375,11.6,2.5,1.8,0.4,0.2,0.034,-5.9,-0.3,FALSE,Pac-12,1
+Lamar Patterson,2014,48,MIL,MIL to ATL,F,6,5,225,22,2,Sr,United States,2,Pitt,40,435,93,57,45,0.326,0.236,0.72,10.9,2.3,1.4,1.1,0.1,0.006,-5.7,-0.4,FALSE,ACC,0
+LaMarcus Aldridge,2006,2,CHI,CHI to POR,FC,6,11,265,20,14,So,United States,1,Texas,1024,35062,19887,8454,2021,0.491,0.317,0.811,34.2,19.4,8.3,2,112.3,0.154,1.7,32.5,TRUE,Big-12,1
+Lance Stephenson,2010,40,IND,,SG,6,6,230,19,9,Fr,United States,2,Cincinnati,508,11866,4354,2124,1456,0.444,0.315,0.685,23.4,8.6,4.2,2.9,16.7,0.068,-1.2,2.5,FALSE,Other,0
+Landry Fields,2010,39,NYK,,F,6,7,210,21,5,Sr,United States,2,Stanford,255,6010,1731,1092,419,0.473,0.332,0.666,23.6,6.8,4.3,1.6,10.5,0.084,-0.3,2.6,FALSE,Pac-12,0
+Landry Shamet,2018,26,PHL,,PG,6,4,190,21,2,So,United States,1,Wichita State,171,4039,1519,304,259,0.414,0.396,0.83,23.6,8.9,1.8,1.5,7,0.083,-2.1,-0.1,FALSE,Other,1
+"Larry Nance, Jr.",2015,27,LAL,,SF,6,7,245,22,5,Sr,United States,1,Wyoming,340,8225,2802,2261,633,0.533,0.333,0.69,24.2,8.2,6.7,1.9,21.9,0.128,1.2,6.7,FALSE,Other,0
+Larry Sanders,2010,15,MIL,,PF,6,11,235,21,6,Jr,United States,1,VCU,238,4635,1520,1345,174,0.48,0,0.553,19.5,6.4,5.7,0.7,10.3,0.107,-1.1,1.1,FALSE,Other,0
+Lauri Markkanen,2017,7,MIN,MIN to CHI,SF,7,0,240,20,3,Fr,Finland,1,Arizona,191,5836,3126,1415,247,0.437,0.362,0.846,30.6,16.4,7.4,1.3,10.2,0.084,-0.2,2.6,FALSE,Pac-12,1
+Lavoy Allen,2011,50,PHL,,PF,6,9,260,22,6,Sr,United States,2,Temple,388,6905,1847,1843,384,0.471,0.133,0.682,17.8,4.8,4.8,1,13.8,0.096,-2.1,-0.1,FALSE,Other,0
+Lazar Hayward,2010,30,WAS,WAS to MIN,F,6,6,225,23,3,Sr,United States,1,Marquette,72,591,207,90,35,0.347,0.269,0.767,8.2,2.9,1.3,0.5,0.2,0.02,-4.2,-0.3,FALSE,Big East,0
+Leon Powe,2006,49,DEN,DEN to BOS,F,6,8,240,22,5,So,United States,2,California,239,3320,1484,911,78,0.515,0,0.682,13.9,6.2,3.8,0.3,12,0.174,-1.6,0.3,FALSE,Pac-12,0
+Lester Hudson,2009,58,BOS,,G,6,3,190,24,4,Sr,United States,2,University of Tennessee at Martin,57,594,268,77,71,0.375,0.277,0.806,10.4,4.7,1.4,1.2,0.2,0.016,-2.1,0,FALSE,Other,0
+Lonnie Walker,2018,18,SAN,,SG,6,5,205,19,2,Fr,United States,1,Miami (FL),114,2065,858,259,138,0.421,0.376,0.757,18.1,7.5,2.3,1.2,1,0.023,-3.5,-0.8,FALSE,ACC,1
+Lonzo Ball,2017,2,LAL,,PG,6,6,190,19,3,Fr,United States,1,UCLA,200,6433,2277,1152,1280,0.397,0.352,0.538,32.2,11.4,5.8,6.4,8.3,0.062,0.6,4.2,FALSE,Pac-12,1
+Lorenzo Brown,2013,52,MIN,,SG,6,5,189,22,5,Jr,United States,2,NC State,103,1185,293,151,183,0.364,0.17,0.707,11.5,2.8,1.5,1.8,-0.2,-0.007,-3.5,-0.5,FALSE,ACC,0
+Luc Mbah a Moute,2008,37,MIL,,F,6,8,230,21,11,Jr,Cameroon,2,UCLA,689,16038,4380,2800,588,0.454,0.334,0.659,23.3,6.4,4.1,0.9,26,0.078,-1.5,2,FALSE,Pac-12,0
+Luke Babbitt,2010,16,MIN,MIN to POR,SF,6,9,225,21,8,So,United States,1,Nevada,381,5332,1818,846,224,0.408,0.402,0.747,14,4.8,2.2,0.6,7.2,0.065,-2.1,-0.1,FALSE,Other,0
+Luke Harangody,2010,52,BOS,,F,6,8,245,22,3,Sr,United States,2,Notre Dame,70,871,253,196,36,0.376,0.241,0.737,12.4,3.6,2.8,0.5,0.9,0.048,-3.5,-0.3,FALSE,ACC,0
+Luke Kennard,2017,12,DET,,SG,6,5,206,20,3,So,United States,1,Duke,201,4544,1897,553,418,0.446,0.411,0.863,22.6,9.4,2.8,2.1,8.5,0.09,-0.8,1.4,FALSE,ACC,1
+Maarty Leunen,2008,54,HOU,HOU to LACLAC to DALDAL to HOUHOU to IND,F,6,9,220,22,0,Sr,United States,2,Oregon,,,,,,,,,,,,,,,,,FALSE,Pac-12,0
+Magnum Rolle,2010,51,OKC,OKC to IND,F,6,11,235,24,1,Sr,Bahamas,2,Louisiana Tech,,,,,,,,,,,,,,,,,FALSE,Other,0
+Malachi Richardson,2016,22,CHA,CHA to SAC,SF,6,6,205,20,3,Fr,United States,1,Syracuse,70,625,198,70,24,0.358,0.301,0.783,8.9,2.8,1,0.3,-0.1,-0.009,-6.1,-0.7,FALSE,ACC,0
+Malcolm Brogdon,2016,36,MIL,,SG,6,5,229,23,4,Sr,United States,2,Virginia,281,8341,4148,1108,1299,0.468,0.388,0.891,29.7,14.8,3.9,4.6,20.6,0.118,0.8,5.9,FALSE,ACC,1
+Malcolm Lee,2011,43,CHI,CHI to MIN,G,6,5,200,21,3,Jr,United States,2,UCLA,36,534,140,65,51,0.382,0.294,0.703,14.8,3.9,1.8,1.4,0.4,0.04,-2.5,-0.1,FALSE,Pac-12,0
+Malik Beasley,2016,19,DEN,,SG,6,4,187,19,4,Fr,United States,1,Florida State,253,4929,2488,589,295,0.45,0.393,0.814,19.5,9.8,2.3,1.2,7.8,0.076,-0.9,1.4,FALSE,ACC,1
+Malik Hairston,2008,48,PHX,PHX to SAN,SF,6,6,220,21,2,Sr,United States,2,Oregon,62,472,149,77,29,0.512,0.167,0.514,7.6,2.4,1.2,0.5,0.8,0.086,-2,0,FALSE,Pac-12,0
+Malik Monk,2017,11,CHA,,SG,6,3,200,19,3,Fr,United States,1,Kentucky,219,3878,1984,436,372,0.403,0.337,0.839,17.7,9.1,2,1.7,1.7,0.021,-2.8,-0.8,FALSE,SEC,1
+Marcus D. Williams,2006,22,NJN,,G,6,3,205,20,4,Jr,United States,1,UConn,203,3095,1128,361,574,0.386,0.321,0.767,15.2,5.6,1.8,2.8,0,-0.001,-3.3,-1,FALSE,Big East,0
+Marcus Denmon,2012,59,SAN,,G,6,3,185,22,0,Sr,United States,2,Missouri,,,,,,,,,,,,,,,,,FALSE,SEC,0
+Marcus E. Williams,2007,33,SAN,,F,6,7,207,20,2,So,United States,2,Arizona,13,39,14,12,3,0.318,,,3,1.1,0.9,0.2,-0.1,-0.084,-5.4,0,FALSE,Pac-12,0
+Marcus Morris,2011,14,HOU,,F,6,9,235,21,9,Jr,United States,1,Kansas,640,17200,7718,2952,950,0.432,0.372,0.763,26.9,12.1,4.6,1.5,32,0.089,-0.6,6.2,FALSE,Big-12,1
+Marcus Paige,2016,55,BRK,BRK to UTH,G,6,0,164,22,1,Sr,United States,2,UNC,5,28,12,4,3,0.286,0.25,1,5.6,2.4,0.8,0.6,0,-0.006,-8.8,0,FALSE,ACC,0
+Marcus Smart,2014,6,BOS,,PG,6,3,220,20,6,So,United States,1,Oklahoma State,424,12316,4240,1493,1752,0.375,0.319,0.776,29,10,3.5,4.1,22.3,0.087,-0.2,5.4,FALSE,Big-12,1
+Marcus Thornton,2009,43,MIA,MIA to NOP,SG,6,4,205,22,8,Sr,United States,2,LSU,483,11299,5750,1348,677,0.425,0.358,0.83,23.4,11.9,2.8,1.4,20,0.085,0.2,6.2,FALSE,SEC,0
+Marcus Thornton,2015,45,BOS,,G,6,4,190,22,1,Sr,United States,2,William & Mary,,,,,,,,,,,,,,,,,FALSE,Other,0
+Mardy Collins,2006,29,NYK,,G,6,6,220,21,4,Sr,United States,1,Temple,189,2771,742,336,327,0.38,0.299,0.599,14.7,3.9,1.8,1.7,-1.6,-0.027,-4.4,-1.7,FALSE,Other,0
+Marial Shayok,2019,54,PHL,,G,6,5,196,23,1,Sr,Canada,2,Iowa State,4,28,11,7,1,0.25,0.333,0.75,7,2.8,1.8,0.3,-0.1,-0.13,-13,-0.1,FALSE,Big-12,0
+Mario Chalmers,2008,34,MIN,MIN to MIA,G,6,2,190,22,9,Jr,United States,2,Kansas,646,17245,5743,1585,2412,0.417,0.351,0.793,26.7,8.9,2.5,3.7,32.3,0.09,-0.6,5.9,FALSE,Big-12,0
+Markel Brown,2014,44,MIN,MIN to BRK,SG,6,3,190,22,3,Sr,United States,2,Oklahoma State,113,1794,584,234,132,0.38,0.295,0.781,15.9,5.2,2.1,1.2,1.1,0.029,-2.9,-0.4,FALSE,Big-12,0
+Markelle Fultz,2017,1,PHL,,PG,6,4,209,19,3,Fr,United States,1,Washington,113,2891,1228,376,524,0.447,0.265,0.695,25.6,10.9,3.3,4.6,3.2,0.053,-2.2,-0.2,FALSE,Pac-12,1
+Markieff Morris,2011,13,PHX,,PF,6,10,245,21,9,Jr,United States,1,Kansas,674,16890,7500,3559,1096,0.447,0.344,0.776,25.1,11.1,5.3,1.6,26.5,0.075,-1.3,2.9,FALSE,Big-12,1
+Marquese Chriss,2016,8,SAC,SAC to PHX,PF,6,9,240,18,4,Fr,United States,1,Washington,258,4992,2052,1263,281,0.455,0.289,0.667,19.3,8,4.9,1.1,5.7,0.055,-2.3,-0.4,FALSE,Pac-12,1
+Marquis Teague,2012,29,CHI,,PG,6,2,180,19,3,Fr,United States,1,Kentucky,91,909,217,90,134,0.343,0.222,0.661,10,2.4,1,1.5,-0.9,-0.045,-6.5,-1,FALSE,SEC,0
+Marreese Speights,2008,16,PHL,,C,6,10,255,20,10,So,United States,1,Florida,705,10640,5592,2875,461,0.459,0.356,0.797,15.1,7.9,4.1,0.7,25.8,0.116,-2.2,-0.6,FALSE,SEC,0
+MarShon Brooks,2011,25,BOS,BOS to NJN,GF,6,5,200,22,5,Sr,United States,1,Providence,200,3456,1592,424,282,0.447,0.345,0.751,17.3,8,2.1,1.4,3.3,0.046,-1.6,0.4,FALSE,Big East,0
+Marvin Bagley III,2018,2,SAC,,PF,6,11,240,19,2,Fr,United States,1,Duke,112,2852,1621,843,107,0.499,0.318,0.664,25.5,14.5,7.5,1,5,0.084,-2.1,-0.1,FALSE,ACC,1
+Mason Plumlee,2013,22,BRK,,PF,6,11,245,23,7,Sr,United States,1,Duke,572,12582,4837,3674,1328,0.577,0.053,0.569,22,8.5,6.4,2.3,38,0.145,1.4,10.7,FALSE,ACC,1
+Matisse Thybulle,2019,20,BOS,BOS to PHL,SF,6,5,200,22,1,Sr,United States,1,Washington,105,2037,456,177,120,0.421,0.344,0.6,19.4,4.3,1.7,1.1,4.2,0.098,0.9,1.5,FALSE,Pac-12,1
+Maurice Ager,2006,28,DAL,,F-G,6,5,202,22,4,Sr,United States,1,Michigan State,82,505,169,46,19,0.339,0.25,0.566,6.2,2.1,0.6,0.2,-0.9,-0.089,-9.4,-0.9,FALSE,Big-10,0
+Maurice Harkless,2012,15,PHL,,F,6,9,220,19,8,Fr,United States / Puerto Rico,1,St. John's,548,12508,3863,2010,512,0.478,0.326,0.61,22.8,7,3.7,0.9,22,0.084,-0.5,4.7,FALSE,Big East,1
+"Melvin Frazier, Jr.",2018,35,ORL,,SF,6,6,200,21,2,Jr,United States,2,Tulane,29,170,55,15,4,0.4,0.364,0.375,5.9,1.9,0.5,0.1,0,0.008,-5.4,-0.2,FALSE,Other,0
+Meyers Leonard,2012,11,POR,,C,7,1,255,20,8,So,United States,1,Illinois,447,7158,2502,1737,395,0.482,0.39,0.809,16,5.6,3.9,0.9,15.5,0.104,-1.4,1,FALSE,Big-10,1
+Mfiondu Kabengele,2019,27,BRK,BRK to LAC,SF,6,10,250,21,1,So,Canada,1,Florida State,35,158,69,25,7,0.359,0.342,0.909,4.5,2,0.7,0.2,0.1,0.022,-5.6,-0.1,FALSE,ACC,1
+Michael Beasley,2008,2,MIA,,PF,6,9,235,19,11,Fr,United States,1,Kansas State,609,13903,7568,2861,788,0.465,0.349,0.759,22.8,12.4,4.7,1.3,15.6,0.054,-1.7,0.9,FALSE,Big-12,0
+Michael Carter-Williams,2013,11,PHL,,PG,6,6,195,21,7,So,United States,1,Syracuse,381,9654,3940,1669,1663,0.403,0.255,0.713,25.3,10.3,4.4,4.4,7.1,0.035,-1.1,2.1,FALSE,ACC,1
+Michael Kidd-Gilchrist,2012,2,CHA,,SF,6,7,232,18,8,Fr,United States,1,Kentucky,446,10978,3750,2420,515,0.474,0.272,0.715,24.6,8.4,5.4,1.2,21,0.092,-1.8,0.6,FALSE,SEC,0
+Michael Patrick Gbinije,2016,49,DET,,SF,6,6,200,24,1,Sr,United States / Nigeria,2,Syracuse,9,32,4,3,2,0.1,0,1,3.6,0.4,0.3,0.2,-0.1,-0.136,-12.1,-0.1,FALSE,ACC,0
+"Michael Porter, Jr.",2018,14,DEN,,PF,6,10,218,19,2,Fr,United States,1,Missouri,87,1842,1020,495,74,0.516,0.418,0.794,21.2,11.7,5.7,0.9,6,0.156,1.5,1.6,FALSE,SEC,0
+Mikal Bridges,2018,10,PHL,PHL to PHX,SG,6,7,210,21,2,Jr,United States,1,Villanova,196,5789,1913,757,399,0.486,0.366,0.827,29.5,9.8,3.9,2,12.8,0.106,0.4,3.6,FALSE,Big East,1
+Mike Conley,2007,4,MEM,,PG,6,1,175,19,13,Fr,United States,1,Ohio State,868,28043,12949,2591,4900,0.44,0.378,0.819,32.3,14.9,3,5.6,77.7,0.133,2.4,30.9,TRUE,Big-10,1
+Mike Muscala,2013,44,DAL,DAL to ATL,FC,6,11,240,21,7,Sr,United States,2,Bucknell,389,6102,2322,1242,356,0.458,0.368,0.847,15.7,6,3.2,0.9,14.6,0.115,-0.3,2.7,FALSE,Other,1
+Mike Scott,2012,43,ATL,,PF,6,8,237,23,8,Sr,United States,2,Virginia,528,8734,3618,1671,471,0.457,0.364,0.756,16.5,6.9,3.2,0.9,16.3,0.089,-1.7,0.7,FALSE,ACC,1
+Miles Bridges,2018,12,LAC,LAC to CHA,SF,6,7,225,20,2,So,United States,1,Michigan State,186,4768,1842,916,293,0.452,0.339,0.81,25.6,9.9,4.9,1.6,6.4,0.064,-1.6,0.5,FALSE,Big-10,1
+Miles Plumlee,2012,26,IND,,C,6,11,249,23,7,Sr,United States,1,Duke,346,5658,1697,1562,178,0.542,,0.543,16.4,4.9,4.5,0.5,10.6,0.09,-1.9,0.2,FALSE,ACC,0
+Mitch McGary,2014,21,OKC,,C,6,10,255,22,2,So,United States,1,Michigan,52,557,227,183,17,0.527,0,0.58,10.7,4.4,3.5,0.3,1.3,0.108,-2.6,-0.1,FALSE,Big-10,0
+Mitchell Robinson,2018,36,NYK,,C,7,1,240,20,2,Fr,United States,2,,155,3566,1307,1083,88,0.706,,0.565,23,8.4,7,0.6,15.9,0.214,2.3,3.9,FALSE,Other,1
+Miye Oni,2019,58,GOS,GOS to UTH,SF,6,5,206,22,1,Jr,United States,2,Yale,38,329,86,64,10,0.378,0.389,0.818,8.7,2.3,1.7,0.3,0.6,0.082,-3.1,-0.1,FALSE,Other,1
+Moe Wagner,2018,25,LAL,,PF,6,11,245,21,2,Jr,Germany,1,Michigan,112,1633,767,376,109,0.495,0.299,0.806,14.6,6.8,3.4,1,2.7,0.081,-2.4,-0.2,FALSE,Big-10,0
+Mohamed Bamba,2018,6,ORL,,C,7,0,250,20,2,Fr,United States,1,Texas,131,1868,725,621,87,0.472,0.321,0.618,14.3,5.5,4.7,0.7,4.7,0.12,-0.5,0.7,FALSE,Big-12,0
+Monte Morris,2017,51,DEN,,G,6,2,183,21,3,Sr,United States / Nigeria,2,Iowa State,194,4611,1897,411,682,0.477,0.387,0.809,23.8,9.8,2.1,3.5,12.4,0.129,0.3,2.7,FALSE,Big-12,1
+Montrezl Harrell,2015,32,HOU,,F,6,8,240,21,5,Jr,United States,2,Louisville,361,7709,4670,1855,472,0.618,0.085,0.648,21.4,12.9,5.1,1.3,31.5,0.196,2.7,9.1,FALSE,ACC,1
+Morris Almond,2007,25,UTH,,GF,6,6,220,22,3,Sr,United States,1,Rice University,38,361,119,46,12,0.381,0.292,0.743,9.5,3.1,1.2,0.3,0,0.005,-6.1,-0.4,FALSE,Other,0
+Myles Turner,2015,11,IND,,FC,6,11,250,19,5,Fr,United States,1,Texas,381,10892,4866,2529,460,0.488,0.351,0.77,28.6,12.8,6.6,1.2,29.6,0.131,0.6,7.2,FALSE,Big-12,1
+Nassir Little,2019,25,POR,,SF,6,6,220,19,1,Fr,United States,1,UNC,75,939,315,177,34,0.444,0.31,0.734,12.5,4.2,2.4,0.5,1.4,0.07,-3,-0.2,FALSE,ACC,1
+Nate Wolters,2013,38,WAS,WAS to PHLPHL to MIL,PG,6,4,190,22,3,Sr,United States,2,South Dakota State,84,1575,461,185,209,0.423,0.261,0.635,18.8,5.5,2.2,2.5,0.9,0.028,-2.6,-0.2,FALSE,Other,0
+Nerlens Noel,2013,6,NOP,NOP to PHL,FC,6,11,220,19,7,Fr,United States,1,Kentucky,399,8831,3077,2468,444,0.547,0.222,0.648,22.1,7.7,6.2,1.1,24.1,0.131,0.9,6.4,FALSE,SEC,1
+Nick Calathes,2009,45,MIN,MIN to DALDAL to MEM,PG,6,6,213,20,2,So,United States / Greece,2,Florida,129,2011,590,243,353,0.441,0.288,0.581,15.6,4.6,1.9,2.7,2.6,0.063,-0.5,0.8,FALSE,SEC,0
+Nick Fazekas,2007,34,DAL,,F,6,11,240,22,1,Sr,United States / Japan,2,Nevada,26,269,107,89,11,0.561,0,0.682,10.3,4.1,3.4,0.4,0.8,0.148,0.5,0.2,FALSE,Other,0
+Nick Johnson,2014,42,HOU,,SG,6,3,200,21,1,Jr,United States,2,Arizona,28,262,74,39,11,0.347,0.238,0.68,9.4,2.6,1.4,0.4,-0.1,-0.02,-6.5,-0.3,FALSE,Pac-12,0
+Nick Young,2007,16,WAS,,SG,6,7,210,22,12,Jr,United States,1,USC,720,16419,8194,1427,687,0.418,0.376,0.836,22.8,11.4,2,1,18.6,0.054,-2.2,-0.8,FALSE,Pac-12,0
+Nickeil Alexander-Walker,2019,17,BRK,BRK to ATLATL to NOP,SG,6,5,205,20,1,So,Canada,1,Virginia Tech,81,1214,570,174,152,0.392,0.335,0.75,15,7,2.1,1.9,0.2,0.009,-2.9,-0.3,FALSE,ACC,1
+Nicolas Claxton,2019,31,BRK,,C,6,11,215,20,1,So,United States / U.S. Virgin Islands,2,Georgia,26,386,168,87,27,0.609,0.111,0.563,14.8,6.5,3.3,1,1.2,0.154,1.6,0.3,FALSE,SEC,1
+Nigel Williams-Goss,2017,55,UTH,,SG,6,3,190,22,1,Jr,United States,2,Gonzaga,10,50,14,6,6,0.313,0.286,1,5,1.4,0.6,0.6,0,0.017,-3.9,0,FALSE,Other,0
+Nik Stauskas,2014,8,SAC,,SG,6,6,205,20,5,So,Canada,1,Michigan,335,6662,2272,688,513,0.389,0.353,0.814,19.9,6.8,2.1,1.5,3.8,0.028,-3,-1.7,FALSE,Big-10,0
+Nikola Vucevic,2011,16,PHL,,PF,7,0,260,20,9,Jr,Switzerland / Montenegro,1,USC,640,19536,10661,6606,1693,0.498,0.353,0.753,30.5,16.7,10.3,2.6,52.4,0.129,2.3,21,TRUE,Pac-12,0
+Noah Vonleh,2014,9,CHA,,FC,6,10,257,18,6,Fr,United States,1,Indiana,339,5683,1660,1742,257,0.459,0.308,0.691,16.8,4.9,5.1,0.8,9.2,0.078,-2.4,-0.6,FALSE,Big-10,1
+Nolan Smith,2011,21,POR,,G,6,2,190,22,2,Sr,United States,1,Duke,84,829,277,83,97,0.371,0.26,0.714,9.9,3.3,1,1.2,-0.8,-0.047,-6,-0.8,FALSE,ACC,0
+Norman Powell,2015,46,MIL,MIL to TOR,SG,6,4,215,22,5,Sr,United States,2,UCLA,347,6977,3422,850,471,0.465,0.38,0.831,20.1,9.9,2.4,1.4,15,0.103,0,3.4,FALSE,Pac-12,1
+Norris Cole,2011,28,CHI,CHI to MINMIN to MIA,G,6,2,175,22,6,Sr,United States,1,Cleveland State University,360,8018,2506,702,981,0.407,0.324,0.743,22.3,7,2,2.7,3,0.018,-4.1,-4.1,FALSE,Other,0
+O.J. Mayo,2008,3,MIN,MIN to MEM,SG,6,5,210,20,8,Fr,United States,1,USC,547,16919,7574,1706,1607,0.429,0.373,0.82,30.9,13.8,3.1,2.9,21.8,0.062,-0.9,4.7,FALSE,Pac-12,0
+Ogugua Anunoby,2017,23,TOR,,SF,6,8,232,19,3,So,England / United States,1,Indiana,235,5734,1989,888,251,0.481,0.371,0.669,24.4,8.5,3.8,1.1,12.4,0.104,-0.2,2.6,FALSE,Big-10,0
+Olivier Hanlan,2015,42,UTH,UTH to SAN,G,6,4,190,22,0,Jr,Canada,2,Boston College,,,,,,,,,,,,,,,,,FALSE,ACC,0
+Omari Spellman,2018,30,ATL,,PF,6,9,245,20,2,Fr,United States,1,Villanova,95,1691,642,413,94,0.417,0.366,0.766,17.8,6.8,4.3,1,2.4,0.068,-1.5,0.2,FALSE,Big East,0
+Orlando Johnson,2012,36,SAC,SAC to IND,GF,6,5,220,23,3,Sr,United States,2,UC Santa Barbara,103,1112,329,180,69,0.358,0.311,0.727,10.8,3.2,1.7,0.7,1.4,0.059,-2.4,-0.1,FALSE,Other,0
+Otto Porter,2013,3,WAS,,SF,6,8,198,20,7,So,United States,1,Georgetown,436,11582,4789,2164,665,0.48,0.405,0.792,26.6,11,5,1.5,31.1,0.129,1.6,10.6,FALSE,Other,1
+P.J. Tucker,2006,35,TOR,,SF,6,6,245,21,9,Jr,United States,2,Texas,687,20164,4945,3950,984,0.42,0.358,0.749,29.4,7.2,5.7,1.4,34.7,0.083,-0.8,5.9,FALSE,Big-12,1
+P.J. Washington,2019,12,CHA,,PF,6,7,236,20,1,So,United States,1,Kentucky,95,2845,1169,547,226,0.455,0.387,0.712,29.9,12.3,5.8,2.4,3.7,0.063,-1.2,0.6,FALSE,SEC,1
+Pascal Siakam,2016,27,TOR,,F,6,9,230,22,4,So,Cameroon,1,New Mexico State,309,8360,4194,1774,788,0.491,0.328,0.774,27.1,13.6,5.7,2.6,23.4,0.134,1.2,6.8,TRUE,Other,1
+Pat Connaughton,2015,41,BRK,BRK to POR,SF,6,4,209,22,5,Sr,United States,2,Notre Dame,321,5286,1605,953,408,0.444,0.352,0.786,16.5,5,3,1.3,12.3,0.112,-0.3,2.3,FALSE,ACC,1
+Pat Ewing,2008,43,SAC,,F,6,8,237,24,1,Sr,United States / Jamaica,2,Georgetown,7,19,3,2,2,0,0,0.75,2.7,0.4,0.3,0.3,-0.1,-0.158,-9.1,0,TRUE,Other,0
+Patrick McCaw,2016,38,MIL,MIL to GOS,G,6,7,185,20,4,So,United States,2,UNLV,198,3369,760,319,270,0.42,0.305,0.785,17,3.8,1.6,1.4,4.4,0.063,-2.7,-0.6,FALSE,Other,1
+Patrick O'Bryant,2006,9,GOS,,C,7,0,250,20,4,So,United States,1,Bradley,90,524,186,127,25,0.494,0,0.583,5.8,2.1,1.4,0.3,0.5,0.046,-4.6,-0.3,FALSE,Other,0
+Patrick Patterson,2010,14,HOU,,F,6,9,230,21,10,Jr,United States,1,Kentucky,695,14519,4650,2753,714,0.448,0.369,0.754,20.9,6.7,4,1,30.9,0.102,0,7.2,FALSE,SEC,1
+Patty Mills,2009,55,POR,,G,6,0,180,20,11,So,Australia,2,Saint Mary's,709,13952,6356,1184,1646,0.431,0.39,0.856,19.7,9,1.7,2.3,32.3,0.111,0.5,9,FALSE,Other,1
+Paul Davis,2006,34,LAC,,FC,6,11,270,21,4,Sr,United States,2,Michigan State,82,702,217,158,32,0.402,0,0.732,8.6,2.6,1.9,0.4,0.5,0.035,-4.2,-0.4,FALSE,Big-10,0
+Paul George,2010,10,IND,,GF,6,9,220,20,10,So,United States,1,Fresno State,684,22909,13752,4357,2358,0.436,0.385,0.847,33.5,20.1,6.4,3.4,73.6,0.154,4.1,35.4,TRUE,Other,1
+Paul Millsap,2006,47,UTH,,FC,6,7,257,21,14,Jr,United States,2,Louisiana Tech,1028,29719,14230,7459,2303,0.491,0.346,0.736,28.9,13.8,7.3,2.2,94,0.152,2,29.6,TRUE,Other,1
+Perry Jones,2012,28,OKC,,PF,6,11,235,20,3,So,United States,1,Baylor,143,1675,488,252,54,0.42,0.293,0.66,11.7,3.4,1.8,0.4,1.7,0.048,-3.5,-0.6,FALSE,Big-12,0
+Peyton Siva,2013,56,DET,,PG,6,0,185,22,1,Sr,United States,2,Louisville,24,224,54,14,34,0.316,0.28,0.733,9.3,2.3,0.6,1.4,-0.2,-0.032,-6.4,-0.2,FALSE,ACC,0
+Pierre Jackson,2013,42,PHL,PHL to NOPNOP to PHL,PG,5,10,180,21,1,Sr,United States,2,Baylor,8,84,35,9,19,0.333,0.273,0.857,10.5,4.4,1.1,2.4,0,0.021,-4.4,-0.1,FALSE,Big-12,0
+Quincy Acy,2012,37,TOR,,F,6,7,240,21,7,Sr,United States,2,Baylor,337,5392,1642,1179,217,0.444,0.35,0.759,16,4.9,3.5,0.6,8.7,0.078,-2,-0.1,FALSE,Big-12,0
+Quincy Douby,2006,19,SAC,,G,6,3,175,22,4,Jr,United States,1,Rutgers University,143,1535,588,152,93,0.389,0.312,0.884,10.7,4.1,1.1,0.7,0,0,-3.5,-0.6,FALSE,Big-10,0
+Quincy Miller,2012,38,DEN,,PF,6,11,210,19,3,Fr,United States,2,Baylor,69,934,295,169,37,0.35,0.292,0.706,13.5,4.3,2.4,0.5,-0.1,-0.003,-3.9,-0.5,FALSE,Big-12,0
+Quincy Pondexter,2010,26,OKC,OKC to NOP,F,6,7,230,22,9,Sr,United States,1,Washington,355,5530,1609,640,263,0.423,0.356,0.746,15.6,4.5,1.8,0.7,9.7,0.084,-1.8,0.3,FALSE,Pac-12,0
+Quinndary Weatherspoon,2019,49,SAN,,SG,6,4,205,22,1,Sr,United States,2,Mississippi State,19,117,18,10,15,0.292,0.167,0.75,6.2,0.9,0.5,0.8,-0.2,-0.099,-8.8,-0.2,FALSE,SEC,1
+R.J. Barrett,2019,3,NYK,,SG,6,7,202,19,1,Fr,Canada,1,Duke,99,3153,1545,541,270,0.425,0.331,0.661,31.8,15.6,5.5,2.7,1.7,0.026,-3.1,-0.9,FALSE,ACC,0
+R.J. Hunter,2015,28,BOS,,G,6,6,190,21,4,Jr,United States,1,Georgia State University,45,395,133,46,19,0.371,0.295,0.818,8.8,3,1,0.4,0.4,0.051,-2,0,FALSE,Other,0
+Rajon Rondo,2006,21,PHX,PHX to BOS,PG,6,1,180,20,14,So,United States,1,Kentucky,899,27494,9013,4183,7309,0.458,0.319,0.606,30.6,10,4.7,8.1,60,0.105,1.3,22.8,TRUE,SEC,1
+Rakeem Christmas,2015,36,MIN,MIN to CLECLE to IND,PF,6,9,255,23,2,Sr,United States,2,Syracuse,30,225,63,57,4,0.467,,0.724,7.5,2.1,1.9,0.1,0.5,0.105,-4.7,-0.2,FALSE,ACC,0
+Ramon Sessions,2007,56,MIL,,G,6,3,190,21,11,Jr,United States,2,Nevada,691,16119,7141,1840,2807,0.434,0.316,0.791,23.3,10.3,2.7,4.1,28.8,0.086,-0.7,5.2,FALSE,Other,0
+Randy Foye,2006,7,BOS,BOS to PORPOR to MIN,G,6,4,218,22,11,Sr,United States,1,Villanova,752,19279,7729,1686,2112,0.401,0.366,0.852,25.6,10.3,2.2,2.8,23.5,0.058,-1.2,3.8,FALSE,Big East,0
+Rashad Vaughn,2015,17,MIL,,SF,6,6,210,18,3,Fr,United States,1,UNLV,139,1671,423,158,75,0.337,0.313,0.692,12,3,1.1,0.5,-0.6,-0.017,-4.7,-1.2,FALSE,Other,0
+Ray McCallum,2013,36,SAC,,PG,6,3,191,22,4,Jr,United States,2,Detroit Mercy,154,2808,920,306,368,0.408,0.335,0.711,18.2,6,2,2.4,2.1,0.035,-2.6,-0.4,FALSE,Other,0
+Raymond Spalding,2018,56,PHL,PHL to DAL,PF,6,10,215,21,2,Jr,United States,2,Louisville,16,167,58,52,5,0.529,0,0.286,10.4,3.6,3.3,0.3,0.1,0.026,-5.7,-0.2,FALSE,ACC,0
+Reggie Bullock,2013,25,LAC,,SG,6,7,205,22,7,Jr,United States,1,UNC,339,6976,2442,761,392,0.428,0.387,0.829,20.6,7.2,2.2,1.2,12,0.083,-0.9,1.9,FALSE,ACC,1
+Reggie Jackson,2011,24,OKC,,G,6,3,208,21,9,Jr,Italy / United States,1,Boston College,601,14942,7557,1766,2571,0.429,0.341,0.854,24.9,12.6,2.9,4.3,31.1,0.1,0.3,8.8,FALSE,ACC,1
+Renaldo Balkman,2006,20,NYK,,F,6,8,208,21,6,Jr,United States / Puerto Rico,1,South Carolina,221,3064,894,769,132,0.51,0.172,0.542,13.9,4,3.5,0.6,7.2,0.113,0.1,1.6,FALSE,SEC,0
+Reyshawn Terry,2007,44,ORL,ORL to DAL,PF,6,8,235,23,0,Sr,United States,2,UNC,,,,,,,,,,,,,,,,,FALSE,ACC,0
+Richard Hendrix,2008,49,GOS,,FC,6,9,264,21,1,Jr,United States / North Macedonia,2,Alabama,,,,,,,,,,,,,,,,,FALSE,SEC,0
+Richaun Holmes,2015,37,PHL,,F,6,10,240,21,5,Sr,United States,2,Bowling Green,308,6209,2795,1672,322,0.594,0.258,0.738,20.2,9.1,5.4,1,20.9,0.162,0.5,3.9,FALSE,Other,1
+Ricky Ledo,2013,43,MIL,MIL to PHLPHL to DAL,GF,6,7,197,20,2,Fr,United States,2,Providence,28,277,109,38,21,0.336,0.371,0.769,9.9,3.9,1.4,0.8,-0.6,-0.096,-7.6,-0.4,FALSE,Big East,0
+Robbie Hummel,2012,58,MIN,,F,6,8,220,23,2,Sr,United States,2,Purdue,98,1397,379,266,50,0.418,0.343,0.867,14.3,3.9,2.7,0.5,1.9,0.066,-3.1,-0.4,FALSE,Big-10,0
+Robert Dozier,2009,60,MIA,,PF,6,9,215,23,0,Sr,United States,2,Memphis,,,,,,,,,,,,,,,,,FALSE,Other,0
+Robert Sacre,2012,60,LAL,,C,7,0,270,23,4,Sr,Canada / United States,2,Gonzaga,189,2745,787,593,126,0.436,0,0.671,14.5,4.2,3.1,0.7,2.4,0.042,-4,-1.4,FALSE,Other,0
+Robert Vaden,2009,54,CHA,CHA to OKC,SG,6,5,220,24,1,Sr,United States,2,UAB,,,,,,,,,,,,,,,,,FALSE,Other,0
+Robert Williams,2018,27,BOS,,PF,6,8,237,20,2,So,United States,1,Texas A&M,96,1260,493,434,78,0.723,0,0.634,13.1,5.1,4.5,0.8,6.4,0.242,4.9,2.2,FALSE,SEC,1
+Robin Lopez,2008,15,PHX,,FC,7,0,281,20,12,So,United States,1,Stanford,873,19439,7638,4378,723,0.53,0.298,0.747,22.3,8.7,5,0.8,46.3,0.114,-1.1,4.5,FALSE,Pac-12,1
+Rodney Carney,2006,16,CHI,CHI to PHL,F,6,7,205,22,5,Sr,United States,1,Memphis,299,4600,1778,588,132,0.422,0.338,0.704,15.4,5.9,2,0.4,6.2,0.064,-1.6,0.5,FALSE,Other,0
+Rodney Hood,2014,23,UTH,,F,6,8,205,21,6,So,United States,1,Duke,378,10032,4424,1050,690,0.423,0.369,0.837,26.5,11.7,2.8,1.8,16.5,0.079,-1,2.4,FALSE,ACC,1
+Rodney Stuckey,2007,15,DET,,G,6,5,205,21,10,So,United States,1,Eastern Washington,651,17890,8185,1912,2333,0.423,0.3,0.824,27.5,12.6,2.9,3.6,28.7,0.077,-0.9,4.9,FALSE,Other,0
+Romeo Langford,2019,14,BOS,,SG,6,4,216,19,1,Fr,United States,1,Indiana,32,370,79,41,13,0.35,0.185,0.72,11.6,2.5,1.3,0.4,0.2,0.025,-4.9,-0.3,FALSE,Big-10,0
+Romero Osby,2013,51,ORL,,PF,6,8,240,23,0,Sr,United States,2,Oklahoma,,,,,,,,,,,,,,,,,FALSE,Big-12,0
+Rondae Hollis-Jefferson,2015,23,POR,POR to BRK,SF,6,6,217,20,5,So,United States,1,Arizona,294,6652,2733,1658,566,0.448,0.213,0.738,22.6,9.3,5.6,1.9,12.5,0.09,-0.7,2.2,FALSE,Pac-12,0
+Ronnie Brewer,2006,14,UTH,,GF,6,7,235,21,8,Jr,United States,1,Arkansas,502,11539,3940,1427,828,0.49,0.254,0.675,23,7.8,2.8,1.6,30.4,0.127,1.6,10.6,FALSE,SEC,0
+Roy Hibbert,2008,17,TOR,TOR to IND,C,7,2,270,21,9,Sr,United States,1,Georgetown,662,16389,6611,4173,885,0.465,0.25,0.755,24.8,10,6.3,1.3,35.9,0.105,-1.1,3.5,TRUE,Other,0
+Royce White,2012,16,HOU,,PF,6,8,268,21,2,So,United States,1,Iowa State,3,9,0,0,0,0,,,3,0,0,0,0,-0.121,-16.9,0,FALSE,Big-12,0
+Rudy Gay,2006,8,HOU,HOU to MEM,SF,6,8,240,19,14,So,United States,1,UConn,979,32062,16549,5738,2127,0.455,0.349,0.799,32.7,16.9,5.9,2.2,58,0.087,0.7,22.2,FALSE,Big East,1
+Rui Hachimura,2019,9,WAS,,F,6,8,230,21,1,Jr,Japan,1,Gonzaga,82,2496,1106,491,140,0.471,0.315,0.806,30.4,13.5,6,1.7,3.2,0.062,-3,-0.6,FALSE,Other,1
+Russ Smith,2014,47,PHL,PHL to NOP,G,6,0,165,23,2,Sr,United States,2,Louisville,27,131,53,15,19,0.319,0.188,0.769,4.9,2,0.6,0.7,-0.2,-0.068,-5.1,-0.1,FALSE,ACC,0
+Russell Westbrook,2008,4,SEA,,G,6,3,200,19,12,So,United States,1,UCLA,912,31564,21159,6541,7646,0.437,0.305,0.793,34.6,23.2,7.2,8.4,101.8,0.155,4.7,53.1,TRUE,Pac-12,1
+Ryan Anderson,2008,21,NJN,,PF,6,10,240,20,12,So,United States,1,California,649,16769,8001,3413,586,0.422,0.38,0.854,25.8,12.3,5.3,0.9,46.7,0.134,1,12.8,FALSE,Pac-12,0
+Ryan Hollins,2006,50,CHA,,C,7,0,230,21,10,Sr,United States,2,UCLA,518,6134,1913,1140,151,0.584,0,0.649,11.8,3.7,2.2,0.3,10.4,0.081,-4.1,-3.2,FALSE,Pac-12,0
+Ryan Kelly,2013,48,LAL,,PF,6,11,230,22,4,Sr,United States,2,Duke,163,3125,981,504,215,0.378,0.316,0.797,19.2,6,3.1,1.3,3,0.046,-2.6,-0.5,FALSE,ACC,0
+Ryan Reid,2010,57,IND,IND to OKC,PF,6,8,235,23,1,Sr,United States,2,Florida State,5,17,8,2,0,0.8,,,3.4,1.6,0.4,0,0.1,0.142,-2,0,FALSE,ACC,0
+Sam Dekker,2015,18,HOU,,SF,6,9,230,21,4,Jr,United States,1,Wisconsin,200,3096,1094,607,160,0.478,0.288,0.606,15.5,5.5,3,0.8,5.4,0.083,-1.4,0.5,FALSE,Big-10,0
+Sam Young,2009,36,MEM,,F,6,6,225,24,4,Sr,United States / Lebanon,2,Pitt,249,3966,1436,573,180,0.442,0.28,0.742,15.9,5.8,2.3,0.7,5.2,0.063,-2.1,-0.1,FALSE,ACC,0
+Sammy Mejia,2007,57,DET,,SF,6,6,190,24,0,Sr,United States,2,DePaul,,,,,,,,,,,,,,,,,FALSE,Big East,0
+Sasha Kaun,2008,56,SEA,SEA to CLE,C,6,11,250,23,1,Sr,Russia,2,Kansas,25,95,23,26,3,0.529,,0.455,3.8,0.9,1,0.1,0.2,0.096,-2.8,0,FALSE,Big-12,0
+Sean Singletary,2008,42,SAC,,PG,6,0,185,22,1,Sr,United States,2,Virginia,37,303,90,35,29,0.365,0.4,0.857,8.2,2.4,0.9,0.8,0,0.006,-5.1,-0.2,FALSE,ACC,0
+Sean Williams,2007,17,NJN,,C,6,10,235,20,4,Jr,United States,1,Boston College,137,1978,581,472,47,0.511,0,0.624,14.4,4.2,3.4,0.3,3,0.073,-3.1,-0.6,FALSE,ACC,0
+Semaj Christon,2014,55,MIA,MIA to CHACHA to OKC,PG,6,3,190,21,1,So,United States,2,Xavier,64,973,183,87,130,0.345,0.19,0.548,15.2,2.9,1.4,2,0.1,0.006,-5.1,-0.8,FALSE,Big East,0
+Semi Ojeleye,2017,37,BOS,,SF,6,6,240,22,3,Jr,United States,2,SMU,236,3482,821,500,110,0.394,0.351,0.697,14.8,3.5,2.1,0.5,4.7,0.065,-3.2,-1.1,FALSE,Other,1
+Shabazz Muhammad,2013,14,UTH,UTH to MIN,GF,6,5,225,20,5,Fr,United States,1,UCLA,278,4772,2504,770,151,0.473,0.319,0.751,17.2,9,2.8,0.5,8.5,0.085,-2,0,FALSE,Pac-12,0
+Shabazz Napier,2014,24,CHA,CHA to MIA,PG,6,1,180,22,6,Sr,United States / Puerto Rico,1,UConn,345,5986,2433,657,849,0.397,0.345,0.815,17.4,7.1,1.9,2.5,8.1,0.065,-0.7,2,FALSE,Big East,0
+Shai Gilgeous-Alexander,2018,11,CHA,CHA to LAC,PG,6,6,181,19,2,Fr,Canada,1,Kentucky,186,5748,3019,807,705,0.482,0.37,0.805,30.9,16.2,4.3,3.8,13.2,0.11,1.3,4.7,FALSE,SEC,1
+Shake Milton,2018,54,DAL,DAL to PHL,SG,6,6,207,21,2,Jr,United States,2,SMU,95,1946,949,202,230,0.455,0.365,0.837,20.5,10,2.1,2.4,4.2,0.104,-2,0,FALSE,Other,1
+Shan Foster,2008,51,DAL,DAL to UTH,GF,6,6,195,21,0,Sr,United States,2,Vanderbilt,,,,,,,,,,,,,,,,,FALSE,SEC,0
+Shane Larkin,2013,18,ATL,ATL to DAL,PG,5,11,175,20,4,So,United States / Turkey,1,Miami (FL),256,4880,1399,490,737,0.422,0.336,0.777,19.1,5.5,1.9,2.9,4.4,0.044,-2.4,-0.6,FALSE,ACC,0
+Shannon Brown,2006,25,CLE,,G,6,4,210,20,9,Jr,United States,1,Michigan State,408,7329,3118,760,458,0.42,0.332,0.807,18,7.6,1.9,1.1,9.2,0.06,-1.5,1,FALSE,Big-10,0
+Shawne Williams,2006,17,IND,,F,6,10,230,20,8,Fr,United States,1,Memphis,314,5368,1769,945,220,0.403,0.339,0.755,17.1,5.6,3,0.7,6.7,0.06,-2.2,-0.3,FALSE,Other,0
+Shelden Williams,2006,5,ATL,,PF,6,9,250,22,6,Sr,United States,1,Duke,361,5586,1618,1562,163,0.462,0.222,0.74,15.5,4.5,4.3,0.5,9.9,0.085,-3,-1.5,FALSE,ACC,0
+Shelvin Mack,2011,34,WAS,,G,6,3,203,21,8,Jr,United States,2,Butler,456,8392,2997,894,1421,0.423,0.33,0.731,18.4,6.6,2,3.1,10.3,0.059,-1.9,0.1,FALSE,Big East,0
+Sindarius Thornwell,2017,48,MIL,MIL to LAC,SG,6,4,215,22,2,Sr,United States,2,South Carolina,153,1577,377,193,94,0.414,0.348,0.672,10.3,2.5,1.3,0.6,1,0.03,-3,-0.4,FALSE,SEC,1
+Skal Labissiere,2016,28,PHX,PHX to SAC,C,6,11,235,20,4,Fr,Haiti,1,Kentucky,148,2595,1069,662,152,0.492,0.353,0.748,17.5,7.2,4.5,1,4.4,0.081,-2.3,-0.2,FALSE,SEC,0
+Solomon Alabi,2010,50,DAL,DAL to TOR,C,7,1,250,22,2,So,Nigeria,2,Florida State,26,181,39,61,5,0.314,,0.7,7,1.5,2.3,0.2,0,0.01,-4.4,-0.1,FALSE,ACC,0
+Solomon Hill,2013,23,IND,,SF,6,6,226,22,7,Sr,United States,1,Arizona,406,8808,2307,1258,612,0.392,0.335,0.803,21.7,5.7,3.1,1.5,11.2,0.061,-2.2,-0.3,FALSE,Pac-12,1
+Solomon Jones,2006,33,ATL,,C,6,10,230,21,8,Sr,United States,2,South Florida,281,3092,839,654,99,0.467,0.111,0.717,11,3,2.3,0.4,5,0.078,-4,-1.6,FALSE,Other,0
+Sonny Weems,2008,39,CHI,CHI to DEN,SF,6,6,205,21,4,Sr,United States,2,Arkansas,183,3335,1189,402,257,0.465,0.283,0.702,18.2,6.5,2.2,1.4,0,0.001,-4.2,-1.8,FALSE,SEC,0
+Spencer Dinwiddie,2014,38,DET,,PG,6,5,215,21,6,Jr,United States,2,Colorado,320,8226,4123,888,1587,0.41,0.318,0.794,25.7,12.9,2.8,5,18.4,0.107,0.3,4.8,FALSE,Pac-12,1
+Spencer Hawes,2007,10,SAC,,C,7,1,245,19,10,Fr,United States,1,Washington,684,15541,5932,3893,1271,0.457,0.35,0.716,22.7,8.7,5.7,1.9,22.6,0.07,-1.1,3.4,FALSE,Pac-12,0
+Stanley Johnson,2015,8,DET,,G,6,7,245,19,5,Fr,United States,1,Arizona,347,6833,2156,1081,487,0.374,0.299,0.756,19.7,6.2,3.1,1.4,4,0.028,-2.8,-1.4,FALSE,Pac-12,1
+Stanley Robinson,2010,59,ORL,,F,6,9,220,21,0,Sr,United States,2,UConn,,,,,,,,,,,,,,,,,FALSE,Big East,0
+Stephane Lasme,2007,46,GOS,,F,6,8,215,24,1,Sr,Gabon,2,UMass,16,303,83,53,3,0.451,,0.594,18.9,5.2,3.3,0.2,0.3,0.041,-4.4,-0.2,FALSE,Other,0
+Stephen Curry,2009,7,GOS,,G,6,3,190,21,11,Jr,United States,1,Davidson,738,25314,17549,3366,4864,0.476,0.433,0.907,34.3,23.8,4.6,6.6,108.5,0.206,6.4,53.9,TRUE,Other,1
+Stephen Zimmerman,2016,41,ORL,,C,6,11,240,19,1,Fr,United States,2,UNLV,19,108,23,35,4,0.323,,0.6,5.7,1.2,1.8,0.2,0,-0.005,-8.3,-0.2,FALSE,Other,0
+Sterling Brown,2017,46,PHL,PHL to MIL,G,6,6,232,22,3,Sr,United States,2,SMU,203,3499,1137,680,221,0.417,0.355,0.794,17.2,5.6,3.3,1.1,5.3,0.073,-2.2,-0.2,FALSE,Other,1
+Steve Novak,2006,32,HOU,,F,6,10,225,23,11,Sr,United States,2,Marquette,467,5657,2177,591,132,0.437,0.43,0.877,12.1,4.7,1.3,0.3,14.5,0.123,0.8,4,FALSE,Big East,0
+Steven Adams,2013,12,OKC,,C,7,0,265,19,7,Fr,New Zealand,1,Pitt,569,15290,5502,4388,695,0.59,0.083,0.552,26.9,9.7,7.7,1.2,47.8,0.15,0.3,9,FALSE,ACC,1
+Svi Mykhailiuk,2018,47,LAL,,SF,6,8,205,21,2,Sr,Ukraine,2,Kansas,136,2376,901,220,203,0.387,0.369,0.775,17.5,6.6,1.6,1.5,1.8,0.036,-2.6,-0.4,FALSE,Big-12,0
+T.J. Leaf,2017,18,IND,,PF,6,10,225,20,3,Fr,United States / Israel,1,UCLA,139,1203,465,278,42,0.491,0.341,0.571,8.7,3.3,2,0.3,2.7,0.107,-1.8,0.1,FALSE,Pac-12,0
+T.J. Warren,2014,14,PHX,,F,6,8,215,20,6,So,United States,1,NC State,332,9553,5142,1372,397,0.507,0.357,0.78,28.8,15.5,4.1,1.2,19.6,0.099,-0.2,4.2,FALSE,ACC,1
+Taj Gibson,2009,26,CHI,,F,6,9,232,24,11,Jr,United States,1,USC,816,20399,7689,5075,820,0.515,0.223,0.709,25,9.4,6.2,1,53.2,0.125,-0.8,6.4,FALSE,Pac-12,1
+Talen Horton-Tucker,2019,46,ORL,ORL to LAL,SF,6,4,233,18,1,Fr,United States,2,Iowa State,45,796,350,112,95,0.451,0.256,0.825,17.7,7.8,2.5,2.1,1.4,0.083,-1.3,0.1,FALSE,Big-12,1
+Taurean Green,2007,52,POR,,PG,6,0,177,20,1,Jr,United States,2,Florida,17,74,27,10,11,0.28,0.182,0.917,4.4,1.6,0.6,0.6,-0.1,-0.066,-7.5,-0.1,FALSE,SEC,0
+Taurean Prince,2016,12,UTH,UTH to ATL,F,6,7,218,22,4,Sr,United States,1,Baylor,289,7474,3250,1230,553,0.41,0.368,0.821,25.9,11.2,4.3,1.9,5.8,0.037,-1.9,0.1,FALSE,Big-12,1
+Taylor Griffin,2009,48,PHX,,F,6,8,235,23,1,Sr,United States,2,Oklahoma,8,32,10,2,1,0.4,0,0.5,4,1.3,0.3,0.1,0,-0.039,-8.1,-0.1,FALSE,Big-12,0
+Terance Mann,2019,48,LAC,,SG,6,7,215,22,1,Sr,United States,2,Florida State,81,1004,297,186,101,0.48,0.361,0.753,12.4,3.7,2.3,1.2,2.3,0.11,-1.6,0.1,FALSE,ACC,1
+Terrence Jones,2012,18,HOU,,PF,6,9,255,20,6,So,United States,1,Kentucky,234,5562,2431,1334,238,0.501,0.297,0.621,23.8,10.4,5.7,1,14.7,0.127,0.5,3.6,FALSE,SEC,0
+Terrence Ross,2012,8,TOR,,SF,6,7,206,21,8,So,United States,1,Washington,597,14897,6754,1715,698,0.419,0.369,0.836,25,11.3,2.9,1.2,23.2,0.075,-0.6,5.3,FALSE,Pac-12,1
+Terrence Williams,2009,11,NJN,,GF,6,6,220,21,4,Sr,United States,1,Louisville,153,2922,1085,545,364,0.412,0.317,0.659,19.1,7.1,3.6,2.4,-0.2,-0.004,-2.8,-0.6,FALSE,ACC,0
+Terrico White,2010,36,DET,,G,6,5,215,20,1,So,United States,2,Ole Miss,,,,,,,,,,,,,,,,,FALSE,SEC,0
+Terry Rozier,2015,16,BOS,,G,6,1,190,21,5,So,United States,1,Louisville,374,8881,4009,1396,1016,0.408,0.379,0.818,23.7,10.7,3.7,2.7,16,0.086,0.2,4.9,FALSE,ACC,1
+Thaddeus Young,2007,12,PHL,,F,6,8,235,19,13,Fr,United States,1,Georgia Tech,1002,30208,13154,5951,1772,0.501,0.332,0.666,30.1,13.1,5.9,1.8,64.9,0.103,0.4,18.2,FALSE,ACC,1
+Thomas Bryant,2017,42,UTH,UTH to LAL,C,6,10,248,19,3,So,United States,2,Indiana,143,2986,1532,863,196,0.6,0.362,0.748,20.9,10.7,6,1.4,10.5,0.168,1.8,2.8,FALSE,Big-10,1
+Thomas Robinson,2012,5,SAC,,PF,6,10,235,21,5,Jr,United States,1,Kansas,313,4204,1528,1507,190,0.47,0,0.505,13.4,4.9,4.8,0.6,4.6,0.053,-3.5,-1.6,FALSE,Big-12,0
+Thomas Welsh,2018,58,DEN,,C,7,0,255,22,1,Sr,United States,2,UCLA,11,36,18,4,5,0.538,0.429,0.5,3.3,1.6,0.4,0.5,0.1,0.162,1.2,0,FALSE,Pac-12,0
+Tim Hardaway Jr.,2013,24,NYK,,SG,6,5,205,21,7,Jr,United States,1,Michigan,514,13788,7043,1399,945,0.423,0.357,0.815,26.8,13.7,2.7,1.8,21.6,0.075,-1,3.6,FALSE,Big-10,1
+Tiny Gallon,2010,47,MIL,,C,6,9,290,19,0,Fr,United States,2,Oklahoma,,,,,,,,,,,,,,,,,FALSE,Big-12,0
+Tobias Harris,2011,19,CHA,CHA to MIL,F,6,9,235,18,9,Fr,United States,1,Tennessee,656,20352,10632,4031,1392,0.473,0.367,0.825,31,16.2,6.1,2.1,50.4,0.119,1.1,15.9,FALSE,SEC,1
+Toney Douglas,2009,29,LAL,LAL to NYK,G,6,2,195,23,8,Sr,United States,1,Florida State,394,7511,3009,875,889,0.404,0.354,0.824,19.1,7.6,2.2,2.3,12.1,0.077,-0.8,2.2,FALSE,ACC,0
+Tony Bradley,2017,28,LAL,LAL to UTH,C,6,11,248,19,3,Fr,United States,1,UNC,89,983,401,386,42,0.636,0.6,0.644,11,4.5,4.3,0.5,4.6,0.223,0.9,0.7,FALSE,ACC,1
+Tony Carr,2018,51,NOP,,PG,6,5,200,20,0,So,United States,2,Penn State,,,,,,,,,,,,,,,,,FALSE,Big-10,0
+Tony Mitchell,2013,37,DET,,F,6,9,240,21,2,So,United States,2,University of North Texas,21,79,22,26,2,0.417,1,0.579,3.8,1,1.2,0.1,0.2,0.151,0.4,0,FALSE,Other,0
+Tony Snell,2013,20,CHI,,G,6,6,213,21,7,Jr,United States,1,New Mexico,530,11838,3391,1219,622,0.431,0.394,0.839,22.3,6.4,2.3,1.2,17.3,0.07,-1.9,0.3,FALSE,Other,1
+Tony Wroten,2012,25,MEM,,PG,6,6,205,19,4,Fr,United States,1,Washington,145,3076,1604,363,437,0.413,0.231,0.647,21.2,11.1,2.5,3,-1.3,-0.021,-3.4,-1.1,FALSE,Pac-12,0
+Trae Young,2018,5,DAL,DAL to ATL,PG,6,1,180,19,2,Fr,United States,1,Oklahoma,181,5992,4353,718,1589,0.428,0.348,0.854,33.1,24,4,8.8,13.9,0.112,2,6,TRUE,Big-12,1
+Travis Leslie,2011,47,LAC,,G,6,4,205,21,2,Jr,United States,2,Georgia,10,45,14,9,5,0.357,,0.444,4.5,1.4,0.9,0.5,0.1,0.06,-0.3,0,FALSE,SEC,0
+Tremont Waters,2019,51,BOS,,PG,5,10,175,21,1,So,United States,2,LSU,21,217,73,20,46,0.3,0.256,0.938,10.3,3.5,1,2.2,-0.2,-0.047,-4.7,-0.1,FALSE,SEC,1
+Trent Plaisted,2008,46,SEA,SEA to DET,C,6,11,245,21,0,Jr,United States,2,Brigham Young University Hawaii,,,,,,,,,,,,,,,,,FALSE,Other,0
+Trevor Booker,2010,23,MIN,MIN to WAS,PF,6,8,228,22,8,Sr,United States,1,Clemson,532,10872,3679,2932,566,0.515,0.305,0.636,20.4,6.9,5.5,1.1,26.2,0.116,-0.5,4.2,FALSE,ACC,0
+Trey Burke,2013,9,MIN,MIN to UTH,G,6,0,185,20,7,So,United States,1,Michigan,434,9657,4445,828,1442,0.412,0.349,0.803,22.3,10.2,1.9,3.3,12.7,0.063,-1.1,2.2,FALSE,Big-10,1
+Trey Lyles,2015,12,UTH,,SF,6,10,235,19,5,Fr,Canada / United States,1,Kentucky,373,6667,2713,1572,388,0.435,0.342,0.704,17.9,7.3,4.2,1,11,0.079,-1.2,1.3,FALSE,SEC,1
+Trey Thompkins,2011,37,LAC,,PF,6,10,245,21,2,Jr,United States,2,Georgia,24,119,57,24,3,0.393,0.308,0.714,5,2.4,1,0.1,0,0.004,-5.7,-0.1,FALSE,SEC,0
+Tristan Thompson,2011,4,CLE,,F,6,9,254,20,9,Fr,Canada,1,Texas,655,18183,6125,5695,660,0.519,0.257,0.61,27.8,9.4,8.7,1,45.1,0.119,-1.6,1.8,FALSE,Big-12,1
+"Troy Brown, Jr.",2018,15,WAS,,SF,6,6,215,18,2,Fr,United States,1,Oregon,141,2783,1046,588,276,0.426,0.325,0.751,19.7,7.4,4.2,2,2.8,0.049,-2.1,-0.1,FALSE,Pac-12,0
+Ty Jerome,2019,24,PHL,PHL to BOSBOS to PHX,PG,6,5,200,21,1,Jr,United States,1,Virginia,41,595,196,80,78,0.378,0.337,0.667,14.5,4.8,2,1.9,0.5,0.042,-2.5,-0.1,FALSE,ACC,1
+Ty Lawson,2009,18,MIN,MIN to DEN,PG,5,11,195,21,9,Jr,United States,1,UNC,551,16088,6977,1506,3316,0.46,0.359,0.77,29.2,12.7,2.7,6,42.1,0.126,1.4,13.6,FALSE,ACC,0
+Tyler Dorsey,2017,41,ATL,,SG,6,5,183,21,2,So,United States / Greece,2,Oregon,104,1672,701,243,135,0.389,0.35,0.669,16.1,6.7,2.3,1.3,1,0.03,-3.1,-0.5,FALSE,Pac-12,0
+Tyler Ennis,2014,18,PHX,,PG,6,3,182,19,4,Fr,Canada,1,Syracuse,186,2336,779,250,359,0.419,0.317,0.768,12.6,4.2,1.3,1.9,1.3,0.026,-3.4,-0.8,FALSE,ACC,0
+Tyler Hansbrough,2009,13,IND,,PF,6,9,250,23,7,Sr,United States,1,UNC,428,7233,2881,1808,181,0.439,0.136,0.738,16.9,6.7,4.2,0.4,20.2,0.134,-2,0,FALSE,ACC,0
+Tyler Harvey,2015,51,ORL,ORL to MEM,G,6,4,185,21,0,Jr,United States,2,Eastern Washington,,,,,,,,,,,,,,,,,FALSE,Other,0
+Tyler Herro,2019,13,MIA,,SG,6,6,195,19,1,Fr,United States,1,Kentucky,87,2530,1234,401,229,0.424,0.362,0.847,29.1,14.2,4.6,2.6,2.1,0.039,-2.1,-0.1,FALSE,SEC,1
+Tyler Honeycutt,2011,35,SAC,,F,6,8,190,20,2,So,United States,2,UCLA,24,120,28,24,9,0.314,0.2,0.714,5,1.2,1,0.4,-0.1,-0.049,-5.1,-0.1,FALSE,Pac-12,0
+Tyler Lydon,2017,24,UTH,UTH to DEN,PF,6,10,225,21,2,So,United States,1,Syracuse,26,96,23,18,6,0.5,0.4,0.333,3.7,0.9,0.7,0.2,0.2,0.084,-4.3,-0.1,FALSE,ACC,0
+Tyler Ulis,2016,34,PHX,,PG,5,10,149,20,3,So,United States,2,Kentucky,133,2782,998,223,537,0.403,0.28,0.808,20.9,7.5,1.7,4,0.5,0.008,-3.6,-1.1,FALSE,SEC,0
+Tyler Zeller,2012,17,DAL,DAL to CLE,C,7,0,250,22,8,Sr,United States,1,UNC,414,7254,2873,1820,367,0.508,0.286,0.764,17.5,6.9,4.4,0.9,17.1,0.113,-2,0,FALSE,ACC,0
+Tyreke Evans,2009,4,SAC,,G,6,6,220,19,10,Fr,United States,1,Memphis,594,18242,9347,2720,2852,0.44,0.323,0.757,30.7,15.7,4.6,4.8,28.4,0.075,0.8,13.1,FALSE,Other,0
+Tyrone Wallace,2016,60,UTH,,G,6,5,198,22,3,Sr,United States,2,California,106,1639,549,228,126,0.425,0.203,0.671,15.5,5.2,2.2,1.2,0.2,0.006,-5.1,-1.3,FALSE,Pac-12,0
+Tyrus Thomas,2006,4,POR,POR to CHI,FC,6,9,215,20,8,Fr,United States / Kenya,1,LSU,402,7932,3093,1938,347,0.438,0.235,0.732,19.7,7.7,4.8,0.9,13,0.078,-1.2,1.7,FALSE,SEC,0
+Tyshawn Taylor,2012,41,POR,POR to BRK,G,6,3,185,22,2,Sr,United States,2,Kansas,61,491,174,33,57,0.354,0.36,0.684,8,2.9,0.5,0.9,-0.9,-0.088,-8.1,-0.8,FALSE,Big-12,0
+Tyus Jones,2015,24,CLE,CLE to MIN,PG,6,1,196,19,5,Fr,United States,1,Duke,351,6400,2031,571,1274,0.432,0.338,0.811,18.2,5.8,1.6,3.6,13.3,0.099,0,3.3,FALSE,ACC,1
+Vernon Macklin,2011,52,DET,,F,6,10,227,24,1,Sr,United States,2,Florida,23,135,46,34,5,0.543,,0.571,5.9,2,1.5,0.2,0.5,0.161,1.2,0.1,FALSE,SEC,0
+Victor Oladipo,2013,2,ORL,,G,6,4,210,21,7,Jr,United States,1,Indiana,450,14857,7907,2080,1782,0.438,0.348,0.792,33,17.6,4.6,4,25,0.081,1,11.1,TRUE,Big-10,1
+Vince Edwards,2018,52,UTH,UTH to HOU,SF,6,8,225,22,1,Sr,United States,2,Purdue,2,16,3,2,0,0.25,0.25,,8,1.5,1,0,0,-0.014,-6.4,0,FALSE,Big-10,0
+Wade Baldwin IV,2016,17,MEM,,G,6,4,220,20,3,So,United States,1,Vanderbilt,56,579,174,69,78,0.355,0.25,0.776,10.3,3.1,1.2,1.4,-0.3,-0.028,-5.3,-0.5,FALSE,SEC,0
+Walter Sharpe,2008,32,SEA,SEA to DET,F,6,9,245,21,1,Jr,United States,2,UAB,8,20,8,3,0,0.364,0,0,2.5,1,0.4,0,-0.1,-0.131,-10.1,0,FALSE,Other,0
+Wayne Ellington,2009,28,MIN,,SG,6,4,207,21,11,Jr,United States,1,UNC,711,14975,5778,1534,797,0.41,0.381,0.841,21.1,8.1,2.2,1.1,19.5,0.063,-1.5,1.9,FALSE,ACC,1
+"Wendell Carter, Jr.",2018,7,CHI,,PF,6,10,270,19,2,Fr,United States,1,Duke,117,3118,1274,945,195,0.508,0.241,0.756,26.6,10.9,8.1,1.7,7.3,0.112,-1.9,0.1,FALSE,ACC,0
+Wesley Iwundu,2017,33,ORL,,F,6,7,195,22,3,Sr,United States,2,Kansas State,205,3494,917,496,200,0.412,0.3,0.797,17,4.5,2.4,1,4.3,0.058,-3.5,-1.4,FALSE,Big-12,1
+Wesley Johnson,2010,4,MIN,,GF,6,7,215,22,9,Jr,United States,1,Syracuse,609,13472,4235,1924,645,0.404,0.337,0.741,22.1,7,3.2,1.1,10.7,0.038,-1.6,1.2,FALSE,ACC,0
+Will Barton,2012,40,POR,,GF,6,5,181,21,8,So,United States,2,Memphis,535,13311,5994,2248,1374,0.434,0.351,0.783,24.9,11.2,4.2,2.6,22.2,0.08,-0.1,6.2,FALSE,Other,1
+Will Blalock,2006,60,DET,,G,6,1,200,22,1,Jr,United States,2,Iowa State,14,166,25,15,17,0.3,0.2,1,11.9,1.8,1.1,1.2,-0.1,-0.032,-5.8,-0.2,FALSE,Big-12,0
+Willie Cauley-Stein,2015,6,SAC,,C,7,0,240,21,5,Jr,United States,1,Kentucky,384,8786,3553,2344,579,0.543,0.185,0.614,22.9,9.3,6.1,1.5,22.2,0.121,0,4.4,FALSE,SEC,1
+Willie Warren,2010,54,LAC,,GF,6,4,200,20,1,So,United States,2,Oklahoma,19,134,37,12,27,0.371,0.333,0.75,7.1,1.9,0.6,1.4,0.2,0.065,-2.7,0,FALSE,Big-12,0
+Wilson Chandler,2007,23,NYK,,SF,6,9,225,20,13,So,United States,1,DePaul,676,20287,8463,3574,1205,0.443,0.341,0.77,30,12.5,5.3,1.8,29,0.069,-1.3,3.5,FALSE,Big East,0
+Xavier Henry,2010,12,MEM,,G,6,6,220,19,5,Fr,United States,1,Kansas,185,2905,1050,351,120,0.406,0.325,0.635,15.7,5.7,1.9,0.6,0.8,0.013,-4.4,-1.7,FALSE,Big-12,0
+Xavier Thames,2014,59,TOR,TOR to BRK,G,6,3,187,23,0,Sr,United States,2,San Diego State,,,,,,,,,,,,,,,,,FALSE,Other,0
+Zach Collins,2017,10,SAC,SAC to POR,C,7,0,235,19,3,Fr,United States,1,Gonzaga,154,2691,881,614,139,0.444,0.324,0.722,17.5,5.7,4,0.9,3.9,0.069,-2.6,-0.4,FALSE,Other,0
+Zach LaVine,2014,13,MIN,,SG,6,5,200,19,6,Fr,United States,1,UCLA,394,12308,7399,1486,1477,0.458,0.385,0.825,31.2,18.8,3.8,3.7,16.9,0.066,0,6.1,TRUE,Pac-12,1
+Zhaire Smith,2018,16,PHX,PHX to PHL,SG,6,4,199,19,2,Fr,United States,1,Texas Tech,13,143,48,15,12,0.378,0.316,0.667,11,3.7,1.2,0.9,0,0.011,-6.1,-0.2,FALSE,Big-12,0
+Zion Williamson,2019,1,NOP,,PF,6,7,285,18,1,Fr,United States,1,Duke,64,1978,1568,429,186,0.606,0.382,0.68,30.9,24.5,6.7,2.9,7.6,0.183,3.7,2.9,TRUE,ACC,1

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>STA 440: Case Studies on STA 440 | Case Studies in the Practice of Statistics</title>
+    <link>/</link>
+    <description>Recent content in STA 440: Case Studies on STA 440 | Case Studies in the Practice of Statistics</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title></title>
+      <link>/schedule.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/schedule.html</guid>
+      <description>Note:  This schedule may be updated as the semester progresses with all changes documented here (full details on accompanying Sakai announcements). 
+Major case studies, activities, and semester milestones are documented on the schedule below. However, regular ungraded mini-assignments will be given and discussed in class and lab to check mastery and identify areas for additional focus. All assignments are due at 11:59 PM US Eastern time unless otherwise noted.</description>
+    </item>
+    
+    <item>
+      <title>Course Policies</title>
+      <link>/policies.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/policies.html</guid>
+      <description>This course recognizes the extraordinary circumstances that many students may be facing and have created the course policies and schedule to help reduce stress and promote effective course mastery. If you find that anything is affecting your wellbeing or academic success and you find it difficult to complete your work, please let me and your Academic Deans know as soon as possible. We are happy to work with you to make sure you succeed in STA 440.</description>
+    </item>
+    
+  </channel>
+</rss>
